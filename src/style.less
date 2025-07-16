@@ -1,32 +1,44 @@
+// 去除自带的样式
 * {
     margin: 0;
     padding: 0;
 }
-body{
+
+body {
     background-color: rgb(241, 242, 246);
 }
 
-.fl{
+.fl {
     float: left;
 }
-.fr{
+
+.fr {
     float: right;
 }
-.clear:after{
+
+.clear:after {
     content: "";
     height: 0;
     display: block;
     clear: both;
 }
-.mt{
+
+.mt {
     margin-top: 20px;
 }
-.mb{
+
+.mb {
     margin-bottom: 20px;
 }
-.ml{
+
+.ml {
     margin-left: 20px;
 }
-.mr{
+
+.mr {
     margin-right: 20px;
+}
+/* 隐藏滚动条 */
+::-webkit-scrollbar {
+    display: none;
 }
