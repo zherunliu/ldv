@@ -17,7 +17,7 @@
   </el-menu-item>
 </template>
 
-<script lang="ts">
+<!-- <script lang="ts">
 import { defineComponent, type PropType } from 'vue'
 import { type MenuItem as MenuItemType } from '@/types/user'
 export default defineComponent({
@@ -28,6 +28,19 @@ export default defineComponent({
       require: true,
     },
   },
+})
+</script> -->
+
+<script setup lang="ts">
+import { type MenuItem as MenuItemType } from '@/types/user'
+
+defineProps<{
+  item: MenuItemType
+}>()
+
+// 可以考虑移除以下 3 行
+defineOptions({
+  name: 'MyMenu',
 })
 </script>
 
@@ -53,7 +66,10 @@ export default defineComponent({
 }
 
 // 样式穿透(使样式突破当前组件)
-::v-deep .el-sub-menu__title:hover {
+// ::v-deep 已过时, 使用 :deep()
+
+// ::v-deep .el-sub-menu__title:hover {
+:deep(.el-sub-menu__title:hover) {
   background-color: rgb(34, 136, 255) !important;
   color: white !important;
 }

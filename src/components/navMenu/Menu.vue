@@ -3,7 +3,10 @@
     <img :src="logo" width="34px" height="34px" />
     <h1>动力港</h1>
   </div>
-  <el-menu :router="true" :default-active="$route.path">
+
+  <!-- $route.path 是 vue2 常用的写法 -->
+  <!-- const route = useRoute(); route.path 更推荐 -->
+  <el-menu :router="true" :default-active="route.path">
     <menu-item v-for="item in menuitems" :item="item" :key="item.url"></menu-item>
   </el-menu>
 </template>
@@ -12,10 +15,17 @@
 import { useUserStore } from '@/store/auth'
 import MenuItem from './MenuItem.vue'
 import logo from '@/assets/logo.png'
+import { useRoute } from 'vue-router'
 
 const userStore = useUserStore()
-console.log(userStore.menu)
+// console.log(userStore.menu)
+
+if (import.meta.env.DEV /** 开发环境, 输出日志 */) {
+  console.log(userStore.menu)
+}
+
 const menuitems = userStore.menu
+const route = useRoute()
 </script>
 
 <style lang="less" scoped>
