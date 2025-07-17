@@ -8,7 +8,7 @@ import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
 // configureVueProject({ scriptLangs: ['ts', 'tsx'] })
 // More info at https://github.com/vuejs/eslint-config-typescript/#advanced-setup
 
-export default {
+export default [
   ...defineConfigWithVueTs(
     {
       name: 'app/files-to-lint',
@@ -22,7 +22,9 @@ export default {
     skipFormatting,
   ),
 
-  rules: {
-    'vue/multi-word-component-names': 'off',
+  {
+    rules: {
+      'vue/multi-word-component-names': 'off',
+    },
   },
-}
+]
