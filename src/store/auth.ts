@@ -23,13 +23,22 @@ export const useUserStore = defineStore('user', {
   actions: {
     async login(data: LoginParams) {
       try {
+        // 解构赋值
+        // 参考 https://wangdoc.com/es6/destructuring#%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC
         const {
           data: {
             token,
             user: { username, roles },
             menulist,
           },
-        } = await loginApi(data)
+        } = (await loginApi(data)) as {
+          data: {
+            token: string
+            user: { username: string; roles: string[] }
+            menulist: MenuItem[]
+          }
+        }
+
         this.token = token
         this.roles = roles
         this.username = username
