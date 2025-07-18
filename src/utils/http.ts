@@ -1,16 +1,16 @@
 import service from './axios'
 
-interface ResponseData {
+export interface ResponseData {
   code: number
-  data: any
+  data: unknown
   message: string
 }
 
-function get(url: string, params?: any): Promise<ResponseData> {
+function get(url: string, params?: unknown): Promise<ResponseData> {
   return service.get(url, { params })
 }
 
-function post(url: string, data?: any): Promise<ResponseData> {
+function post(url: string, data?: unknown): Promise<ResponseData> {
   return service.post(url, data)
 }
 

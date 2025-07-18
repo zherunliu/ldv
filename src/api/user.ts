@@ -1,4 +1,4 @@
-import { post } from '@/utils/http'
+import { post, type ResponseData } from '@/utils/http'
 
 enum Api {
   Login = '/login',
@@ -9,7 +9,7 @@ interface LoginParams {
   password: string
 }
 
-function loginApi(data: LoginParams): Promise<any> {
+function loginApi(data: LoginParams): Promise<ResponseData> {
   return post(Api.Login, data)
 }
 
