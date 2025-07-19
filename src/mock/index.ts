@@ -29,7 +29,7 @@ const menulist_admin = [
       },
       {
         name: '充电桩管理',
-        url: '/chargingstation/fault',
+        url: '/chargingstation/chargingpile',
         icon: 'Warning',
       },
     ],
@@ -56,7 +56,7 @@ const menulist_admin = [
       },
       {
         name: '计费管理',
-        url: '/operations/total',
+        url: '/operations/billing',
         icon: 'Money',
       },
     ],
@@ -68,12 +68,12 @@ const menulist_admin = [
   },
   {
     name: '会员卡管理',
-    url: '/equipment',
+    url: '/associator',
     icon: 'Magnet',
   },
   {
     name: '招商管理',
-    url: '/document',
+    url: '/investment',
     icon: 'Document',
   },
   {
@@ -112,7 +112,7 @@ const menulist_user = [
       },
       {
         name: '充电桩管理',
-        url: '/chargingstation/fault',
+        url: '/chargingstation/chargingpile',
         icon: 'Warning',
       },
     ],
@@ -139,7 +139,7 @@ const menulist_user = [
       },
       {
         name: '计费管理',
-        url: '/operations/total',
+        url: '/operations/billing',
         icon: 'Money',
       },
     ],
@@ -151,7 +151,7 @@ const menulist_user = [
   },
   {
     name: '会员卡管理',
-    url: '/equipment',
+    url: '/associator',
     icon: 'Magnet',
   },
   {

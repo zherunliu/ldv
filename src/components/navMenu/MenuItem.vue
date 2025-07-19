@@ -9,7 +9,7 @@
     </template>
     <my-menu v-for="child in item.children" :item="child" :key="child.url"></my-menu>
   </el-sub-menu>
-  <el-menu-item v-else :index="item?.url">
+  <el-menu-item v-else :index="item?.url" v-show="item.name !== '订单详情'">
     <el-icon>
       <component :is="item?.icon"></component>
     </el-icon>
@@ -39,9 +39,9 @@ defineProps<{
 }>()
 
 // 可以考虑移除以下 3 行
-defineOptions({
-  name: 'MyMenu',
-})
+// defineOptions({
+//   name: 'MyMenu',
+// })
 </script>
 
 <style scoped lang="less">
@@ -66,7 +66,7 @@ defineOptions({
 }
 
 // 样式穿透(使样式突破当前组件)
-// ::v-deep 已过时, 使用 :deep()
+// ::v-deep 已过时，使用 :deep()
 
 // ::v-deep .el-sub-menu__title:hover {
 :deep(.el-sub-menu__title:hover) {

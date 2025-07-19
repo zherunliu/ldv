@@ -15,5 +15,12 @@ router.beforeEach((to) => {
     if (to.path === '/login') {
       return { path: '/' }
     }
+    if (
+      to.meta.needAuth &&
+      !userStore.roles.some((role: string) => (to.meta.needAuth as string[]).includes(role))
+    ) {
+      // 已登录但无权访问
+      return { path: '/' }
+    }
   }
 })

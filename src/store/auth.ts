@@ -32,6 +32,7 @@ export const useUserStore = defineStore('user', {
             menulist,
           },
         } = (await loginApi(data)) as {
+          // 断言 await 得到的对象类型
           data: {
             token: string
             user: { username: string; roles: string[] }
@@ -52,6 +53,14 @@ export const useUserStore = defineStore('user', {
       } catch (error) {
         console.log(error)
       }
+    },
+    // 登出，清空数据
+    logout() {
+      this.token = ''
+      this.roles = []
+      this.username = ''
+      this.menu = []
+      sessionStorage.clear()
     },
   },
 })
