@@ -17,7 +17,10 @@ router.beforeEach((to) => {
     }
     if (
       to.meta.needAuth &&
-      !userStore.roles.some((role: string) => (to.meta.needAuth as string[]).includes(role))
+      // 在 @/router/index.ts 中, 使用 RouteMeta 接口扩展 meta 字段的类型
+      // 所以这里不再需要使用类型断言了
+      // 后续如果有新增字段, 可以继续使用 RouteMeta 接口扩展 meta 字段的类型
+      !userStore.roles.some((role: string) => to.meta.needAuth?.includes(role))
     ) {
       // 已登录但无权访问
       return { path: '/' }
