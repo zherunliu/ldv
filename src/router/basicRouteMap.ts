@@ -1,5 +1,13 @@
 import { type RouteRecordRaw } from 'vue-router'
 
+// 扩展 meta 字段的类型
+// 参考 https://router.vuejs.org/zh/guide/advanced/meta.html#TypeScript
+declare module 'vue-router' {
+  interface RouteMeta {
+    needAuth?: string[]
+  }
+}
+
 const routes: RouteRecordRaw[] = [
   {
     path: '/',

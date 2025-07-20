@@ -6,7 +6,7 @@
           <Bell />
         </el-icon>
       </el-badge>
-      <el-avatar icon="UserFilled" class="ml mr"/>
+      <el-avatar icon="UserFilled" class="ml mr" />
       <el-dropdown @command="handleCommand">
         <span class="el-dropdown-link">
           欢迎您，{{ username }}
@@ -44,7 +44,6 @@ const handleCommand = (command: string) => {
     router.push('/login')
   }
 }
-
 </script>
 
 <style lang="less" scoped>
@@ -52,7 +51,7 @@ const handleCommand = (command: string) => {
   background-color: white;
   height: 60px;
   padding: 0 20px;
-  .personal{
+  .personal {
     display: flex;
     float: right;
     height: 60px;
