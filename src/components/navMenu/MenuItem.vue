@@ -9,7 +9,12 @@
     </template>
     <my-menu v-for="child in item.children" :item="child" :key="child.url"></my-menu>
   </el-sub-menu>
-  <el-menu-item v-else :index="item?.url" v-show="item.name !== '订单详情'">
+  <el-menu-item
+    v-else
+    :index="item?.url"
+    @click="add(item.name, item.url, item.icon)"
+    v-show="item.name !== '订单详情'"
+  >
     <el-icon>
       <component :is="item?.icon"></component>
     </el-icon>
@@ -33,15 +38,20 @@ export default defineComponent({
 
 <script setup lang="ts">
 import { type MenuItem as MenuItemType } from '@/types/user'
+import { useTabsStore } from '@/store/tabs'
 
 defineProps<{
   item: MenuItemType
 }>()
-
-// 可以考虑移除以下 3 行
-// defineOptions({
-//   name: 'MyMenu',
-// })
+defineOptions({
+  name: 'MyMenu',
+})
+const tabsStore = useTabsStore()
+const { addTab, setCurrentTab } = tabsStore
+const add = (name: string, url: string, icon: string) => {
+  addTab(name, url, icon)
+  setCurrentTab(name, url)
+}
 </script>
 
 <style scoped lang="less">
