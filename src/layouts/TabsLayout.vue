@@ -1,6 +1,12 @@
 <template>
-  <el-tabs v-model="currentTab.name" type="card" class="demo-tabs" @tab-click="handleClick" closable
-    @tab-remove="remove">
+  <el-tabs
+    v-model="currentTab.name"
+    type="card"
+    class="demo-tabs"
+    @tab-click="handleClick"
+    closable
+    @tab-remove="remove"
+  >
     <el-tab-pane v-for="tab in tabs" :key="tab.url" :label="tab.name" :name="tab.name">
       <template #label>
         <span class="custom-tabs-label">
@@ -32,7 +38,7 @@ const { tabs, currentTab } = storeToRefs(tabsStore)
 const { setCurrentTab, addTab, removeTab } = tabsStore
 
 const handleClick = ({ index: idx }: { index: string | undefined }) => {
-  const index = idx ? Number.parseInt(idx, 10) : NaN;
+  const index = idx ? Number.parseInt(idx, 10) : NaN
   router.push(tabs.value[index].url)
   setCurrentTab(tabs.value[index].name, tabs.value[index].url)
 }
@@ -62,7 +68,6 @@ if (item) {
   addTab(name, url, icon)
   setCurrentTab(name, url)
 }
-
 </script>
 
 <style lang="less" scoped>

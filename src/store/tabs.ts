@@ -15,21 +15,21 @@ export const useTabsStore = defineStore('tabs', () => {
     currentTab.value = { name, url }
   }
   const removeTab = (name: string) => {
-    const index = tabs.value.findIndex(item => item.name === name)
+    const index = tabs.value.findIndex((item) => item.name === name)
 
-    if(currentTab.value.name === name){
+    if (currentTab.value.name === name) {
       if (tabs.value.length > 1) {
         if (index === 0) {
           currentTab.value = tabs.value[1]
-        } else{
+        } else {
           currentTab.value = tabs.value[index - 1]
         }
-      }else{
+      } else {
         return
       }
     }
 
-    tabs.value = tabs.value.filter(tab => tab.name !== name)
+    tabs.value = tabs.value.filter((tab) => tab.name !== name)
   }
   return { tabs, addTab, currentTab, setCurrentTab, removeTab }
 })
