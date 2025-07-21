@@ -10,7 +10,8 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "prepare": "husky"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
@@ -31,9 +32,11 @@
     "@vue/tsconfig": "^0.7.0",
     "eslint": "^9.31.0",
     "eslint-plugin-vue": "^10.3.0",
+    "husky": "^9.1.7",
     "jiti": "^2.4.2",
     "jsdom": "^26.1.0",
     "less": "^4.3.0",
+    "lint-staged": "^16.1.2",
     "mockjs": "^1.1.0",
     "npm-run-all2": "^8.0.4",
     "prettier": "^3.6.2",
@@ -45,5 +48,14 @@
     "vite-plugin-vue-devtools": "^7.7.7",
     "vue-tsc": "^2.2.12"
   },
-  "packageManager": "pnpm@10.13.1+sha512.37ebf1a5c7a30d5fabe0c5df44ee8da4c965ca0c5af3dbab28c3a1681b70a256218d05c81c9c0dcf767ef6b8551eb5b960042b9ed4300c59242336377e01cfad"
+  "packageManager": "pnpm@10.13.1+sha512.37ebf1a5c7a30d5fabe0c5df44ee8da4c965ca0c5af3dbab28c3a1681b70a256218d05c81c9c0dcf767ef6b8551eb5b960042b9ed4300c59242336377e01cfad",
+  "lint-staged": {
+    "src/**/*.{vue,js,jsx,ts,tsx}": [
+      "pnpm format",
+      "pnpm lint"
+    ],
+    "src/**/*.{json,css,less,scss,md,mdx}": [
+      "pnpm format"
+    ]
+  }
 }
