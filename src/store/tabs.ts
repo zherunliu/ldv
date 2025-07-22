@@ -29,6 +29,15 @@ export const useTabsStore = defineStore('tabs', () => {
       }
     }
 
+    //! 上面一段逻辑好像可以简化 ?
+    // if (currentTab.value.name === name && tabs.value.length > 1) {
+    //   if (index === 0) {
+    //     currentTab.value = tabs.value[1]
+    //   } else {
+    //     currentTab.value = tabs.value[index - 1]
+    //   }
+    // }
+
     tabs.value = tabs.value.filter((tab) => tab.name !== name)
   }
   return { tabs, addTab, currentTab, setCurrentTab, removeTab }

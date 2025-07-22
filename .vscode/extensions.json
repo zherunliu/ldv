@@ -1,0 +1,26 @@
+{
+  // lovelove ❤️
+  "recommendations": [
+    // 检查单词拼写的插件
+    "streetsidesoftware.code-spell-checker",
+    // 可以使注释更醒目
+    "aaron-bond.better-comments",
+    // for vite
+    "antfu.vite",
+    // 这是一个很可爱的 icon 插件
+    "catppuccin.catppuccin-vsc-icons",
+    // for eslint
+    "dbaeumer.vscode-eslint",
+    // 一个方便看历史提交的插件
+    // 如果不小心掉进陌生的页面, 就按 esc 退出 !
+    "eamodio.gitlens",
+    // for editorconfig
+    "editorconfig.editorconfig",
+    // for pritter
+    "esbenp.prettier-vscode",
+    // 可以使 TODO 更醒目
+    "gruntfuggly.todo-tree",
+    // for .env.development, .env.production
+    "mikestead.dotenv"
+  ]
+}
