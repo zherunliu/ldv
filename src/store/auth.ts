@@ -23,15 +23,7 @@ export const useUserStore = defineStore('user', {
   actions: {
     async login(data: LoginParams) {
       try {
-        // 解构赋值
-        // 参考 https://wangdoc.com/es6/destructuring#%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC
-        const {
-          data: {
-            token,
-            user: { username, roles },
-            menulist,
-          },
-        } = (await loginApi(data)) as {
+        const res = (await loginApi(data)) as {
           // 断言 await 得到的对象类型
           data: {
             token: string
@@ -39,6 +31,14 @@ export const useUserStore = defineStore('user', {
             menulist: MenuItem[]
           }
         }
+
+        // 解构赋值
+        // 参考 https://wangdoc.com/es6/destructuring#%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC
+        const {
+          token,
+          user: { username, roles },
+          menulist,
+        } = res.data
 
         this.token = token
         this.roles = roles

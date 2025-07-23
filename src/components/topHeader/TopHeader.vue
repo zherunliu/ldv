@@ -58,4 +58,9 @@ const handleCommand = (command: string) => {
     align-items: center;
   }
 }
+
+.el-dropdown-link {
+  outline-style: none;
+  cursor: pointer;
+}
 </style>

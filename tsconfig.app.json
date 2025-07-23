@@ -14,7 +14,15 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": false,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "sourceMap": true
   },
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue","src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx"]
+  "include": [
+    "env.d.ts",
+    "src/**/*",
+    "src/**/*.vue",
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx"
+  ]
 }

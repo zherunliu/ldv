@@ -131,6 +131,10 @@ const chartRef = ref(null)
 let myChart: echarts.ECharts | null = null
 let option: echarts.EChartsOption
 
+interface IEvent {
+  axesInfo: { value: number }[]
+}
+
 onMounted(() => {
   if (chartRef.value) {
     myChart = echarts.init(chartRef.value)
@@ -193,8 +197,8 @@ onMounted(() => {
 
     myChart.setOption(option)
     // FIXME: 首先是这个类型，其次写了一个 useCharts.ts 但是没用上
-    myChart.on('updateAxisPointer', function (event: any) {
-      const xAxisInfo = event.axesInfo[0]
+    myChart.on('updateAxisPointer', function (event) {
+      const xAxisInfo = (event as IEvent).axesInfo[0]
       if (xAxisInfo) {
         const dimension = xAxisInfo.value + 1
         myChart?.setOption<echarts.EChartsOption>({
