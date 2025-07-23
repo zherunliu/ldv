@@ -1,7 +1,5 @@
 import { onMounted, onUnmounted, ref, type Ref, markRaw } from 'vue'
 import echarts, { type ECOption } from '@/utils/typedEchart'
-import { LineChart } from 'echarts/charts'
-echarts.use([LineChart])
 
 export function useCharts(chartRef: Ref<HTMLElement | null>, initialOptions: ECOption) {
   const chartInstance = ref<echarts.ECharts | null>(null)
