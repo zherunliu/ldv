@@ -127,7 +127,7 @@ import flash3 from '@/assets/flash3.png'
 import { onMounted, onUnmounted, ref } from 'vue'
 
 // import * as echarts from 'echarts'
-import echarts, { type ECOption } from '@/utils/typedEchart'
+import echarts, { type ECOption } from '@/utils/typedEcharts'
 
 const chartRef = ref(null)
 let myChart: echarts.ECharts | null = null
