@@ -125,11 +125,18 @@ import flash from '@/assets/flash.png'
 import flash2 from '@/assets/flash2.png'
 import flash3 from '@/assets/flash3.png'
 import { onMounted, onUnmounted, ref } from 'vue'
-import * as echarts from 'echarts'
+
+// import * as echarts from 'echarts'
+import echarts, { type ECOption } from '@/utils/typedEcharts'
 
 const chartRef = ref(null)
 let myChart: echarts.ECharts | null = null
-let option: echarts.EChartsOption
+// let option: echarts.EChartsOption
+let option: ECOption
+
+interface IEvent {
+  axesInfo: { value: number }[]
+}
 
 onMounted(() => {
   if (chartRef.value) {
@@ -193,11 +200,12 @@ onMounted(() => {
 
     myChart.setOption(option)
     // FIXME: 首先是这个类型，其次写了一个 useCharts.ts 但是没用上
-    myChart.on('updateAxisPointer', function (event: any) {
-      const xAxisInfo = event.axesInfo[0]
+    myChart.on('updateAxisPointer', function (event) {
+      const xAxisInfo = (event as IEvent).axesInfo[0]
       if (xAxisInfo) {
         const dimension = xAxisInfo.value + 1
-        myChart?.setOption<echarts.EChartsOption>({
+        // myChart?.setOption<echarts.EChartsOption>({
+        myChart?.setOption<ECOption>({
           series: {
             id: 'pie',
             label: {
