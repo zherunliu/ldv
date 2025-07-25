@@ -197,3 +197,19 @@ Mock.mock('https://www.demo.com/login', 'post', (options) => {
     }
   }
 })
+
+// echarts 图表接口
+Mock.mock('https://www.demo.com/chartData', 'get', () => {
+  return {
+    code: 200,
+    message: '获取图表数据成功',
+    data: {
+      list: [
+        ['period', '0:00', '6:00', '12:00', '18:00', '24:00'],
+        ['充电桩', 56.5, 82.1, 88.7, 70.1, 85.1],
+        ['充电柜', 51.1, 51.4, 53.3, 73.8, 68.7],
+        ['充电站', 40.1, 69.5, 36.4, 45.2, 32.5],
+      ],
+    },
+  }
+})

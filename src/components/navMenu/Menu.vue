@@ -18,7 +18,6 @@ import logo from '@/assets/logo.png'
 import { useRoute } from 'vue-router'
 
 const userStore = useUserStore()
-// console.log(userStore.menu)
 
 if (import.meta.env.DEV /** 开发环境, 输出日志 */) {
   console.log(userStore.menu)
