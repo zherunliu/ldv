@@ -126,16 +126,18 @@ import flash2 from '@/assets/flash2.png'
 import flash3 from '@/assets/flash3.png'
 import { chartDataApi } from '@/api/dashboard'
 import { type ECOption } from '@/utils/typedEcharts'
-import { useCharts } from '@/hooks/useCharts'
-import { type IEvent } from '@/hooks/useCharts'
+import { useCharts, type ChartEventConfig } from '@/hooks/useCharts'
 import { ref } from 'vue'
 
-type SourceArr = (string | number)[][]
+type TSource = (string | number)[][]
+interface IDataSet {
+  source: TSource
+}
 
 const chartRef = ref(null)
 const setChartData = async () => {
   const options: ECOption & {
-    dataset: { source: SourceArr }
+    dataset: IDataSet
   } = {
     legend: {},
     tooltip: {
@@ -143,8 +145,8 @@ const setChartData = async () => {
       showContent: true,
     },
     dataset: {
-      source: [] as SourceArr,
-    },
+      source: [],
+    } as IDataSet,
     xAxis: { type: 'category' },
     yAxis: { type: 'value', axisLabel: { formatter: '{value}kw' } },
     grid: { top: '20%', bottom: '20%', left: '40%' },
@@ -187,19 +189,21 @@ const setChartData = async () => {
     ],
   }
   const res = await chartDataApi()
-  options.dataset.source = (res.data as { list: SourceArr }).list
+  options.dataset.source = (res.data as { list: TSource }).list
   return options
 }
 
 // 定义特定图表的事件处理
-const customEvents = [
+const customEvents: ChartEventConfig[] = [
   {
+    // 监听鼠标悬停在图表上的位置
     eventName: 'updateAxisPointer',
-    handler: (event: IEvent) => {
+    // [tiancheng] @/hooks/useChart 第 31 行传递的 chartInstance
+    handler: (event, chartInstance) => {
       const xAxisInfo = event.axesInfo[0]
       if (xAxisInfo) {
         const dimension = xAxisInfo.value + 1
-        chartInstance.value?.setOption({
+        chartInstance?.setOption({
           series: {
             id: 'pie',
             label: {
@@ -222,7 +226,7 @@ const customEvents = [
   },
 ]
 
-const { chartInstance } = useCharts(chartRef, setChartData, customEvents)
+useCharts(chartRef, setChartData, customEvents)
 </script>
 
 <style lang="less" scoped>
