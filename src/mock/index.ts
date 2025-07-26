@@ -220,7 +220,7 @@ Mock.mock('https://www.demo.com/chartRadarData', 'get', () => {
     code: 200,
     message: '获取雷达图数据成功',
     data: {
-      list: [42, 30, 200, 350, 500, 100],
+      list: Array.from({ length: 6 }, () => Math.floor(Math.random() * 100)),
     },
   }
 })

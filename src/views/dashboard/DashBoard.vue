@@ -212,12 +212,14 @@ const setChartRadarData = async () => {
     radar: {
       radius: 75,
       indicator: [
-        { name: '闲置数', max: 65 },
-        { name: '使用数', max: 160 },
-        { name: '故障数', max: 300 },
-        { name: '维修数', max: 380 },
-        { name: '更换数', max: 520 },
-        { name: '报废数', max: 250 },
+        // max 不一致, echarts 会打印警告信息
+        // [ECharts] The ticks may be not readable when set min: 0, max: 👉520👈 and alignTicks: true
+        { name: '闲置数', max: 100 },
+        { name: '使用数', max: 100 },
+        { name: '故障数', max: 100 },
+        { name: '维修数', max: 100 },
+        { name: '更换数', max: 100 },
+        { name: '报废数', max: 100 },
       ],
     },
     series: [
