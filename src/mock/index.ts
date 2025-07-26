@@ -213,3 +213,14 @@ Mock.mock('https://www.demo.com/chartData', 'get', () => {
     },
   }
 })
+
+// radar 图表接口
+Mock.mock('https://www.demo.com/chartRadarData', 'get', () => {
+  return {
+    code: 200,
+    message: '获取雷达图数据成功',
+    data: {
+      list: [42, 30, 200, 350, 500, 100],
+    },
+  }
+})

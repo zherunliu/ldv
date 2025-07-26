@@ -15,7 +15,6 @@ export function useCharts(
   setChartData: () => Promise<ECOption>,
   customEvents: ChartEventConfig[] = [],
 ) {
-  // [tiancheng] 这里不需要使用 ref, 那个老师教错了
   let chartInstance: echarts.ECharts | null = null
 
   const initChart = async () => {
@@ -53,12 +52,4 @@ export function useCharts(
     })
     chartInstance?.dispose()
   })
-
-  // [tiancheng] 好像不需要暴露? 请看第 31 行!
-  // 暴露图表实例供外部使用
-  return {
-    chartInstance,
-  } as {
-    chartInstance: echarts.ECharts | null
-  }
 }

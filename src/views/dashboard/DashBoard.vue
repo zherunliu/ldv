@@ -1,5 +1,5 @@
 <template>
-  <el-row>
+  <el-row :gutter="20">
     <el-col :span="18">
       <el-card>
         <template #header>
@@ -115,7 +115,14 @@
       </el-card>
     </el-col>
     <el-col :span="6">
-      <el-card> </el-card>
+      <el-card>
+        <template #header>
+          <div class="title">
+            <h4>设备总览</h4>
+          </div>
+        </template>
+        <div ref="chartRadarRef" style="height: 240px; width: 100%"></div>
+      </el-card>
     </el-col>
   </el-row>
 </template>
@@ -124,17 +131,19 @@
 import flash from '@/assets/flash.png'
 import flash2 from '@/assets/flash2.png'
 import flash3 from '@/assets/flash3.png'
-import { chartDataApi } from '@/api/dashboard'
+import { chartDataApi, chartRadarDataApi } from '@/api/dashboard'
 import { type ECOption } from '@/utils/typedEcharts'
 import { useCharts, type ChartEventConfig } from '@/hooks/useCharts'
 import { ref } from 'vue'
 
+type TValue = (string | number)[]
 type TSource = (string | number)[][]
 interface IDataSet {
   source: TSource
 }
 
 const chartRef = ref(null)
+const chartRadarRef = ref(null)
 const setChartData = async () => {
   const options: ECOption & {
     dataset: IDataSet
@@ -146,7 +155,7 @@ const setChartData = async () => {
     },
     dataset: {
       source: [],
-    } as IDataSet,
+    },
     xAxis: { type: 'category' },
     yAxis: { type: 'value', axisLabel: { formatter: '{value}kw' } },
     grid: { top: '20%', bottom: '20%', left: '40%' },
@@ -178,7 +187,11 @@ const setChartData = async () => {
           focus: 'self',
         },
         label: {
-          formatter: '{b}: {@0:00} ({d}%)',
+          show: false,
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: `{b}: {d}%`,
         },
         encode: {
           itemName: 'period',
@@ -190,6 +203,36 @@ const setChartData = async () => {
   }
   const res = await chartDataApi()
   options.dataset.source = (res.data as { list: TSource }).list
+  return options
+}
+const setChartRadarData = async () => {
+  const options: ECOption & {
+    series: Array<{ data: Array<{ value: TValue }> }>
+  } = {
+    radar: {
+      radius: 75,
+      indicator: [
+        { name: '闲置数', max: 65 },
+        { name: '使用数', max: 160 },
+        { name: '故障数', max: 300 },
+        { name: '维修数', max: 380 },
+        { name: '更换数', max: 520 },
+        { name: '报废数', max: 250 },
+      ],
+    },
+    series: [
+      {
+        type: 'radar',
+        data: [
+          {
+            value: [],
+          },
+        ],
+      },
+    ],
+  }
+  const res = await chartRadarDataApi()
+  options.series[0].data[0].value = (res.data as { list: TValue }).list
   return options
 }
 
@@ -208,8 +251,6 @@ const customEvents: ChartEventConfig[] = [
             id: 'pie',
             label: {
               show: false,
-              formatter: `{b}: {@[${dimension}]}`,
-              position: 'inside',
             },
             tooltip: {
               trigger: 'item',
@@ -227,6 +268,7 @@ const customEvents: ChartEventConfig[] = [
 ]
 
 useCharts(chartRef, setChartData, customEvents)
+useCharts(chartRadarRef, setChartRadarData)
 </script>
 
 <style lang="less" scoped>
