@@ -1,0 +1,11 @@
+{
+  "configurations": [
+    {
+      "name": "vscode 中调试: pnpm dev 后开始调试 (5173 端口); chrome 中调试: 在代码中插入 debugger 即可",
+      "request": "launch",
+      "type": "chrome",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/src"
+    }
+  ]
+}
