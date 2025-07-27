@@ -27,8 +27,8 @@ export function useCharts(
       // 注册自定义事件
       customEvents.forEach(({ eventName, handler }) => {
         chartInstance?.on(eventName, (...args: unknown[]) => {
-          // [tiancheng] 可以在这里传递 chartInstance, 这样就不需要暴露啦
-          // 请看 @/views/DashBoard.vue 第 201 行!
+          // 可以在这里传递 chartInstance
+          // 请看 @/views/DashBoard.vue 第 201 行
           handler(args[0] as IEvent, chartInstance)
         })
       })
