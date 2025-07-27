@@ -1,13 +1,17 @@
 <template>
   <el-row :gutter="20">
-    <el-col :span="18">
+    <el-col :span="16">
       <el-card>
         <template #header>
           <div class="title">
             <h4>设备运行状态</h4>
-            <p class="ml">更新时间</p>
-            <!-- TODO: 点击图标的时间 -->
-            <el-icon color="#86909c" style="margin-left: 5px">
+            <p class="ml">更新时间：{{ formattedDate }}</p>
+            <el-icon
+              color="#86909c"
+              style="margin-left: 5px; cursor: pointer"
+              :class="{ rotating: isRotating }"
+              @click="refreshTime"
+            >
               <Refresh />
             </el-icon>
           </div>
@@ -114,7 +118,7 @@
         <div ref="chartRef" style="height: 350px; width: 100%"></div>
       </el-card>
     </el-col>
-    <el-col :span="6">
+    <el-col :span="8">
       <el-card>
         <template #header>
           <div class="title">
@@ -122,6 +126,83 @@
           </div>
         </template>
         <div ref="chartRadarRef" style="height: 240px; width: 100%"></div>
+      </el-card>
+      <el-card class="mt">
+        <template #header>
+          <div class="title">
+            <h4>营收统计表</h4>
+          </div>
+        </template>
+        <div>
+          <ul class="ranking-list">
+            <li class="ranking-item">
+              <span class="rank" style="background-color: rgb(255, 215, 0); color: white">1</span>
+              <span class="store-name">上海</span>
+              <span class="sales">26, 457</span>
+              <span class="green" style="margin-left: 20px; font-size: 12px"
+                >16%
+                <el-icon>
+                  <CaretTop />
+                </el-icon>
+              </span>
+            </li>
+            <li class="ranking-item">
+              <span class="rank" style="background-color: rgb(192, 192, 192); color: white">2</span>
+              <span class="store-name">北京</span>
+              <span class="sales">25, 392</span>
+              <span class="red" style="margin-left: 20px; font-size: 12px"
+                >10%
+                <el-icon>
+                  <CaretBottom />
+                </el-icon>
+              </span>
+            </li>
+            <li class="ranking-item">
+              <span class="rank" style="background-color: rgb(186, 110, 64); color: white">3</span>
+              <span class="store-name">深圳</span>
+              <span class="sales">25, 031</span>
+              <span class="green" style="margin-left: 20px; font-size: 12px"
+                >34%
+                <el-icon>
+                  <CaretTop />
+                </el-icon>
+              </span>
+            </li>
+            <li class="ranking-item">
+              <span class="rank">4</span>
+              <span class="store-name">重庆</span>
+              <span class="sales">15, 973</span>
+              <span class="green" style="margin-left: 20px; font-size: 12px"
+                >34%
+                <el-icon>
+                  <CaretTop />
+                </el-icon>
+              </span>
+            </li>
+            <li class="ranking-item">
+              <span class="rank">5</span>
+              <span class="store-name">成都</span>
+              <span class="sales">12, 184</span>
+              <span class="red" style="margin-left: 20px; font-size: 12px"
+                >14%
+                <el-icon>
+                  <CaretBottom />
+                </el-icon>
+              </span>
+            </li>
+            <li class="ranking-item">
+              <span class="rank">6</span>
+              <span class="store-name">杭州</span>
+              <span class="sales">11, 376</span>
+              <span class="green" style="margin-left: 20px; font-size: 12px"
+                >24%
+                <el-icon>
+                  <CaretTop />
+                </el-icon>
+              </span>
+            </li>
+          </ul>
+        </div>
       </el-card>
     </el-col>
   </el-row>
@@ -134,7 +215,32 @@ import flash3 from '@/assets/flash3.png'
 import { chartDataApi, chartRadarDataApi } from '@/api/dashboard'
 import { type ECOption } from '@/utils/typedEcharts'
 import { useCharts, type ChartEventConfig } from '@/hooks/useCharts'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { CaretBottom } from '@element-plus/icons-vue'
+
+const now = ref(new Date())
+const isRotating = ref(false)
+const formattedDate = computed(() => {
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false,
+  }
+  return new Intl.DateTimeFormat('zh-CN', options).format(now.value)
+})
+
+const refreshTime = () => {
+  if (isRotating.value) return
+  isRotating.value = true
+  setTimeout(() => {
+    isRotating.value = false
+    now.value = new Date()
+  }, 1000)
+}
 
 type TValue = (string | number)[]
 type TSource = (string | number)[][]
@@ -210,10 +316,9 @@ const setChartRadarData = async () => {
     series: Array<{ data: Array<{ value: TValue }> }>
   } = {
     radar: {
-      radius: 75,
+      radius: 90,
       indicator: [
         // max 不一致, echarts 会打印警告信息
-        // [ECharts] The ticks may be not readable when set min: 0, max: 👉520👈 and alignTicks: true
         { name: '闲置数', max: 100 },
         { name: '使用数', max: 100 },
         { name: '故障数', max: 100 },
@@ -325,5 +430,53 @@ useCharts(chartRadarRef, setChartRadarData)
 
 .green {
   color: var(--el-color-success);
+}
+
+.red {
+  color: var(--el-color-error);
+}
+
+// 旋转动画
+.rotating {
+  animation: rotateCounterClockwise 1s linear;
+}
+
+@keyframes rotateCounterClockwise {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.ranking-list {
+  .ranking-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+
+    .rank {
+      display: inline-block;
+      font-weight: bold;
+      color: #666;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 18px;
+    }
+
+    .store-name {
+      flex-grow: 1;
+      padding: 0 10px;
+    }
+  }
+
+  .ranking-item:nth-child(even) {
+    background-color: rgb(253, 246, 236);
+  }
 }
 </style>
