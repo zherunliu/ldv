@@ -215,7 +215,7 @@ import flash3 from '@/assets/flash3.png'
 import { chartDataApi, chartRadarDataApi } from '@/api/dashboard'
 import { type ECOption } from '@/utils/typedEcharts'
 import { useCharts, type ChartEventConfig } from '@/hooks/useCharts'
-import { computed, ref } from 'vue'
+import { computed, onUnmounted, ref } from 'vue'
 import { CaretBottom } from '@element-plus/icons-vue'
 
 const now = ref(new Date())
@@ -233,14 +233,32 @@ const formattedDate = computed(() => {
   return new Intl.DateTimeFormat('zh-CN', options).format(now.value)
 })
 
+let timer: number | null = null
+
 const refreshTime = () => {
-  if (isRotating.value) return
+  if (isRotating.value || timer) {
+    // 防抖: 简单地说, 是一定时间间隔内, 如果事件被触发多次, 仅执行最后一次 handler
+    // 节流: 简单地说, 是一定时间间隔内, 如果事件被触发多次，仅执行第一次 handler
+    // 这里实现了类似节流的功能, 1s 内只触发一次
+    // 并且组件卸载时, 清除定时器, 防止可能的内存泄漏
+    // 详细可以参考 https://juejin.cn/post/7211687237019467833
+    return
+  }
+
   isRotating.value = true
-  setTimeout(() => {
+  timer = setTimeout(() => {
     isRotating.value = false
     now.value = new Date()
+    timer = null
   }, 1000)
 }
+
+onUnmounted(() => {
+  if (timer) {
+    clearTimeout(timer)
+  }
+  timer = null
+})
 
 type TValue = (string | number)[]
 type TSource = (string | number)[][]
@@ -348,7 +366,7 @@ const customEvents: ChartEventConfig[] = [
   {
     // 监听鼠标悬停在图表上的位置
     eventName: 'updateAxisPointer',
-    // [tiancheng] @/hooks/useChart 第 31 行传递的 chartInstance
+    // @/hooks/useChart 第 31 行传递的 chartInstance
     handler: (event, chartInstance) => {
       const xAxisInfo = event.axesInfo[0]
       if (xAxisInfo) {
