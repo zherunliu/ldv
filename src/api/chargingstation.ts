@@ -1,3 +1,4 @@
+import type { IRowType } from '@/types/station'
 import { post } from '@/utils/http'
 
 interface IListType {
@@ -5,15 +6,25 @@ interface IListType {
   pageSize: number
   name?: string
   id?: string
-  status?: number
+  status: number
 }
 
 enum Api {
   List = '/stationList',
+  Edit = '/station/edit',
+  Delete = '/station/delete',
 }
 
 function listApi(data: IListType) {
   return post(Api.List, data)
 }
 
-export { listApi }
+function editApi(data: IRowType) {
+  return post(Api.Edit, data)
+}
+
+function deleteApi(id: string) {
+  return post(Api.Edit, { id })
+}
+
+export { listApi, editApi, deleteApi }

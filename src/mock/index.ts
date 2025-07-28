@@ -625,7 +625,7 @@ Mock.mock('https://www.demo.com/stationList', 'post', (options) => {
   if (name) {
     chargingStation = chargingStation.filter((item) => item.name.includes(name))
   }
-  if (status && status != 1) {
+  if (status !== 1) {
     chargingStation = chargingStation.filter((item) => item.status === status)
   }
   // 实现分页
@@ -634,10 +634,30 @@ Mock.mock('https://www.demo.com/stationList', 'post', (options) => {
   const paginatedItems = chargingStation.slice(start, start + pageSize)
   return {
     code: 200,
-    success: true,
+    message: '获取表格数据成功',
     data: {
       list: paginatedItems,
       total,
     },
+  }
+})
+
+Mock.mock('https://www.demo.com/station/edit', 'post', (options) => {
+  const res = JSON.parse(options.body)
+  console.log(res)
+  return {
+    code: 200,
+    message: '新增/编辑操作成功',
+    data: res,
+  }
+})
+
+Mock.mock('https://www.demo.com/station/delete', 'post', (options) => {
+  const res = JSON.parse(options.body)
+  console.log(res)
+  return {
+    code: 200,
+    message: '删除操作成功',
+    data: res,
   }
 })

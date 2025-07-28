@@ -240,7 +240,6 @@ const refreshTime = () => {
     // 防抖: 简单地说, 是一定时间间隔内, 如果事件被触发多次, 仅执行最后一次 handler
     // 节流: 简单地说, 是一定时间间隔内, 如果事件被触发多次，仅执行第一次 handler
     // 这里实现了类似节流的功能, 1s 内只触发一次
-    // 并且组件卸载时, 清除定时器, 防止可能的内存泄漏
     // 详细可以参考 https://juejin.cn/post/7211687237019467833
     return
   }
@@ -253,6 +252,7 @@ const refreshTime = () => {
   }, 1000)
 }
 
+// 组件卸载时, 清除定时器, 防止可能的内存泄漏
 onUnmounted(() => {
   if (timer) {
     clearTimeout(timer)
