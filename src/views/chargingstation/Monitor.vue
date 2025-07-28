@@ -98,9 +98,12 @@ const pageInfo = reactive({
 })
 const loadData = async () => {
   loading.value = true
-  const {
-    data: { list, total }, // FIXME
-  } = await listApi({ ...pageInfo, status: formParams.value, [select.value]: formParams.input })
+  const { data } = await listApi({
+    ...pageInfo,
+    status: formParams.value,
+    [select.value]: formParams.input,
+  })
+  const { list, total } = data as { list: IRowType[]; total: number }
   loading.value = false
   tableData.value = list
   totals.value = total
