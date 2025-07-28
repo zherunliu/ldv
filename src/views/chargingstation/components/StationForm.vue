@@ -80,13 +80,35 @@ const ruleForm = ref<IRowType>({
   fault: '',
 })
 
-const props = defineProps({
-  dialogVisible: {
-    type: Boolean,
-    rquired: true,
-  },
-})
+// 过时的, 不推荐的写法
+// 可以参考 https://161043261.github.io/t/vue#%E7%88%B6%E4%BC%A0%E5%AD%90-defineprops-%E5%AF%B9%E6%AF%94-useattrs
+// 父传子中, 子组件的 4 中写法 (推荐写法 3, 只需了解写法 3, 定义一个 IProps 接口即可)
+// const props = defineProps({
+//   dialogVisible: {
+//     type: Boolean,
+//     rquired: true,
+//   },
+// })
+
+// 推荐的写法
+interface IProps {
+  dialogVisible: boolean
+}
+
+const props = defineProps<IProps>()
+
+// 不推荐的写法, 不能得到良好的类型提示, 即使这里不需要提示
+// 可以参考 https://161043261.github.io/t/vue#%E5%AD%90%E4%BC%A0%E7%88%B6
+// 子传父中, 子组件的 3 种写法 (推荐写法 3, 只需了解写法 3, 定义一个 IEmit 接口即可)
+// 因为这里的自定义事件很简单, 所以保留了基础写法
 const emit = defineEmits(['close', 'reload'])
+
+// 推荐的写法
+// interface IEmit {
+//   close /** eventName */: [/** arg1: TArg1, arg2: TArg2 */],
+//   reload /** eventName */: [/** arg1: TArg1, arg2: TArg2 */],
+// }
+// const emit = defineEmits<IEmit>()
 
 const rules = reactive<FormRules<IRowType>>({
   name: [{ required: true, message: '请输入站点名称', trigger: 'blur' }],
