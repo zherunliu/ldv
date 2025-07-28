@@ -24,7 +24,7 @@ function editApi(data: IRowType) {
 }
 
 function deleteApi(id: string) {
-  return post(Api.Edit, { id })
+  return post(Api.Delete, { id })
 }
 
 export { listApi, editApi, deleteApi }
