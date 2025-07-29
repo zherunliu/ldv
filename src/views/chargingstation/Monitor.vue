@@ -98,11 +98,16 @@ const pageInfo = reactive({
 })
 const loadData = async () => {
   loading.value = true
-  const { data } = await listApi({
-    ...pageInfo,
-    status: formParams.value,
-    [select.value]: formParams.input,
-  })
+  const { data } = await listApi(
+    {
+      ...pageInfo,
+      status: formParams.value,
+      // 这里 [select.value], 是将 select.value 这个字符串
+      // 作为 data 对象 (listApi 函数的参数) 的一个属性名 (id 或 name)
+      [select.value]: formParams.input,
+    } /** data */,
+  )
+
   const { list, total } = data as { list: IRowType[]; total: number }
   loading.value = false
   tableData.value = list
