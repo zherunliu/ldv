@@ -1,5 +1,5 @@
 import type { IRowType } from '@/types/station'
-import { post } from '@/utils/http'
+import { get, post } from '@/utils/http'
 
 interface IListType {
   page: number
@@ -9,10 +9,18 @@ interface IListType {
   status: number
 }
 
+interface IRevenueList {
+  page: number
+  pageSize: number
+  name: string
+}
+
 enum Api {
   List = '/stationList',
   Edit = '/station/edit',
   Delete = '/station/delete',
+  RevenueChart = '/revenueChart',
+  Revenue = '/revenueList',
 }
 
 function listApi(data: IListType) {
@@ -27,4 +35,12 @@ function deleteApi(id: string) {
   return post(Api.Delete, { id })
 }
 
-export { listApi, editApi, deleteApi }
+function chartApi() {
+  return get(Api.RevenueChart)
+}
+
+function revenueApi(data: IRevenueList) {
+  return post(Api.Revenue, data)
+}
+
+export { listApi, editApi, deleteApi, chartApi, revenueApi }

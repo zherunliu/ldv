@@ -18,6 +18,7 @@ import {
   TransformComponent,
   LegendComponent,
   GraphicComponent,
+  VisualMapComponent,
 } from 'echarts/components'
 
 import type {
@@ -57,6 +58,7 @@ echarts.use([
   TransformComponent,
   LegendComponent,
   GraphicComponent,
+  VisualMapComponent,
 
   BarChart,
   LineChart,

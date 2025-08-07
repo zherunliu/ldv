@@ -138,7 +138,7 @@
             <li class="ranking-item">
               <span class="rank" style="background-color: rgb(255, 215, 0); color: white">1</span>
               <span class="store-name">上海</span>
-              <span class="sales">26, 457</span>
+              <span class="sales">{{ formatNumberToThousands(26457) }}</span>
               <span class="green" style="margin-left: 20px; font-size: 12px"
                 >16%
                 <el-icon>
@@ -149,7 +149,7 @@
             <li class="ranking-item">
               <span class="rank" style="background-color: rgb(192, 192, 192); color: white">2</span>
               <span class="store-name">北京</span>
-              <span class="sales">25, 392</span>
+              <span class="sales">{{ formatNumberToThousands(25392) }}</span>
               <span class="red" style="margin-left: 20px; font-size: 12px"
                 >10%
                 <el-icon>
@@ -160,9 +160,9 @@
             <li class="ranking-item">
               <span class="rank" style="background-color: rgb(186, 110, 64); color: white">3</span>
               <span class="store-name">深圳</span>
-              <span class="sales">25, 031</span>
+              <span class="sales">{{ formatNumberToThousands(18531) }}</span>
               <span class="green" style="margin-left: 20px; font-size: 12px"
-                >34%
+                >12%
                 <el-icon>
                   <CaretTop />
                 </el-icon>
@@ -171,7 +171,7 @@
             <li class="ranking-item">
               <span class="rank">4</span>
               <span class="store-name">重庆</span>
-              <span class="sales">15, 973</span>
+              <span class="sales">{{ formatNumberToThousands(15973) }}</span>
               <span class="green" style="margin-left: 20px; font-size: 12px"
                 >34%
                 <el-icon>
@@ -182,7 +182,7 @@
             <li class="ranking-item">
               <span class="rank">5</span>
               <span class="store-name">成都</span>
-              <span class="sales">12, 184</span>
+              <span class="sales">{{ formatNumberToThousands(12184) }}</span>
               <span class="red" style="margin-left: 20px; font-size: 12px"
                 >14%
                 <el-icon>
@@ -193,7 +193,7 @@
             <li class="ranking-item">
               <span class="rank">6</span>
               <span class="store-name">杭州</span>
-              <span class="sales">11, 376</span>
+              <span class="sales">{{ formatNumberToThousands(11376) }}</span>
               <span class="green" style="margin-left: 20px; font-size: 12px"
                 >24%
                 <el-icon>
@@ -217,6 +217,7 @@ import { type ECOption } from '@/utils/typedEcharts'
 import { useCharts, type ChartEventConfig } from '@/hooks/useCharts'
 import { computed, onUnmounted, ref } from 'vue'
 import { CaretBottom } from '@element-plus/icons-vue'
+import formatNumberToThousands from '@/utils/toThousands'
 
 const now = ref(new Date())
 const isRotating = ref(false)
