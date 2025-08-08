@@ -209,32 +209,6 @@ const setChartData = async () => {
         type: 'line',
         smooth: true,
         data: [],
-        /* FIXME：markArea 没有显示？ */
-        markArea: {
-          itemStyle: {
-            color: 'rgba(255, 173, 177, 0.4)',
-          },
-          data: [
-            [
-              {
-                name: 'Morning Peak',
-                x: '07:30',
-              },
-              {
-                x: '10:00',
-              },
-            ],
-            [
-              {
-                name: 'Evening Peak',
-                x: '17:30',
-              },
-              {
-                x: '21:15',
-              },
-            ],
-          ],
-        },
       },
     ],
   }

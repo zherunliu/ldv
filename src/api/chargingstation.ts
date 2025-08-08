@@ -21,6 +21,7 @@ enum Api {
   Delete = '/station/delete',
   RevenueChart = '/revenueChart',
   Revenue = '/revenueList',
+  currentList = '/currentList',
 }
 
 function listApi(data: IListType) {
@@ -43,4 +44,8 @@ function revenueApi(data: IRevenueList) {
   return post(Api.Revenue, data)
 }
 
-export { listApi, editApi, deleteApi, chartApi, revenueApi }
+function currentListApi() {
+  return post(Api.currentList)
+}
+
+export { listApi, editApi, deleteApi, chartApi, revenueApi, currentListApi }

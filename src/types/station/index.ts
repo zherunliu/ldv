@@ -25,4 +25,24 @@ interface IRevenueType {
   mpercent: number
 }
 
-export type { IRowType, IRevenueType }
+interface IChargeDevice {
+  id: string
+  voltage: string
+  current: string
+  power: string
+  tem: string
+  status: number
+  record?: Array<{
+    time: string
+    msg: string
+  }>
+  percent?: string
+}
+
+interface IPileType {
+  id: string
+  name: string
+  list: IChargeDevice[]
+}
+
+export type { IRowType, IRevenueType, IChargeDevice, IPileType }

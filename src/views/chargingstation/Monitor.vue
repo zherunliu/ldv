@@ -73,13 +73,13 @@
       @current-change="handleCurrentChange"
     />
   </el-card>
-  <station-from :dialog-visible="visible" @close="visible = false" @reload="loadData" />
+  <station-form :dialog-visible="visible" @close="visible = false" @reload="loadData" />
 </template>
 
 <script setup lang="ts">
 import { listApi, deleteApi } from '@/api/chargingstation'
 import { onMounted, reactive, ref } from 'vue'
-import StationFrom from './components/StationForm.vue'
+import StationForm from './components/StationForm.vue'
 import type { IRowType } from '@/types/station'
 import { useStationStore } from '@/store/station'
 import { ElMessage } from 'element-plus'
