@@ -1149,6 +1149,11 @@ const chargingPile = [
         power: '21KW',
         tem: '29°c',
         status: 2,
+        record: [
+          { time: '24.09.11', msg: '故障维修' },
+          { time: '24.12.21', msg: '故障维修' },
+          { time: '25.05.03', msg: '故障维修' },
+        ],
         percent: '70%',
       },
       { id: 'CD1003', voltage: '314v', current: '212.2A', power: '21KW', tem: '32°c', status: 1 },

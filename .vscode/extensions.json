@@ -4,7 +4,7 @@
     // 检查单词拼写的插件
     "streetsidesoftware.code-spell-checker",
     // 可以使注释更醒目
-    "aaron-bond.better-comments",
+    // "aaron-bond.better-comments",
     // for vite
     "antfu.vite",
     // 这是一个很可爱的 icon 插件
