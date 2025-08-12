@@ -1095,7 +1095,21 @@ let chargingStation2 = [
   },
 ]
 // 原始数据的深拷贝
-const originalChargingStation2 = JSON.parse(JSON.stringify(chargingStation2))
+// window.structuredClone 是浏览器原生的、用于深拷贝对象的方法
+// 参考 https://developer.mozilla.org/en-US/docs/Web/API/Window/structuredClone
+// 它的性能比 JSON.parse(JSON.stringify(obj)) 高
+// 并且 JSON.parse(JSON.stringify(obj)) 存在数据类型丢失或转换、无法处理循环引用等问题
+// 但是，window.structuredClone 旧版本浏览器可能不支持，所以需要做兼容性处理
+
+// 问题：如何深拷贝
+// - window.structuredClone(obj)
+// - JSON.parse(JSON.stringify(obj))
+// - lodash.cloneDeep(obj)
+// 参考 https://lodash.com/docs/4.17.15#cloneDeep
+const originalChargingStation2 = window.structuredClone
+  ? window.structuredClone(chargingStation2)
+  : JSON.parse(JSON.stringify(chargingStation2))
+
 // 定义 API 接口
 Mock.mock('https://www.demo.com/revenueList', 'post', (options) => {
   chargingStation2 = originalChargingStation2
