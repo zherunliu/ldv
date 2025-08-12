@@ -46,6 +46,7 @@ declare module 'vue' {
     ElTimeline: typeof import('element-plus/es')['ElTimeline']
     ElTimelineItem: typeof import('element-plus/es')['ElTimelineItem']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    MapContainer: typeof import('./src/components/map/MapContainer.vue')['default']
     Menu: typeof import('./src/components/navMenu/Menu.vue')['default']
     MenuItem: typeof import('./src/components/navMenu/MenuItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
