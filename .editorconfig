@@ -1,4 +1,6 @@
-[*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,vue,css,scss,sass,less,style}]
+# https://stylus-lang.com/docs/selectors.html
+# .styl 和 .less, .scss, .sass 一样，也是 CSS 预处理文件
+[*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,vue,css,scss,sass,less,styl}]
 charset = utf-8
 indent_size = 2
 indent_style = space
