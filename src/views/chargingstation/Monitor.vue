@@ -1,8 +1,8 @@
 <template>
   <el-card>
     <el-row :gutter="20">
-      <el-col :span="6"
-        ><!-- trim 去除首尾空格 -->
+      <el-col :span="6">
+        <!-- trim 去除首尾空格 -->
         <el-input v-model.trim="formParams.input" placeholder="请输入站点名称/ID">
           <template #append>
             <el-select v-model="select" style="width: 115px">

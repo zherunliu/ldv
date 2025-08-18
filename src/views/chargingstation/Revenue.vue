@@ -124,7 +124,7 @@ import { onMounted, ref } from 'vue'
 import { type ECOption } from '@/utils/typedEcharts'
 import { useCharts } from '@/hooks/useCharts'
 import { chartApi, revenueApi } from '@/api/chargingstation'
-import { usePaginaion } from '@/hooks/usePagitanion'
+import { usePagination } from '@/hooks/usePagination'
 import { type IRevenueType } from '@/types/station'
 
 const chartRef = ref(null)
@@ -235,7 +235,7 @@ const loadData = async () => {
 }
 
 const { totals, pageInfo, handleSizeChange, handleCurrentChange, setTotals } =
-  usePaginaion(loadData)
+  usePagination(loadData)
 
 onMounted(() => {
   loadData()
