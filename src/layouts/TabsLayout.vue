@@ -57,16 +57,16 @@ const remove = (tabPaneName: TabPaneName) => {
 }
 
 function findObjectByUrl(arr: MenuItem[], url: string): MenuItem | undefined {
+  console.log(arr)
   for (const item of arr) {
     if (item.url === url) {
       return item
     }
     if (item.children) {
       const found: MenuItem | undefined = findObjectByUrl(item.children, url)
-      // if (found) {
-      //   return found
-      // }
-      return found // MenuItem | undefined, 这里没有必要做空判断
+      if (found) {
+        return found
+      }
     }
   }
   return undefined
