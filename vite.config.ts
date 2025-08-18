@@ -11,7 +11,7 @@ import { visualizer } from 'rollup-plugin-visualizer'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/ldv/',
+  base: '/LDV/',
   plugins: [
     vue(),
     vueDevTools(),
