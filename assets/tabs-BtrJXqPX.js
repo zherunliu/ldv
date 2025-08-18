@@ -1,0 +1,2 @@
+import{aQ as l,r as s}from"./index-4ZyPtW_9.js";const i=l("tabs",()=>{const e=s([]),r=s({name:"",url:""});return{tabs:e,addTab:(a,t,u)=>{e.value.some(n=>n.url===t)||e.value.push({name:a,url:t,icon:u})},currentTab:r,setCurrentTab:(a,t)=>{r.value={name:a,url:t}},removeTab:a=>{const t=e.value.findIndex(u=>u.name===a);if(r.value.name===a)if(e.value.length>1)t===0?r.value=e.value[1]:r.value=e.value[t-1];else return;//! 上面一段逻辑好像可以简化 ?
+e.value=e.value.filter(u=>u.name!==a)}}});export{i as u};
