@@ -51,7 +51,8 @@
       <el-table-column align="center" label="支付方式" prop="orderNo"></el-table-column>
       <el-table-column align="center" label="订单状态" prop="orderNo"></el-table-column>
       <el-table-column align="center" width="150px" label="操作">
-        <template #default="scope">
+        <!-- <template #default="scope"> -->
+        <template #default>
           <el-button type="primary" size="small">详情</el-button>
           <el-button type="danger" size="small">删除</el-button>
         </template>
