@@ -19,9 +19,9 @@ import { useRoute } from 'vue-router'
 
 const userStore = useUserStore()
 
-if (import.meta.env.DEV /** 开发环境, 输出日志 */) {
-  console.log(userStore.menu)
-}
+// if (import.meta.env.DEV /** 开发环境, 输出日志 */) {
+//   console.log(userStore.menu)
+// }
 
 const menuitems = userStore.menu
 const route = useRoute()

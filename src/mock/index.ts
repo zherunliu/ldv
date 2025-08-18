@@ -3722,7 +3722,7 @@ Mock.mock(`${import.meta.env.VITE_SERVER_URL}/batchDelete`, 'post', (options) =>
   return {
     code: 200,
     message: '成功',
-    data: '操作成功',
+    data: '批量删除操作成功',
   }
 })
 

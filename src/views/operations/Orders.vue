@@ -37,11 +37,17 @@
     </el-row>
   </el-card>
   <el-card class="mt">
-    <el-button type="danger">批量删除</el-button>
-    <el-button icon="Download" type="primary">导出订单数据到Excel</el-button>
+    <el-button type="danger" :disabled="!selectionList.length" @click="handleBatchDelete"
+      >批量删除</el-button
+    >
+    <el-button icon="Download" type="primary" :disabled="!selectionList.length"
+      >导出订单数据到Excel</el-button
+    >
   </el-card>
   <el-card class="mt">
-    <el-table :data="dataList" v-loading="loading">
+    <el-table :data="dataList" v-loading="loading" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" width="30"></el-table-column>
+      <el-table-column align="center" label="序号" type="index" width="60"></el-table-column>
       <el-table-column align="center" label="订单号" prop="orderNo"></el-table-column>
       <el-table-column align="center" label="设备编号" prop="orderNo"></el-table-column>
       <el-table-column align="center" label="订单日期" prop="orderNo"></el-table-column>
@@ -49,11 +55,19 @@
       <el-table-column align="center" label="结束时间" prop="orderNo"></el-table-column>
       <el-table-column align="center" label="金额" prop="orderNo"></el-table-column>
       <el-table-column align="center" label="支付方式" prop="orderNo"></el-table-column>
-      <el-table-column align="center" label="订单状态" prop="orderNo"></el-table-column>
+      <el-table-column align="center" label="订单状态" prop="orderNo">
+        <template #default="scope">
+          <el-tag v-if="scope.row.status === 2" type="success" size="small">进行中</el-tag>
+          <el-tag v-else-if="scope.row.status === 3" type="primary" size="small">已完成</el-tag>
+          <el-tag v-else-if="scope.row.status === 4" type="warning" size="small">异常</el-tag>
+          <el-tag v-else size="small">未知</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column align="center" width="150px" label="操作">
-        <!-- <template #default="scope"> -->
-        <template #default>
-          <el-button type="primary" size="small">详情</el-button>
+        <template #default="scope">
+          <el-button type="primary" size="small" @click="handleDetail(scope.row.orderNo)">
+            详情
+          </el-button>
           <el-button type="danger" size="small">删除</el-button>
         </template>
       </el-table-column>
@@ -75,6 +89,10 @@
 <script setup lang="ts">
 import { ref, type Ref } from 'vue'
 import { useTable } from '@/hooks/useTable'
+import { batchDeleteApi } from '@/api/operations'
+import { ElMessage } from 'element-plus'
+import { useRouter } from 'vue-router'
+import { useTabsStore } from '@/store/tabs'
 
 interface ISearchType {
   orderNo: string
@@ -130,5 +148,30 @@ const handleReset = () => {
     endDate: '',
   }
   resetPagination()
+}
+
+const selectionList = ref<IOrderType[]>([])
+const handleSelectionChange = (selection: IOrderType[]) => {
+  selectionList.value = selection
+}
+
+const handleBatchDelete = async () => {
+  try {
+    const res = await batchDeleteApi(selectionList.value.map((item) => item.orderNo))
+    if (res.code === 200) {
+      ElMessage.success(String(res.data))
+      loadData()
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const router = useRouter()
+const { addTab, setCurrentTab } = useTabsStore()
+const handleDetail = (orderNo: string) => {
+  addTab('订单详情', '/operations/detail', 'Share')
+  setCurrentTab('订单详情', '/operations/detail')
+  router.push('/operations/detail?orderNo=' + orderNo)
 }
 </script>

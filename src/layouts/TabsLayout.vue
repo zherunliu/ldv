@@ -57,7 +57,6 @@ const remove = (tabPaneName: TabPaneName) => {
 }
 
 function findObjectByUrl(arr: MenuItem[], url: string): MenuItem | undefined {
-  console.log(arr)
   for (const item of arr) {
     if (item.url === url) {
       return item
@@ -73,10 +72,10 @@ function findObjectByUrl(arr: MenuItem[], url: string): MenuItem | undefined {
 }
 const item = findObjectByUrl(menu.value, route.path)
 
-if (import.meta.env.DEV) {
-  console.log(route.path)
-  console.log(item)
-}
+// if (import.meta.env.DEV) {
+//   console.log(route.path)
+//   console.log(item)
+// }
 
 if (item) {
   const { name, url, icon } = item
