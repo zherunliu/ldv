@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import routes from './basicRouteMap'
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory('/ldv'),
   routes,
 })
 
