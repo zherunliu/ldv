@@ -14,7 +14,8 @@ let map: any = null
 const markersData = ref<IStation[]>([])
 onMounted(() => {
   AMapLoader.load({
-    key: '99997aed9d68f53c894c3b2fae1e2e5b',
+    // import.meta.env.VITE_AMAP_JS_KEY
+    key: import.meta.env.VITE_AMAP_JS_KEY,
     version: '1.4.15',
     plugins: [],
   })

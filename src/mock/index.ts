@@ -162,7 +162,7 @@ const menulist_manager = [
 ]
 
 //登录接口
-Mock.mock('https://www.demo.com/login', 'post', (options) => {
+Mock.mock(`${import.meta.env.VITE_SERVER_URL}/login`, 'post', (options) => {
   const { username, password } = JSON.parse(options.body)
   if (username === 'admin' && password === 'admin') {
     return {
@@ -199,7 +199,7 @@ Mock.mock('https://www.demo.com/login', 'post', (options) => {
 })
 
 // echarts 图表接口
-Mock.mock('https://www.demo.com/chartData', 'get', () => {
+Mock.mock(`${import.meta.env.VITE_SERVER_URL}/chartData`, 'get', () => {
   return {
     code: 200,
     message: '获取图表数据成功',
@@ -215,7 +215,7 @@ Mock.mock('https://www.demo.com/chartData', 'get', () => {
 })
 
 // radar 图表接口
-Mock.mock('https://www.demo.com/chartRadarData', 'get', () => {
+Mock.mock(`${import.meta.env.VITE_SERVER_URL}/chartRadarData`, 'get', () => {
   return {
     code: 200,
     message: '获取雷达图数据成功',
@@ -226,7 +226,7 @@ Mock.mock('https://www.demo.com/chartRadarData', 'get', () => {
 })
 
 // 折线图图表接口
-Mock.mock('https://www.demo.com/revenueChart', 'get', () => {
+Mock.mock(`${import.meta.env.VITE_SERVER_URL}/revenueChart`, 'get', () => {
   return {
     code: 200,
     message: '获取数据成功',
@@ -627,7 +627,7 @@ let chargingStation = [
 // 原始数据的深拷贝
 const originalChargingStation = JSON.parse(JSON.stringify(chargingStation))
 // 定义 API 接口
-Mock.mock('https://www.demo.com/stationList', 'post', (options) => {
+Mock.mock(`${import.meta.env.VITE_SERVER_URL}/stationList`, 'post', (options) => {
   chargingStation = originalChargingStation
   const { id, name, status, page, pageSize } = options.body ? JSON.parse(options.body) : {}
   // 根据条件过滤数据
@@ -655,7 +655,7 @@ Mock.mock('https://www.demo.com/stationList', 'post', (options) => {
 })
 
 // 新增/删除接口（直接返回）
-Mock.mock('https://www.demo.com/station/edit', 'post', (options) => {
+Mock.mock(`${import.meta.env.VITE_SERVER_URL}/station/edit`, 'post', (options) => {
   const res = JSON.parse(options.body)
   console.log(res)
   return {
@@ -665,7 +665,7 @@ Mock.mock('https://www.demo.com/station/edit', 'post', (options) => {
   }
 })
 
-Mock.mock('https://www.demo.com/station/delete', 'post', (options) => {
+Mock.mock(`${import.meta.env.VITE_SERVER_URL}/station/delete`, 'post', (options) => {
   const res = JSON.parse(options.body)
   console.log(res)
   return {
@@ -1111,7 +1111,7 @@ const originalChargingStation2 = window.structuredClone
   : JSON.parse(JSON.stringify(chargingStation2))
 
 // 定义 API 接口
-Mock.mock('https://www.demo.com/revenueList', 'post', (options) => {
+Mock.mock(`${import.meta.env.VITE_SERVER_URL}/revenueList`, 'post', (options) => {
   chargingStation2 = originalChargingStation2
   const { name = '', page = 1, pageSize = 10 } = options.body ? JSON.parse(options.body) : {}
   // 根据 name 过滤数据
@@ -3478,7 +3478,7 @@ const chargingPile = [
   },
 ]
 //充电桩列表接口
-Mock.mock('https://www.demo.com/currentList', 'post', () => {
+Mock.mock(`${import.meta.env.VITE_SERVER_URL}/currentList`, 'post', () => {
   return {
     code: 200,
     success: true,
@@ -3681,7 +3681,7 @@ const stations = [
   },
 ]
 //电子地图接口
-Mock.mock('https://www.demo.com/mapList', 'post', () => {
+Mock.mock(`${import.meta.env.VITE_SERVER_URL}/mapList`, 'post', () => {
   return {
     code: 200,
     success: true,
@@ -3690,7 +3690,7 @@ Mock.mock('https://www.demo.com/mapList', 'post', () => {
 })
 
 //订单管理接口
-Mock.mock('https://www.demo.com/orderList', 'post', (options) => {
+Mock.mock(`${import.meta.env.VITE_SERVER_URL}/orderList`, 'post', (options) => {
   const { pageSize } = JSON.parse(options.body)
   console.log('后端订单管理接到参数', JSON.parse(options.body))
   return {
@@ -3716,7 +3716,7 @@ Mock.mock('https://www.demo.com/orderList', 'post', (options) => {
 })
 
 //订单管理-批量删除接口
-Mock.mock('https://www.demo.com/batchDelete', 'post', (options) => {
+Mock.mock(`${import.meta.env.VITE_SERVER_URL}/batchDelete`, 'post', (options) => {
   const { order } = JSON.parse(options.body)
   console.log('订单管理批量删除接口', JSON.stringify(order))
   return {
@@ -3883,7 +3883,7 @@ const cityList = [
 ]
 
 //计费管理城市接口
-Mock.mock('https://www.demo.com/cityList', 'get', () => {
+Mock.mock(`${import.meta.env.VITE_SERVER_URL}/cityList`, 'get', () => {
   return {
     code: 200,
     message: '操作成功',
@@ -3958,7 +3958,7 @@ const alarmList = [
   },
 ]
 
-Mock.mock('https://www.demo.com/alarmList', 'get', () => {
+Mock.mock(`${import.meta.env.VITE_SERVER_URL}/alarmList`, 'get', () => {
   return {
     code: 200,
     message: '操作成功',
@@ -3967,7 +3967,7 @@ Mock.mock('https://www.demo.com/alarmList', 'get', () => {
 })
 
 //会员卡管理接口
-Mock.mock('https://www.demo.com/member', 'post', (req) => {
+Mock.mock(`${import.meta.env.VITE_SERVER_URL}/member`, 'post', (req) => {
   const { page, pageSize, no, tel, name } = JSON.parse(req.body)
   console.log('会员管理接口', page, pageSize, no, tel, name)
   return {
@@ -3999,7 +3999,7 @@ Mock.mock('https://www.demo.com/member', 'post', (req) => {
 })
 
 //招商管理分类列表接口
-Mock.mock('https://www.demo.com/document', 'get', () => {
+Mock.mock(`${import.meta.env.VITE_SERVER_URL}/document`, 'get', () => {
   return {
     code: 200,
     message: '操作成功',
@@ -4024,7 +4024,7 @@ Mock.Random.extend({
   },
 })
 //权限设置页面
-Mock.mock('https://www.demo.com/permissionList', 'post', (req) => {
+Mock.mock(`${import.meta.env.VITE_SERVER_URL}/permissionList`, 'post', (req) => {
   const { pageSize } = JSON.parse(req.body)
   console.log('权限设置接口收到参数', JSON.parse(req.body))
   return {
@@ -4106,7 +4106,7 @@ const menulist_user = [
   },
 ]
 //获取当前用户权限
-Mock.mock('https://www.demo.com/userAuth', 'post', (req) => {
+Mock.mock(`${import.meta.env.VITE_SERVER_URL}/userAuth`, 'post', (req) => {
   //console.log(234,req.body)
   const { pageAuthority } = JSON.parse(req.body)
   console.log('后端收到当前权限', pageAuthority)
@@ -4131,7 +4131,7 @@ Mock.mock('https://www.demo.com/userAuth', 'post', (req) => {
 })
 
 //权限设置接口
-Mock.mock('https://www.demo.com/setAuth', 'post', (req) => {
+Mock.mock(`${import.meta.env.VITE_SERVER_URL}/setAuth`, 'post', (req) => {
   const { btnList, pageList, account } = JSON.parse(req.body)
   console.log('权限设置接口修改账号权限', account, btnList, pageList)
   return {

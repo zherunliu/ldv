@@ -2,7 +2,7 @@ import axios, { type AxiosInstance, type InternalAxiosRequestConfig, type AxiosE
 import { ElNotification } from 'element-plus'
 
 const service: AxiosInstance = axios.create({
-  baseURL: 'https://www.demo.com',
+  baseURL: import.meta.env.VITE_SERVER_URL,
   timeout: 5000,
 })
 

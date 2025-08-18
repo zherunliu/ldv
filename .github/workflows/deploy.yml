@@ -41,5 +41,5 @@ jobs: # 工作流中的作业
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          user_name: "1437257281"
+          user_name: "zherunliu"
           user_email: "1437257281@qq.com"
