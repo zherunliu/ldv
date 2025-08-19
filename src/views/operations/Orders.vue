@@ -162,8 +162,8 @@ const handleBatchDelete = async () => {
       ElMessage.success(String(res.data))
       loadData()
     }
-  } catch (error) {
-    console.log(error)
+  } catch (err) {
+    console.error(err)
   }
 }
 

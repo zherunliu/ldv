@@ -50,8 +50,8 @@ export const useUserStore = defineStore('user', {
         sessionStorage.setItem('roles', JSON.stringify(roles))
         sessionStorage.setItem('username', username)
         sessionStorage.setItem('menu', JSON.stringify(menulist))
-      } catch (error) {
-        console.log(error)
+      } catch (err) {
+        console.error(err)
       }
     },
     // 登出，清空数据

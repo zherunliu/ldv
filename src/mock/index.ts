@@ -657,7 +657,7 @@ Mock.mock(`${import.meta.env.VITE_SERVER_URL}/stationList`, 'post', (options) =>
 // 新增/删除接口（直接返回）
 Mock.mock(`${import.meta.env.VITE_SERVER_URL}/station/edit`, 'post', (options) => {
   const res = JSON.parse(options.body)
-  console.log(res)
+  // console.log(res)
   return {
     code: 200,
     message: '新增/编辑操作成功',
@@ -667,7 +667,7 @@ Mock.mock(`${import.meta.env.VITE_SERVER_URL}/station/edit`, 'post', (options) =
 
 Mock.mock(`${import.meta.env.VITE_SERVER_URL}/station/delete`, 'post', (options) => {
   const res = JSON.parse(options.body)
-  console.log(res)
+  // console.log(res)
   return {
     code: 200,
     message: '删除操作成功',
@@ -1115,7 +1115,9 @@ Mock.mock(`${import.meta.env.VITE_SERVER_URL}/revenueList`, 'post', (options) =>
   chargingStation2 = originalChargingStation2
   const { name = '', page = 1, pageSize = 10 } = options.body ? JSON.parse(options.body) : {}
   // 根据 name 过滤数据
-  console.log('营收统计表格接口', name, page, pageSize)
+  if (import.meta.env.DEV) {
+    console.log('营收统计表格接口', name, page, pageSize)
+  }
   if (name) {
     chargingStation2 = chargingStation2.filter((item) => item.name.includes(name))
   }
@@ -3692,7 +3694,9 @@ Mock.mock(`${import.meta.env.VITE_SERVER_URL}/mapList`, 'post', () => {
 //订单管理接口
 Mock.mock(`${import.meta.env.VITE_SERVER_URL}/orderList`, 'post', (options) => {
   const { pageSize } = JSON.parse(options.body)
-  console.log('后端订单管理接到参数', JSON.parse(options.body))
+  if (import.meta.env.DEV) {
+    console.log('后端订单管理接到参数', JSON.parse(options.body))
+  }
   return {
     code: 200,
     message: '成功',
@@ -3718,7 +3722,9 @@ Mock.mock(`${import.meta.env.VITE_SERVER_URL}/orderList`, 'post', (options) => {
 //订单管理-批量删除接口
 Mock.mock(`${import.meta.env.VITE_SERVER_URL}/batchDelete`, 'post', (options) => {
   const { order } = JSON.parse(options.body)
-  console.log('订单管理批量删除接口', JSON.stringify(order))
+  if (import.meta.env.DEV) {
+    console.log('订单管理批量删除接口', JSON.stringify(order))
+  }
   return {
     code: 200,
     message: '成功',
@@ -3969,7 +3975,9 @@ Mock.mock(`${import.meta.env.VITE_SERVER_URL}/alarmList`, 'get', () => {
 //会员卡管理接口
 Mock.mock(`${import.meta.env.VITE_SERVER_URL}/member`, 'post', (req) => {
   const { page, pageSize, no, tel, name } = JSON.parse(req.body)
-  console.log('会员管理接口', page, pageSize, no, tel, name)
+  if (import.meta.env.DEV) {
+    console.log('会员管理接口', page, pageSize, no, tel, name)
+  }
   return {
     code: 200,
     message: '操作成功',
@@ -4026,7 +4034,9 @@ Mock.Random.extend({
 //权限设置页面
 Mock.mock(`${import.meta.env.VITE_SERVER_URL}/permissionList`, 'post', (req) => {
   const { pageSize } = JSON.parse(req.body)
-  console.log('权限设置接口收到参数', JSON.parse(req.body))
+  if (import.meta.env.DEV) {
+    console.log('权限设置接口收到参数', JSON.parse(req.body))
+  }
   return {
     code: 200,
     message: '操作成功',
@@ -4109,7 +4119,9 @@ const menulist_user = [
 Mock.mock(`${import.meta.env.VITE_SERVER_URL}/userAuth`, 'post', (req) => {
   //console.log(234,req.body)
   const { pageAuthority } = JSON.parse(req.body)
-  console.log('后端收到当前权限', pageAuthority)
+  if (import.meta.env.DEV) {
+    console.log('后端收到当前权限', pageAuthority)
+  }
   return {
     code: 200,
     message: '操作成功',
@@ -4133,7 +4145,9 @@ Mock.mock(`${import.meta.env.VITE_SERVER_URL}/userAuth`, 'post', (req) => {
 //权限设置接口
 Mock.mock(`${import.meta.env.VITE_SERVER_URL}/setAuth`, 'post', (req) => {
   const { btnList, pageList, account } = JSON.parse(req.body)
-  console.log('权限设置接口修改账号权限', account, btnList, pageList)
+  if (import.meta.env.DEV) {
+    console.log('权限设置接口修改账号权限', account, btnList, pageList)
+  }
   return {
     code: 200,
     message: '操作成功',
