@@ -37,7 +37,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '/map',
-        name: 'EletronicMap',
+        name: 'ElectronicMap',
         component: () => import('@/views/map/ElectronicMap.vue'),
       },
       {
