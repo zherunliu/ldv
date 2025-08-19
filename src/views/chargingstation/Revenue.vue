@@ -214,7 +214,6 @@ const setChartData = async () => {
   }
   const res = await chartApi()
   options.series[0].data = res.data as number[]
-  console.log(options)
   return options
 }
 useCharts(chartRef, setChartData)

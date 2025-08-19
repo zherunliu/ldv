@@ -107,7 +107,9 @@ const loadData = async () => {
   options.value = data as IPileType[]
   dataList.value = (data as IPileType[])[0].list
   dataListCopy.value = (data as IPileType[])[0].list
-  console.log(dataList.value)
+  if (import.meta.env.DEV) {
+    console.log(dataList.value)
+  }
 }
 function checkCount(num: number) {
   return dataList.value.filter((item) => item.status === num).length
