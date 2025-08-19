@@ -1,0 +1,1 @@
+import{aX as e,aC as n}from"./index-DHl3Ihfm.js";function i(t){return e("/stationList",t)}function s(t){return e("/station/edit",t)}function u(t){return e("/station/delete",{id:t})}function a(){return n("/revenueChart")}function o(t){return e("/revenueList",t)}function c(){return e("/currentList")}export{c as a,a as c,u as d,s as e,i as l,o as r};
