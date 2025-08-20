@@ -77,11 +77,11 @@
       </el-input>
       <el-table :data="tableData" v-loading="loading">
         <el-table-column align="center" type="index" label="序号" width="80" />
-        <el-table-column align="center" prop="name" label="站点名称" />
+        <el-table-column align="center" prop="name" label="站点名称" width="180" />
         <el-table-column align="center" prop="id" label="站点ID" />
         <el-table-column align="center" prop="city" label="所属城市" />
         <el-table-column align="center" prop="count" label="站点总量" />
-        <el-table-column align="center" prop="day" label="单日收入" width="105" sortable>
+        <el-table-column align="center" prop="day" label="单日收入" sortable>
           <template #default="scope">
             <span style="display: block">{{ scope.row.day }}</span>
             <el-tag :type="scope.row.percent > 0 ? 'success' : 'danger'">
@@ -91,7 +91,7 @@
         </el-table-column>
         <el-table-column align="center" prop="month" label="月度收入">
           <template #default="scope">
-            <span>{{ scope.row.month }}</span>
+            <span style="display: block">{{ scope.row.month }}</span>
             <el-tag :type="scope.row.mpercent > 0 ? 'success' : 'danger'">
               {{ scope.row.mpercent > 0 ? '+' : '' }}{{ scope.row.mpercent }}%
             </el-tag>

@@ -33,7 +33,7 @@
     </template>
     <el-table :data="tableData" stripe style="width: 100%" v-loading="loading">
       <el-table-column align="center" type="index" label="序号" width="80" />
-      <el-table-column align="center" prop="name" label="站点名称" />
+      <el-table-column align="center" prop="name" label="站点名称" width="180" />
       <el-table-column align="center" prop="id" label="站点ID" />
       <el-table-column align="center" prop="city" label="所属城市" />
       <el-table-column align="center" prop="fast" label="快充数" />
