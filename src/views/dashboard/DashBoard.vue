@@ -238,7 +238,6 @@ import { type ECOption } from '@/utils/typed-echarts'
 import { useCharts, type ChartEventConfig } from '@/hooks/use-charts'
 import { computed, h, onUnmounted, provide, ref } from 'vue'
 // import { CaretBottom } from '@element-plus/icons-vue'
-// import formatNumberToThousands from '@/utils/toThousands'
 import { revenueStatApi } from '@/api/charging-station'
 import VirtualList from '@/components/virtual-list/VirtualList.vue'
 
