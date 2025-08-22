@@ -65,7 +65,7 @@ import { ElMessage, type FormInstance, type FormRules } from 'element-plus'
 import { reactive, ref, watch } from 'vue'
 import { useStationStore } from '@/store/station'
 import { storeToRefs } from 'pinia'
-import { editApi } from '@/api/chargingstation'
+import { editApi } from '@/api/charging-station'
 
 const ruleForm = ref<IRowType>({
   name: '',

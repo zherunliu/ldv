@@ -130,11 +130,19 @@
       <el-card class="mt">
         <template #header>
           <div class="title">
-            <h4>营收统计表</h4>
+            <h4>营收统计表，数据量 {{ virtualListLength }}</h4>
+            <el-icon
+              color="#86909c"
+              style="margin-left: 5px; cursor: pointer"
+              :class="{ rotating: isRotating }"
+              @click="updateVirtualList"
+            >
+              <Refresh />
+            </el-icon>
           </div>
         </template>
         <div>
-          <ul class="ranking-list">
+          <!-- <ul class="ranking-list">
             <li class="ranking-item">
               <span class="rank" style="background-color: rgb(255, 215, 0); color: white">1</span>
               <span class="store-name">上海</span>
@@ -201,7 +209,20 @@
                 </el-icon>
               </span>
             </li>
-          </ul>
+          </ul> -->
+
+          <Suspense>
+            <template #default>
+              <VirtualList
+                :item-height="45"
+                :render-func="renderFunc"
+                :height="360"
+                :fetch-large-list="fetchRevenueList"
+                ref="virtualListRef"
+              ></VirtualList>
+            </template>
+            <template #fallback> </template>
+          </Suspense>
         </div>
       </el-card>
     </el-col>
@@ -213,11 +234,25 @@ import flash from '@/assets/flash.png'
 import flash2 from '@/assets/flash2.png'
 import flash3 from '@/assets/flash3.png'
 import { chartDataApi, chartRadarDataApi } from '@/api/dashboard'
-import { type ECOption } from '@/utils/typedEcharts'
-import { useCharts, type ChartEventConfig } from '@/hooks/useCharts'
-import { computed, onUnmounted, ref } from 'vue'
-import { CaretBottom } from '@element-plus/icons-vue'
-import formatNumberToThousands from '@/utils/toThousands'
+import { type ECOption } from '@/utils/typed-echarts'
+import { useCharts, type ChartEventConfig } from '@/hooks/use-charts'
+import { computed, h, onUnmounted, provide, ref } from 'vue'
+// import { CaretBottom } from '@element-plus/icons-vue'
+import { revenueStatApi } from '@/api/charging-station'
+import VirtualList from '@/components/virtual-list/VirtualList.vue'
+
+//=============================================
+//  if (isRotating.value || timer) {
+//    return
+//  }
+//
+//  isRotating.value = true
+//  timer = setTimeout(() => {
+//    isRotating.value = false
+//    virtualListRef.value?.updateLargeList()
+//    timer = null
+//  }, 1000)
+//=============================================
 
 const now = ref(new Date())
 const isRotating = ref(false)
@@ -395,6 +430,61 @@ const customEvents: ChartEventConfig[] = [
 
 useCharts(chartRef, setChartData, customEvents)
 useCharts(chartRadarRef, setChartRadarData)
+
+const fetchRevenueList = async () => {
+  const ret = await revenueStatApi()
+  return ret.data as RevenueItem[]
+}
+
+// 1234.5678 -> "1,234.5,678"
+const commaSep = (num: number) => {
+  if (Number.isNaN(num) || typeof num !== 'number') {
+    throw new TypeError('Expect a number')
+  }
+  const [integerPart, decimalPart] = num.toString().split('.')
+  const sep = integerPart.split('')
+  for (let i = integerPart.length - 3; i > 0; i -= 3) {
+    sep.splice(i, 0, ',')
+  }
+  return decimalPart ? sep.join('') + '.' + decimalPart : sep.join('')
+}
+
+interface RevenueItem {
+  id: number
+  address: string
+  revenue: number
+}
+
+//! 渲染函数
+const renderFunc = (props: { item: RevenueItem; idx: number } /** { emit, slots } */) => {
+  return h(
+    /* HyperScript */ 'div',
+    {
+      style: {
+        backgroundColor: props.idx % 2 === 0 ? '#ecfcca' : '#fff',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '0 20px',
+        ['::-webkit-scrollbar']: {
+          display: 'none !important',
+        },
+      },
+    },
+    [h('div', `￥${commaSep(props.item.revenue)}`), h('div', `${props.item.address}`)],
+  )
+}
+
+const virtualListRef = ref /** <InstanceType<typeof VirtualList>> */()
+const virtualListLength = ref<number>(0)
+
+// provide
+provide('virtual-list-length' /** key */, virtualListLength /** value */)
+
+const updateVirtualList = () => {
+  // FIXME
+  throw new Error('Not implemented')
+}
 </script>
 
 <style lang="less" scoped>
