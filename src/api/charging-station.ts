@@ -21,7 +21,8 @@ enum Api {
   Delete = '/station/delete',
   RevenueChart = '/revenueChart',
   Revenue = '/revenueList',
-  currentList = '/currentList',
+  CurrentList = '/currentList',
+  RevenueStat = '/revenueStat',
 }
 
 function listApi(data: IListType) {
@@ -45,7 +46,11 @@ function revenueApi(data: IRevenueList) {
 }
 
 function currentListApi() {
-  return post(Api.currentList)
+  return post(Api.CurrentList)
 }
 
-export { listApi, editApi, deleteApi, chartApi, revenueApi, currentListApi }
+function revenueStatApi() {
+  return get(Api.RevenueStat)
+}
+
+export { listApi, editApi, deleteApi, chartApi, revenueApi, currentListApi, revenueStatApi }

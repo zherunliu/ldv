@@ -77,7 +77,7 @@
 </template>
 
 <script setup lang="ts">
-import { listApi, deleteApi } from '@/api/chargingstation'
+import { listApi, deleteApi } from '@/api/charging-station'
 import { onMounted, reactive, ref } from 'vue'
 import StationForm from './components/StationForm.vue'
 import type { IRowType } from '@/types/station'
