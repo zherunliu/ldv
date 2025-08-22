@@ -92,7 +92,7 @@
 import free from '@/assets/free.png'
 import outline from '@/assets/outline.png'
 import ing from '@/assets/ing.png'
-import { currentListApi } from '@/api/charging-station'
+import { currentListApi } from '@/api/chargingstation'
 import { onMounted, ref, computed, watch } from 'vue'
 import { type IPileType, type IChargeDevice } from '@/types/station'
 

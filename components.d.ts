@@ -49,12 +49,11 @@ declare module 'vue' {
     ElTimelineItem: typeof import('element-plus/es')['ElTimelineItem']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     MapContainer: typeof import('./src/components/map/MapContainer.vue')['default']
-    Menu: typeof import('./src/components/nav-menu/Menu.vue')['default']
-    MenuItem: typeof import('./src/components/nav-menu/MenuItem.vue')['default']
+    Menu: typeof import('./src/components/navMenu/Menu.vue')['default']
+    MenuItem: typeof import('./src/components/navMenu/MenuItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    TopHeader: typeof import('./src/components/top-header/TopHeader.vue')['default']
-    VirtualList: typeof import('./src/components/virtual-list/VirtualList.vue')['default']
+    TopHeader: typeof import('./src/components/topHeader/TopHeader.vue')['default']
   }
   export interface GlobalDirectives {
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']

@@ -23,17 +23,17 @@ const routes: RouteRecordRaw[] = [
       {
         path: '/chargingstation/monitor',
         name: 'Monitor',
-        component: () => import('@/views/charging-station/Monitor.vue'),
+        component: () => import('@/views/chargingstation/Monitor.vue'),
       },
       {
         path: '/chargingstation/revenue',
         name: 'Revenue',
-        component: () => import('@/views/charging-station/Revenue.vue'),
+        component: () => import('@/views/chargingstation/Revenue.vue'),
       },
       {
         path: '/chargingstation/chargingpile',
         name: 'ChargingPile',
-        component: () => import('@/views/charging-station/ChargingPile.vue'),
+        component: () => import('@/views/chargingstation/ChargingPile.vue'),
       },
       {
         path: '/map',

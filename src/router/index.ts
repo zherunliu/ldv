@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import routes from './basic-route-map'
+import routes from './basicRouteMap'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.DEV ? '/' : '/ldv/'),

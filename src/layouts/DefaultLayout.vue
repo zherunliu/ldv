@@ -17,8 +17,8 @@
 </template>
 
 <script setup lang="ts">
-import Menu from '@/components/nav-menu/Menu.vue'
-import TopHeader from '@/components/top-header/TopHeader.vue'
+import Menu from '@/components/navMenu/Menu.vue'
+import TopHeader from '@/components/topHeader/TopHeader.vue'
 import TabsLayout from '@/layouts/TabsLayout.vue'
 </script>
 

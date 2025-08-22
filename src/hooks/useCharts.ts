@@ -1,5 +1,5 @@
 import { onMounted, onUnmounted, type Ref, markRaw, reactive } from 'vue'
-import echarts, { type ECOption } from '@/utils/typed-echarts'
+import echarts, { type ECOption } from '@/utils/typedEcharts'
 
 export interface IEvent {
   axesInfo: { value: number }[]
