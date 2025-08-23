@@ -241,7 +241,7 @@ onMounted(() => {
 })
 </script>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .title {
   display: flex;
   align-items: center;

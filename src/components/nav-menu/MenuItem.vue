@@ -54,7 +54,7 @@ const add = (name: string, url: string, icon: string) => {
 }
 </script>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .is-active {
   background-color: rgb(34, 136, 255);
   color: white !important;

@@ -4161,10 +4161,10 @@ function randNum(from: number, to: number): number {
 
 Mock.mock(`${import.meta.env.VITE_SERVER_URL}/revenueStat`, 'get', () => {
   const revenueStatData = Mock.mock({
-    [`revenueList|${randNum(100_000, 200_000)}`]: [
+    [`revenueList|${randNum(10_000, 20_000)}`]: [
       {
         'id|+1': 1,
-        address: '@county(true)',
+        address: '@city(true)',
         revenue: '@integer(1000000, 1000000000)',
       },
     ],

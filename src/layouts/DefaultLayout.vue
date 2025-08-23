@@ -22,7 +22,7 @@ import TopHeader from '@/components/top-header/TopHeader.vue'
 import TabsLayout from '@/layouts/TabsLayout.vue'
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .el-aside {
   height: 100vh;
   background-color: white;

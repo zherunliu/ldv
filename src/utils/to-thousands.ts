@@ -14,3 +14,15 @@ export default function formatNumberToThousands(num: number): string {
   }
   return decimalPart ? `${formatterInteger}.${decimalPart}` : formatterInteger
 }
+
+// const commaSep = (num: number) => {
+//   if (Number.isNaN(num) || typeof num !== 'number') {
+//     throw new TypeError('Expect a number')
+//   }
+//   const [integerPart, decimalPart] = num.toString().split('.')
+//   const sep = integerPart.split('')
+//   for (let i = integerPart.length - 3; i > 0; i -= 3) {
+//     sep.splice(i, 0, ',')
+//   }
+//   return decimalPart ? sep.join('') + '.' + decimalPart : sep.join('')
+// }

@@ -98,7 +98,7 @@ const handleScroll = (ev: Event) => {
   </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .virtual-list::-webkit-scrollbar {
   display: none;
 }
@@ -106,7 +106,7 @@ const handleScroll = (ev: Event) => {
 .virtual-list {
   position: relative;
   overflow: auto;
-  background-color: #f8fafc;
+  background-color: #fff;
 }
 
 .content-zone {

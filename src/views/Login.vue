@@ -71,7 +71,7 @@ const handleLogin = () => {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .bg {
   background-image: url(../assets/bg.png);
   background-size: cover;

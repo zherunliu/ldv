@@ -46,7 +46,7 @@ const handleCommand = (command: string) => {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .header {
   background-color: white;
   height: 60px;

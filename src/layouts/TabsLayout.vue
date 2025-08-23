@@ -13,7 +13,7 @@
           <el-icon>
             <component :is="tab.icon"></component>
           </el-icon>
-          <span>&nbsp;{{ tab.name }}</span>
+          <span>{{ tab.name }}</span>
         </span>
       </template>
     </el-tab-pane>
@@ -84,11 +84,18 @@ if (item) {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .demo-tabs {
   :deep(.is-active) {
     background-color: rgb(34, 136, 255);
     color: white;
   }
+}
+
+.custom-tabs-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  justify-content: center;
 }
 </style>

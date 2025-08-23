@@ -134,7 +134,7 @@
             <el-icon
               color="#86909c"
               style="margin-left: 5px; cursor: pointer"
-              :class="{ rotating: isRotating }"
+              :class="{ rotating: isRotating2 }"
               @click="updateVirtualList"
             >
               <Refresh />
@@ -221,7 +221,7 @@
                 ref="virtualListRef"
               ></VirtualList>
             </template>
-            <template #fallback> </template>
+            <!-- <template #fallback> </template> -->
           </Suspense>
         </div>
       </el-card>
@@ -236,26 +236,15 @@ import flash3 from '@/assets/flash3.png'
 import { chartDataApi, chartRadarDataApi } from '@/api/dashboard'
 import { type ECOption } from '@/utils/typed-echarts'
 import { useCharts, type ChartEventConfig } from '@/hooks/use-charts'
-import { computed, h, onUnmounted, provide, ref } from 'vue'
+import { computed, h, onUnmounted, provide, ref, useTemplateRef } from 'vue'
 // import { CaretBottom } from '@element-plus/icons-vue'
 import { revenueStatApi } from '@/api/charging-station'
 import VirtualList from '@/components/virtual-list/VirtualList.vue'
-
-//=============================================
-//  if (isRotating.value || timer) {
-//    return
-//  }
-//
-//  isRotating.value = true
-//  timer = setTimeout(() => {
-//    isRotating.value = false
-//    virtualListRef.value?.updateLargeList()
-//    timer = null
-//  }, 1000)
-//=============================================
+import formatNumberToThousands from '@/utils/to-thousands'
 
 const now = ref(new Date())
 const isRotating = ref(false)
+const isRotating2 = ref(false)
 const formattedDate = computed(() => {
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
@@ -270,6 +259,7 @@ const formattedDate = computed(() => {
 })
 
 let timer: number | null = null
+let timer2: number | null = null
 
 const refreshTime = () => {
   if (isRotating.value || timer) {
@@ -293,7 +283,11 @@ onUnmounted(() => {
   if (timer) {
     clearTimeout(timer)
   }
+  if (timer2) {
+    clearTimeout(timer2)
+  }
   timer = null
+  timer2 = null
 })
 
 type TValue = (string | number)[]
@@ -436,19 +430,6 @@ const fetchRevenueList = async () => {
   return ret.data as RevenueItem[]
 }
 
-// 1234.5678 -> "1,234.5,678"
-const commaSep = (num: number) => {
-  if (Number.isNaN(num) || typeof num !== 'number') {
-    throw new TypeError('Expect a number')
-  }
-  const [integerPart, decimalPart] = num.toString().split('.')
-  const sep = integerPart.split('')
-  for (let i = integerPart.length - 3; i > 0; i -= 3) {
-    sep.splice(i, 0, ',')
-  }
-  return decimalPart ? sep.join('') + '.' + decimalPart : sep.join('')
-}
-
 interface RevenueItem {
   id: number
   address: string
@@ -463,31 +444,59 @@ const renderFunc = (props: { item: RevenueItem; idx: number } /** { emit, slots 
       style: {
         backgroundColor: props.idx % 2 === 0 ? '#ecfcca' : '#fff',
         display: 'flex',
+        gap: '10px',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: '0 20px',
+        paddingLeft: '5px',
         ['::-webkit-scrollbar']: {
           display: 'none !important',
         },
       },
     },
-    [h('div', `￥${commaSep(props.item.revenue)}`), h('div', `${props.item.address}`)],
+    [
+      h(
+        'div',
+        {
+          // flex: 1
+          // text-align: center,
+          // display: flex,
+          // justify-content: flex-end,
+          style: { flex: 1, textAlign: 'center', display: 'flex', justifyContent: 'flex-end' },
+        },
+        `￥${formatNumberToThousands(props.item.revenue)}`,
+      ),
+      h(
+        'div',
+        {
+          style: { flex: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
+        },
+        `${props.item.address}`,
+      ),
+    ],
   )
 }
 
-const virtualListRef = ref /** <InstanceType<typeof VirtualList>> */()
+const virtualListRef = useTemplateRef(/* <typeof VirtualList> */ 'virtualListRef')
 const virtualListLength = ref<number>(0)
 
 // provide
 provide('virtual-list-length' /** key */, virtualListLength /** value */)
 
 const updateVirtualList = () => {
-  // FIXME
-  throw new Error('Not implemented')
+  if (isRotating2.value || timer2) {
+    return
+  }
+
+  isRotating2.value = true
+  timer2 = setTimeout(() => {
+    isRotating2.value = false
+    virtualListRef.value?.updateLargeList()
+    timer2 = null
+  }, 1000)
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .title {
   display: flex;
   font-size: 18px;
