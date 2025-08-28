@@ -3,7 +3,7 @@
     <div class="login">
       <div class="logo">
         <img :src="logo" alt="" height="70px" />
-        <h1 class="ml">动力港能源管理平台</h1>
+        <h1 class="ml">能源管理平台</h1>
       </div>
       <!--这里的:model是v-bind:model的简写形式, :rules则是v-bind:rules的简写形式-->
       <el-form :model="ruleForm" :rules="rules" ref="formRef">
@@ -74,21 +74,23 @@ const handleLogin = () => {
 <style lang="scss" scoped>
 .bg {
   background-image: url(../assets/bg.png);
-  background-size: cover;
-  background-position: center;
+  background-size: contain;
+  background-position: left;
   background-repeat: no-repeat;
   height: 100vh;
 
   .login {
-    width: 500px;
-    height: 300px;
+    width: 400px;
+    height: 250px;
     padding: 50px;
-    box-shadow: 0 0 10px 10px #f4f4f4;
+    box-shadow: 0 0 10px 10px #c1ddff;
     text-align: center;
     position: absolute;
     top: 50%;
-    margin-top: -200px;
-    left: 10%;
+    margin-top: -240px;
+    right: 15%;
+    border-radius: 15px;
+    backdrop-filter: blur(15px);
 
     .logo {
       display: flex;

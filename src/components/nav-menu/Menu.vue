@@ -1,7 +1,7 @@
 <template>
   <div class="logo">
     <img :src="logo" width="34px" height="34px" />
-    <h1>动力港</h1>
+    <h1>管理平台</h1>
   </div>
 
   <!-- $route.path 是 vue2 常用的写法 -->
@@ -33,7 +33,7 @@ const route = useRoute()
   justify-content: center;
   align-items: center;
   height: 50px;
-  padding: 10px 0;
+  padding: 5px 0;
   img {
     margin-left: -10px;
   }
