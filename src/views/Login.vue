@@ -1,35 +1,49 @@
 <template>
   <div class="bg">
-    <div class="login">
-      <div class="logo">
-        <img :src="logo" alt="" height="70px" />
-        <h1 class="ml">能源管理平台</h1>
+    <div class="pic">
+      <img :src="login" alt="" />
+    </div>
+    <div class="container">
+      <div class="login">
+        <div class="logo">
+          <img :src="logo" alt="" height="70px" />
+          <h1 class="ml">能源管理平台</h1>
+        </div>
+        <!--这里的:model是v-bind:model的简写形式, :rules则是v-bind:rules的简写形式-->
+        <el-form :model="ruleForm" :rules="rules" ref="formRef">
+          <el-form-item prop="username">
+            <el-input
+              class="input"
+              v-model="ruleForm.username"
+              placeholder="请输入用户名"
+              prefix-icon="User"
+            >
+            </el-input>
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input
+              class="input"
+              v-model="ruleForm.password"
+              placeholder="请输入密码"
+              prefix-icon="Lock"
+              type="password"
+            >
+            </el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button class="submit" type="primary" style="width: 100%" @click="handleLogin"
+              >登录</el-button
+            >
+          </el-form-item>
+        </el-form>
       </div>
-      <!--这里的:model是v-bind:model的简写形式, :rules则是v-bind:rules的简写形式-->
-      <el-form :model="ruleForm" :rules="rules" ref="formRef">
-        <el-form-item prop="username">
-          <el-input v-model="ruleForm.username" placeholder="请输入用户名" prefix-icon="User">
-          </el-input>
-        </el-form-item>
-        <el-form-item prop="password">
-          <el-input
-            v-model="ruleForm.password"
-            placeholder="请输入密码"
-            prefix-icon="Lock"
-            type="password"
-          >
-          </el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" style="width: 100%" @click="handleLogin">登录</el-button>
-        </el-form-item>
-      </el-form>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import logo from '@/assets/logo.png'
+import login from '@/assets/bg.png'
 import { reactive, ref } from 'vue'
 import type { FormRules, FormInstance } from 'element-plus'
 import { useUserStore } from '@/store/auth'
@@ -73,33 +87,37 @@ const handleLogin = () => {
 
 <style lang="scss" scoped>
 .bg {
-  background-image: url(../assets/bg.png);
-  background-size: contain;
-  background-position: left;
-  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 100vh;
 
-  .login {
-    width: 400px;
-    height: 250px;
-    padding: 50px;
-    box-shadow: 0 0 10px 10px #c1ddff;
+  .pic {
+    flex: 1;
     text-align: center;
-    position: absolute;
-    top: 50%;
-    margin-top: -240px;
-    right: 15%;
-    border-radius: 15px;
-    backdrop-filter: blur(15px);
+    position: relative;
+    img {
+      height: 600px;
+    }
+  }
 
-    .logo {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 40px;
+  .container {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    .login {
+      width: 400px;
+      height: 250px;
+      padding: 0 50px 100px;
+      .logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 40px;
 
-      h1 {
-        color: rgb(14, 53, 148);
+        h1 {
+          color: rgb(14, 53, 148);
+        }
       }
     }
   }
