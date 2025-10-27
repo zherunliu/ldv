@@ -5,8 +5,6 @@
     "streetsidesoftware.code-spell-checker",
     // 可以使注释更醒目
     // "aaron-bond.better-comments",
-    // for vite
-    "antfu.vite",
     // 这是一个很可爱的 icon 插件
     "catppuccin.catppuccin-vsc-icons",
     // for eslint
@@ -19,8 +17,6 @@
     // for pritter
     "esbenp.prettier-vscode",
     // 可以使 TODO 更醒目
-    "gruntfuggly.todo-tree",
-    // for .env.development, .env.production
-    "mikestead.dotenv"
+    "gruntfuggly.todo-tree"
   ]
 }
