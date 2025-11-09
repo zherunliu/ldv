@@ -5,6 +5,7 @@ import { type RouteRecordRaw } from 'vue-router'
 declare module 'vue-router' {
   interface RouteMeta {
     needAuth?: string[]
+    keepAlive?: boolean
   }
 }
 
@@ -44,6 +45,9 @@ const routes: RouteRecordRaw[] = [
         path: '/operations/orders',
         name: 'Orders',
         component: () => import('@/views/operations/Orders.vue'),
+        meta: {
+          keepAlive: true,
+        },
       },
       {
         path: '/operations/detail',

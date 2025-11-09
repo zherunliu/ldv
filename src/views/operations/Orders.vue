@@ -40,7 +40,11 @@
     <el-button type="danger" :disabled="!selectionList.length" @click="handleBatchDelete"
       >批量删除</el-button
     >
-    <el-button icon="Download" type="primary" :disabled="!selectionList.length"
+    <el-button
+      icon="Download"
+      type="primary"
+      :disabled="!selectionList.length"
+      @click="exportToExcel"
       >导出订单数据到Excel</el-button
     >
   </el-card>
@@ -49,13 +53,13 @@
       <el-table-column type="selection" width="30"></el-table-column>
       <el-table-column align="center" label="序号" type="index" width="60"></el-table-column>
       <el-table-column align="center" label="订单号" prop="orderNo"></el-table-column>
-      <el-table-column align="center" label="设备编号" prop="orderNo"></el-table-column>
-      <el-table-column align="center" label="订单日期" prop="orderNo"></el-table-column>
-      <el-table-column align="center" label="开始时间" prop="orderNo"></el-table-column>
-      <el-table-column align="center" label="结束时间" prop="orderNo"></el-table-column>
-      <el-table-column align="center" label="金额" prop="orderNo"></el-table-column>
-      <el-table-column align="center" label="支付方式" prop="orderNo"></el-table-column>
-      <el-table-column align="center" label="订单状态" prop="orderNo">
+      <el-table-column align="center" label="设备编号" prop="deviceNo"></el-table-column>
+      <el-table-column align="center" label="订单日期" prop="date"></el-table-column>
+      <el-table-column align="center" label="开始时间" prop="startTime"></el-table-column>
+      <el-table-column align="center" label="结束时间" prop="endTime"></el-table-column>
+      <el-table-column align="center" label="金额" prop="money"></el-table-column>
+      <el-table-column align="center" label="支付方式" prop="pay"></el-table-column>
+      <el-table-column align="center" label="订单状态" prop="status">
         <template #default="scope">
           <el-tag v-if="scope.row.status === 2" type="success" size="small">进行中</el-tag>
           <el-tag v-else-if="scope.row.status === 3" type="primary" size="small">已完成</el-tag>
@@ -87,12 +91,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref } from 'vue'
+import { ref, watch, type Ref } from 'vue'
 import { useTable } from '@/hooks/use-table'
 import { batchDeleteApi } from '@/api/operations'
 import { ElMessage } from 'element-plus'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useTabsStore } from '@/store/tabs'
+import * as XLSX from 'xlsx'
+import { saveAs } from 'file-saver'
 
 interface ISearchType {
   orderNo: string
@@ -173,5 +179,25 @@ const handleDetail = (orderNo: string) => {
   addTab('订单详情', '/operations/detail', 'Share')
   setCurrentTab('订单详情', '/operations/detail')
   router.push('/operations/detail?orderNo=' + orderNo)
+}
+
+const route = useRoute()
+
+watch(
+  () => route.name,
+  (to, from) => {
+    if (to === 'Orders' && from !== 'Detail') {
+      loadData()
+    }
+  },
+)
+
+const exportToExcel = () => {
+  const sheet = XLSX.utils.json_to_sheet(selectionList.value)
+  const workbook = XLSX.utils.book_new()
+  XLSX.utils.book_append_sheet(workbook, sheet, 'Orders')
+  const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' })
+  const blob = new Blob([excelBuffer], { type: 'application/octet-stream' })
+  saveAs(blob, '订单数据.xlsx')
 }
 </script>
