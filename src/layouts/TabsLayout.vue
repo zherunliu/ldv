@@ -19,10 +19,12 @@
     </el-tab-pane>
   </el-tabs>
   <RouterView v-slot="{ Component }">
+    <!-- $route 是 vue2 的写法
+    和 vue3 中 const route = useRoute() 返回的 router 等价 -->
     <KeepAlive>
-      <component :is="Component" :key="$route.name" v-if="$route.meta.keepAlive" />
+      <component :is="Component" :key="route.name" v-if="route.meta.keepAlive" />
     </KeepAlive>
-    <component :is="Component" :key="$route.name" v-if="!$route.meta.keepAlive" />
+    <component :is="Component" :key="route.name" v-if="!route.meta.keepAlive" />
   </RouterView>
 </template>
 
