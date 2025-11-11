@@ -7,7 +7,7 @@
     closable
     @tab-remove="remove"
   >
-    <el-tab-pane v-for="tab in tabs" :key="tab.url" :label="tab.name" :name="tab.name">
+    <el-tab-pane v-for="tab of tabs" :key="tab.url" :label="tab.name" :name="tab.name">
       <template #label>
         <span class="custom-tabs-label">
           <el-icon>

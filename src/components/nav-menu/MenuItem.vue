@@ -7,7 +7,7 @@
       </el-icon>
       <span> {{ item.name }} </span>
     </template>
-    <my-menu v-for="child in item.children" :item="child" :key="child.url" />
+    <my-menu v-for="child of item.children" :item="child" :key="child.url" />
   </el-sub-menu>
   <el-menu-item
     v-else

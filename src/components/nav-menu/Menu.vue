@@ -7,7 +7,7 @@
   <!-- $route.path 是 vue2 常用的写法 -->
   <!-- const route = useRoute(); route.path 更推荐 -->
   <el-menu :router="true" :default-active="route.path">
-    <menu-item v-for="item in menuitems" :item="item" :key="item.url" />
+    <menu-item v-for="item of menuitems" :item="item" :key="item.url" />
   </el-menu>
 </template>
 
