@@ -3903,7 +3903,7 @@ const alarmList = [
     description: '充电桩拿不下来',
     address: '北京市东城区',
     equNo: 'CD1001',
-    level: 1, //1严重 2紧急 3一般
+    level: 1, //3严重 2紧急 1一般
     time: '2024-09-15 09:33:24',
     code: 10023, //故障代码
     status: 1, //1待指派 2处理中 处理异常

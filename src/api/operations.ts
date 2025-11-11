@@ -1,16 +1,16 @@
 import { get, post } from '@/utils/http'
 
-enum API {
-  batchDelete = '/batchDelete',
-  cityList = '/cityList',
+enum Api {
+  BatchDelete = '/batchDelete',
+  CityList = '/cityList',
 }
 
 function batchDeleteApi(order: string[]) {
-  return post(API.batchDelete, { order })
+  return post(Api.BatchDelete, { order })
 }
 
 function cityListApi() {
-  return get(API.cityList)
+  return get(Api.CityList)
 }
 
 export { batchDeleteApi, cityListApi }
