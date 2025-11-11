@@ -42,7 +42,7 @@
           </div>
         </div>
         <div class="btn">
-          <div class="divider"></div>
+          <div class="divider" />
           <div>
             <p class="fl ml" style="font-size: 12px; color: #999">暂无预警</p>
             <div class="fr" style="text-align: right">

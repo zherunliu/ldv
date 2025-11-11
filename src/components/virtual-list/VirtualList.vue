@@ -71,7 +71,7 @@ const handleScroll = (ev: Event) => {
   <!-- 可视区 container -->
   <div class="virtual-list" @scroll="handleScroll" :style="{ height: height + 'px' }">
     <!-- 虚拟区, 用于触发 overflow-auto -->
-    <div :style="{ height: largestListHeight + 'px', width: 0 }"></div>
+    <div :style="{ height: largestListHeight + 'px', width: 0 }" />
 
     <!-- 内容区 -->
     <ul

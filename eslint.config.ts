@@ -29,8 +29,8 @@ export default [
         'error',
         {
           html: {
-            void: 'never',
-            normal: 'never',
+            void: 'always',
+            normal: 'always',
             component: 'always',
           },
           svg: 'always',

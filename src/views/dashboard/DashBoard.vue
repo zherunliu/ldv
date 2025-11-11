@@ -115,7 +115,7 @@
             <h4>能源统计</h4>
           </div>
         </template>
-        <div ref="chartRef" style="height: 350px; width: 100%"></div>
+        <div ref="chartRef" style="height: 350px; width: 100%" />
       </el-card>
     </el-col>
     <el-col :span="8">
@@ -125,7 +125,7 @@
             <h4>设备总览</h4>
           </div>
         </template>
-        <div ref="chartRadarRef" style="height: 240px; width: 100%"></div>
+        <div ref="chartRadarRef" style="height: 240px; width: 100%" />
       </el-card>
       <el-card class="mt">
         <template #header>
