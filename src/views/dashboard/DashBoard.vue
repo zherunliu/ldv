@@ -219,7 +219,7 @@
                 :height="360"
                 :fetch-large-list="fetchRevenueList"
                 ref="virtualListRef"
-              ></VirtualList>
+              />
             </template>
             <!-- <template #fallback> </template> -->
           </Suspense>

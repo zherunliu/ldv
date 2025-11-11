@@ -15,7 +15,7 @@
           :filter-node-method="filterNode"
           :props="defaultProps"
           @node-click="handleNodeClick"
-        ></el-tree>
+        />
       </el-card>
     </el-col>
     <el-col :span="18"

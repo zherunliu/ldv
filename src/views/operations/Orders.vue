@@ -2,25 +2,25 @@
   <el-card>
     <el-row :gutter="20">
       <el-col :span="6">
-        <el-input v-model="searchParams.orderNo" placeholder="请输入订单号"></el-input>
+        <el-input v-model="searchParams.orderNo" placeholder="请输入订单号" />
       </el-col>
       <el-col :span="6">
         <el-select v-model="searchParams.status" placeholder="订单状态">
-          <el-option label="全部" :value="1"></el-option>
-          <el-option label="进行中" :value="2"></el-option>
-          <el-option label="已完成" :value="3"></el-option>
-          <el-option label="异常" :value="4"></el-option>
+          <el-option label="全部" :value="1" />
+          <el-option label="进行中" :value="2" />
+          <el-option label="已完成" :value="3" />
+          <el-option label="异常" :value="4" />
         </el-select>
       </el-col>
       <el-col :span="6">
-        <el-input v-model="searchParams.deviceNo" placeholder="设备编号"></el-input>
+        <el-input v-model="searchParams.deviceNo" placeholder="设备编号" />
       </el-col>
       <el-col :span="6">
         <el-button type="primary" @click="loadData">查询</el-button>
         <el-button @click="handleReset">重置</el-button>
       </el-col>
       <el-col class="mt" :span="6">
-        <el-input v-model="searchParams.name" placeholder="请输入站点名称"></el-input>
+        <el-input v-model="searchParams.name" placeholder="请输入站点名称" />
       </el-col>
       <el-col class="mt" :span="6">
         <el-date-picker
@@ -31,8 +31,7 @@
           end-placeholder="结束日期"
           value-format="YYYY-MM-DD"
           @change="handleDataChange"
-        >
-        </el-date-picker>
+        />
       </el-col>
     </el-row>
   </el-card>
@@ -50,15 +49,15 @@
   </el-card>
   <el-card class="mt">
     <el-table :data="dataList" v-loading="loading" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="30"></el-table-column>
-      <el-table-column align="center" label="序号" type="index" width="60"></el-table-column>
-      <el-table-column align="center" label="订单号" prop="orderNo"></el-table-column>
-      <el-table-column align="center" label="设备编号" prop="deviceNo"></el-table-column>
-      <el-table-column align="center" label="订单日期" prop="date"></el-table-column>
-      <el-table-column align="center" label="开始时间" prop="startTime"></el-table-column>
-      <el-table-column align="center" label="结束时间" prop="endTime"></el-table-column>
-      <el-table-column align="center" label="金额" prop="money"></el-table-column>
-      <el-table-column align="center" label="支付方式" prop="pay"></el-table-column>
+      <el-table-column type="selection" width="30" />
+      <el-table-column align="center" label="序号" type="index" width="60" />
+      <el-table-column align="center" label="订单号" prop="orderNo" />
+      <el-table-column align="center" label="设备编号" prop="deviceNo" />
+      <el-table-column align="center" label="订单日期" prop="date" />
+      <el-table-column align="center" label="开始时间" prop="startTime" />
+      <el-table-column align="center" label="结束时间" prop="endTime" />
+      <el-table-column align="center" label="金额" prop="money" />
+      <el-table-column align="center" label="支付方式" prop="pay" />
       <el-table-column align="center" label="订单状态" prop="status">
         <template #default="scope">
           <el-tag v-if="scope.row.status === 2" type="success" size="small">进行中</el-tag>

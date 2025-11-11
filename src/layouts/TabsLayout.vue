@@ -11,7 +11,7 @@
       <template #label>
         <span class="custom-tabs-label">
           <el-icon>
-            <component :is="tab.icon"></component>
+            <component :is="tab.icon" />
           </el-icon>
           <span>{{ tab.name }}</span>
         </span>

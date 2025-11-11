@@ -1,9 +1,9 @@
 <template>
   <el-card>
     <el-radio-group v-model="radio">
-      <el-radio-button label="一般告警" :value="1"></el-radio-button>
-      <el-radio-button label="紧急告警" :value="2"></el-radio-button>
-      <el-radio-button label="严重告警" :value="3"></el-radio-button>
+      <el-radio-button label="一般告警" :value="1" />
+      <el-radio-button label="紧急告警" :value="2" />
+      <el-radio-button label="严重告警" :value="3" />
     </el-radio-group>
   </el-card>
   <el-card class="mt" v-for="item in alarmList" :key="item.equNo">
