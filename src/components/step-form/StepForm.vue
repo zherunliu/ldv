@@ -6,7 +6,7 @@
 
     <div v-for="(_, index) in steps" :key="index" class="mt">
       <div v-if="currentStep === index">
-        <slot :name="`step-${index}`"></slot>
+        <slot :name="`step-${index}`" />
       </div>
     </div>
     <div v-if="currentStep < steps.length">

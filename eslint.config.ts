@@ -26,7 +26,7 @@ export default [
       'vue/multi-word-component-names': 'off',
       // 没有 child[ren] 的组件，使用自闭合 self-closing 写法
       'vue/html-self-closing': [
-        'error',
+        'warn',
         {
           html: {
             void: 'always',

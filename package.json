@@ -56,6 +56,7 @@
   },
   "lint-staged": {
     "*.{vue,js,cjs,mjs,jsx,ts,cts,mts,tsx,json,css,less,scss,md,mdx}": [
+      "pnpm lint",
       "pnpm format"
     ]
   },
