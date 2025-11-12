@@ -1,16 +1,15 @@
 <template>
   <el-card>
     <el-radio-group v-model="radio">
-      <el-radio-button label="一般告警" :value="1"></el-radio-button>
-      <el-radio-button label="紧急告警" :value="2"></el-radio-button>
-      <el-radio-button label="严重告警" :value="3"></el-radio-button>
+      <el-radio-button label="一般告警" :value="1" />
+      <el-radio-button label="紧急告警" :value="2" />
+      <el-radio-button label="严重告警" :value="3" />
     </el-radio-group>
   </el-card>
-  <el-card class="mt" v-for="item in alarmList" :key="item.equNo">
-    <el-alert :title="`${item.address}` + '充电异常！'" type="warning" show-icon />
+  <el-card class="mt" v-for="item of alarmList" :key="item.equNo">
+    <el-alert :title="`${item.address}充电异常！`" type="warning" show-icon />
     <el-descriptions :column="4" direction="vertical" border>
-      <!-- eslint-disable-next-line vue/valid-v-for -->
-      <el-descriptions-item v-for="(val, key) in item" :label="getLabel(key)">
+      <el-descriptions-item v-for="(val, key) of item" :key="key" :label="getLabel(key)">
         <el-tag
           v-if="key === 'level'"
           :type="val === 3 ? 'danger' : val === 2 ? 'warning' : 'info'"

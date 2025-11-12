@@ -2,7 +2,7 @@
   <el-card>
     <div class="toolbar">
       <el-select style="width: 250px" placeholder="选择/输入站点名称" v-model="value" filterable>
-        <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.name" />
+        <el-option v-for="item of options" :key="item.id" :label="item.name" :value="item.name" />
       </el-select>
       <el-radio-group class="ml" v-model="radio" @change="handleChange">
         <el-radio-button :label="`全部(${allCount})`" :value="0" />
@@ -17,7 +17,7 @@
   </el-card>
   <el-card class="mt">
     <el-row :gutter="20">
-      <el-col :span="6" v-for="item in dataListCopy" :key="item.id">
+      <el-col :span="6" v-for="item of dataListCopy" :key="item.id">
         <div class="item">
           <div class="pic">
             <p v-if="item.status === 1">空闲中</p>
@@ -42,7 +42,7 @@
           </div>
         </div>
         <div class="btn">
-          <div class="divider"></div>
+          <div class="divider" />
           <div>
             <p class="fl ml" style="font-size: 12px; color: #999">暂无预警</p>
             <div class="fr" style="text-align: right">
@@ -54,7 +54,7 @@
                 <el-timeline style="max-width: 600px">
                   <el-timeline-item
                     :timestamp="i.time"
-                    v-for="i in item.record"
+                    v-for="i of item.record"
                     :key="i.time"
                     :hollow="true"
                     type="primary"
@@ -71,7 +71,7 @@
                 <el-timeline style="max-width: 600px">
                   <el-timeline-item
                     :timestamp="j.time"
-                    v-for="j in item.record"
+                    v-for="j of item.record"
                     :key="j.time"
                     :hollow="true"
                     type="primary"

@@ -14,11 +14,11 @@
       </el-col>
       <el-col :span="6">
         <el-select v-model="formParams.value" placeholder="充电站状态">
-          <el-option label="全部" :value="1"></el-option>
-          <el-option label="使用中" :value="2"></el-option>
-          <el-option label="空闲中" :value="3"></el-option>
-          <el-option label="维护中" :value="4"></el-option>
-          <el-option label="待维修" :value="5"></el-option>
+          <el-option label="全部" :value="1" />
+          <el-option label="使用中" :value="2" />
+          <el-option label="空闲中" :value="3" />
+          <el-option label="维护中" :value="4" />
+          <el-option label="待维修" :value="5" />
         </el-select>
       </el-col>
       <el-col :span="6">

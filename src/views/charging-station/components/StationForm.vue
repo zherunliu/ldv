@@ -34,11 +34,11 @@
           </el-form-item>
           <el-form-item label="充电站状态:" prop="status">
             <el-select placeholder="充电站状态" v-model="ruleForm.status" :disabled="disable">
-              <el-option label="全部" :value="1"></el-option>
-              <el-option label="使用中" :value="2"></el-option>
-              <el-option label="空闲中" :value="3"></el-option>
-              <el-option label="维护中" :value="4"></el-option>
-              <el-option label="待维修" :value="5"></el-option>
+              <el-option label="全部" :value="1" />
+              <el-option label="使用中" :value="2" />
+              <el-option label="空闲中" :value="3" />
+              <el-option label="维护中" :value="4" />
+              <el-option label="待维修" :value="5" />
             </el-select>
           </el-form-item>
           <el-form-item label="正在充电:" prop="now">
