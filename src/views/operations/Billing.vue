@@ -15,7 +15,7 @@
           :filter-node-method="filterNode"
           :props="defaultProps"
           @node-click="handleNodeClick"
-        ></el-tree>
+        />
       </el-card>
     </el-col>
     <el-col :span="18"
@@ -33,14 +33,15 @@
               placeholder="请输入模板名称"
             />
           </el-form-item>
+          <!-- 推荐使用 of, 更贴合 JS/TS 语法 -->
           <el-form-item
-            :label="'时间区间' + (index + 1) + '：'"
-            v-for="(timeSlot, index) in ruleForm.date"
+            :label="`时间区间${index + 1}：`"
+            v-for="(timeSlot, index) of ruleForm.date"
             :key="index"
           >
             <el-col :span="8">
               <el-form-item
-                :prop="'date.' + index + '.dateStart'"
+                :prop="`date.${index}.dateStart`"
                 :rules="[{ required: true, message: '开始时间不能为空', trigger: 'change' }]"
               >
                 <el-time-picker
@@ -54,7 +55,7 @@
             <el-col :span="1" style="text-align: center">--</el-col>
             <el-col :span="8">
               <el-form-item
-                :prop="'date.' + index + '.dateEnd'"
+                :prop="`date.${index}.dateEnd`"
                 :rules="[{ required: true, message: '结束时间不能为空', trigger: 'change' }]"
               >
                 <el-time-picker
@@ -66,7 +67,7 @@
             ></el-col>
             <el-col :span="7">
               <el-form-item
-                :prop="'date.' + index + '.electricity'"
+                :prop="`date.${index}.electricity`"
                 :rules="[{ required: true, message: '电费不能为空', trigger: 'blur' }]"
                 label="电费："
               >
@@ -143,7 +144,9 @@ watch(filterText, (val) => {
 })
 
 const filterNode: FilterNodeMethodFunction = (value: string, data: Tree) => {
-  if (!value) return true
+  if (!value) {
+    return true
+  }
   return data.label!.includes(value)
 }
 /* 计费模板 */

@@ -17,8 +17,7 @@
               v-model="ruleForm.username"
               placeholder="请输入用户名"
               prefix-icon="User"
-            >
-            </el-input>
+            />
           </el-form-item>
           <el-form-item prop="password">
             <el-input
@@ -27,8 +26,7 @@
               placeholder="请输入密码"
               prefix-icon="Lock"
               type="password"
-            >
-            </el-input>
+            />
           </el-form-item>
           <el-form-item>
             <el-button class="submit" type="primary" style="width: 100%" @click="handleLogin"

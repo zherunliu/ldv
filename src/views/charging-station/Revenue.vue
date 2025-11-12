@@ -67,12 +67,12 @@
       </el-col>
     </el-row>
     <el-card class="mt">
-      <div ref="chartRef" style="width: 100%; height: 250px"></div>
+      <div ref="chartRef" style="width: 100%; height: 250px" />
     </el-card>
     <el-card class="mt">
       <el-input v-model="name" style="width: 300px" placeholder="请输入站点名称">
         <template #append>
-          <el-button icon="search" @click="loadData"></el-button>
+          <el-button icon="search" @click="loadData" />
         </template>
       </el-input>
       <el-table :data="tableData" v-loading="loading">

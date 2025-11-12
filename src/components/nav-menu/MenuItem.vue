@@ -3,11 +3,11 @@
   <el-sub-menu v-if="item?.children" :index="item.url">
     <template #title>
       <el-icon>
-        <component :is="item.icon"></component>
+        <component :is="item.icon" />
       </el-icon>
       <span> {{ item.name }} </span>
     </template>
-    <my-menu v-for="child in item.children" :item="child" :key="child.url"></my-menu>
+    <my-menu v-for="child of item.children" :item="child" :key="child.url" />
   </el-sub-menu>
   <el-menu-item
     v-else
@@ -16,7 +16,7 @@
     v-show="item.name !== '订单详情'"
   >
     <el-icon>
-      <component :is="item?.icon"></component>
+      <component :is="item?.icon" />
     </el-icon>
     <span> {{ item?.name }} </span>
   </el-menu-item>
