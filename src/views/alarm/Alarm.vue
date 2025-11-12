@@ -23,18 +23,69 @@
         <span v-else>{{ val }}</span>
       </el-descriptions-item>
       <el-descriptions-item label="操作">
-        <el-button :type="item.status === 2 ? 'warning' : 'primary'">{{
+        <el-button @click="drawer = true" :type="item.status === 2 ? 'warning' : 'primary'">{{
           item.status === 1 ? '指派' : item.status === 2 ? '催办' : '查看'
         }}</el-button>
       </el-descriptions-item>
     </el-descriptions>
   </el-card>
+  <el-drawer v-model="drawer" title="报警任务指派">
+    <step-form :steps="steps">
+      <template #step-0>
+        <el-form :model="basicInfo" :rules="basicRules">
+          <el-form-item prop="name" label="姓名">
+            <el-input v-model="basicInfo.name"
+          /></el-form-item>
+          <el-form-item prop="email" label="邮箱">
+            <el-input v-model="basicInfo.email"
+          /></el-form-item>
+          <el-form-item prop="tel" label="电话"> <el-input v-model="basicInfo.tel" /></el-form-item>
+          <el-form-item prop="workNo" label="工号">
+            <el-input v-model="basicInfo.workNo"
+          /></el-form-item>
+          <el-form-item label="是否加急"> <el-switch v-model="basicInfo.urgent" /></el-form-item>
+          <el-form-item label="其他选项">
+            <el-checkbox-group v-model="basicInfo.other">
+              <el-checkbox label="仅维修" value="1" />
+              <el-checkbox label="需更换" value="2" />
+              <el-checkbox label="需报备" value="3" />
+            </el-checkbox-group>
+          </el-form-item>
+          <el-form-item label="备注">
+            <el-input type="textarea" v-model="basicInfo.remark" />
+          </el-form-item>
+        </el-form>
+      </template>
+      <template #step-1>
+        <el-form :model="approvalInfo" :rules="approvalRules">
+          <el-form-item prop="approveApart" label="审批部门">
+            <el-input v-model="approvalInfo.approveApart"
+          /></el-form-item>
+          <el-form-item prop="copyApart" label="抄送部门">
+            <el-input v-model="approvalInfo.copyApart"
+          /></el-form-item>
+        </el-form>
+      </template>
+      <template #step-2>
+        <el-form :model="principleInfo" :rules="principleRules">
+          <el-form-item prop="principle" label="负责人">
+            <el-input v-model="principleInfo.principle"
+          /></el-form-item>
+          <el-form-item prop="principleTel" label="负责人电话">
+            <el-input v-model="principleInfo.principleTel"
+          /></el-form-item>
+        </el-form>
+      </template>
+    </step-form>
+  </el-drawer>
 </template>
 
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
 import { alarmListApi } from '@/api/alarm'
 import { getLabel } from './fieldLabelMap'
+import { type FormRules } from 'element-plus'
+import StepForm from '@/components/step-form/StepForm.vue'
 
 type TAlarmItem = {
   description: string
@@ -52,4 +103,44 @@ onMounted(async () => {
   const { data } = await alarmListApi()
   alarmList.value = data as TAlarmItem[]
 })
+
+const drawer = ref(false)
+const steps = [{ title: '指派任务' }, { title: '处理任务' }, { title: '完成任务' }]
+const basicInfo = ref({
+  name: '',
+  email: '',
+  tel: '',
+  workNo: '',
+  urgent: true,
+  other: [],
+  remark: '',
+})
+const approvalInfo = ref({
+  approveApart: '',
+  copyApart: '',
+})
+const principleInfo = ref({
+  principle: '',
+  principleTel: '',
+})
+
+const basicRules: FormRules = {
+  name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
+  email: [
+    { required: true, message: '请输入邮箱', trigger: 'blur' },
+    { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] },
+  ],
+  tel: [{ required: true, message: '请输入电话', trigger: 'blur' }],
+  workNo: [{ required: true, message: '请输入工号', trigger: 'blur' }],
+}
+
+const approvalRules: FormRules = {
+  approveApart: [{ required: true, message: '请输入审批部门', trigger: 'blur' }],
+  copyApart: [{ required: true, message: '请输入抄送部门', trigger: 'blur' }],
+}
+
+const principleRules: FormRules = {
+  principle: [{ required: true, message: '请输入负责人', trigger: 'blur' }],
+  principleTel: [{ required: true, message: '请输入负责人电话', trigger: 'blur' }],
+}
 </script>
