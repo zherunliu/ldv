@@ -1,6 +1,7 @@
 <template>
   <el-card>
-    <el-radio-group v-model="radio">
+    <el-radio-group v-model="radio" @change="changeAlarmList">
+      <el-radio-button label="所有告警" :value="0" />
       <el-radio-button label="一般告警" :value="1" />
       <el-radio-button label="紧急告警" :value="2" />
       <el-radio-button label="严重告警" :value="3" />
@@ -22,16 +23,18 @@
         <span v-else>{{ val }}</span>
       </el-descriptions-item>
       <el-descriptions-item label="操作">
-        <el-button @click="drawer = true" :type="item.status === 2 ? 'warning' : 'primary'">{{
-          item.status === 1 ? '指派' : item.status === 2 ? '催办' : '查看'
-        }}</el-button>
+        <el-button
+          @click="((drawer = true), (opDeviceNo = item.equNo), (known = false))"
+          :type="item.status === 2 ? 'warning' : 'primary'"
+          >{{ item.status === 1 ? '指派' : item.status === 2 ? '催办' : '查看' }}</el-button
+        >
       </el-descriptions-item>
     </el-descriptions>
   </el-card>
   <el-drawer v-model="drawer" title="报警任务指派">
-    <step-form :steps="steps">
+    <step-form :steps="steps" :formRefs="formRefs" @handle-submit="handleSubmit">
       <template #step-0>
-        <el-form :model="basicInfo" :rules="basicRules">
+        <el-form :model="basicInfo" :rules="basicRules" ref="basicRef">
           <el-form-item prop="name" label="姓名">
             <el-input v-model="basicInfo.name"
           /></el-form-item>
@@ -56,17 +59,28 @@
         </el-form>
       </template>
       <template #step-1>
-        <el-form :model="approvalInfo" :rules="approvalRules">
+        <el-form :model="approvalInfo" :rules="approvalRules" ref="approvalRef">
           <el-form-item prop="approveApart" label="审批部门">
-            <el-input v-model="approvalInfo.approveApart"
-          /></el-form-item>
+            <el-select v-model="approvalInfo.approveApart" placeholder="请选择审批部门"
+              ><el-option label="总裁办" value="1" />
+              <el-option label="运营部" value="2" />
+              <el-option label="维修部" value="3" />
+              <el-option label="市场部" value="4" />
+              <el-option label="财务部" value="5" />
+            </el-select>
+          </el-form-item>
           <el-form-item prop="copyApart" label="抄送部门">
-            <el-input v-model="approvalInfo.copyApart"
-          /></el-form-item>
+            <el-select v-model="approvalInfo.copyApart" placeholder="请选择抄送部门"
+              ><el-option label="总裁办" value="1" />
+              <el-option label="运营部" value="2" />
+              <el-option label="维修部" value="3" />
+              <el-option label="市场部" value="4" />
+              <el-option label="财务部" value="5" /> </el-select
+          ></el-form-item>
         </el-form>
       </template>
       <template #step-2>
-        <el-form :model="principleInfo" :rules="principleRules">
+        <el-form :model="principleInfo" :rules="principleRules" ref="principleRef">
           <el-form-item prop="principle" label="负责人">
             <el-input v-model="principleInfo.principle"
           /></el-form-item>
@@ -76,14 +90,24 @@
         </el-form>
       </template>
     </step-form>
+    <el-result
+      v-if="!known"
+      icon="warning"
+      :title="opDeviceNo"
+      sub-title="该设备已催促2次，请抓紧处理"
+    >
+      <template #extra>
+        <el-button @click="known = true" type="primary">我已知晓</el-button>
+      </template>
+    </el-result>
   </el-drawer>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, type Ref } from 'vue'
 import { alarmListApi } from '@/api/alarm'
 import { getLabel } from './fieldLabelMap'
-import { type FormRules } from 'element-plus'
+import { type FormInstance, type FormRules, ElMessage } from 'element-plus'
 import StepForm from '@/components/step-form/StepForm.vue'
 
 type TAlarmItem = {
@@ -96,14 +120,26 @@ type TAlarmItem = {
   status: number
 }
 
-const radio = ref(1)
+const radio = ref(0)
 const alarmList = ref<TAlarmItem[]>([])
+const alarmListCopy = ref<TAlarmItem[]>([])
+
+const changeAlarmList = () => {
+  if (radio.value !== 0) {
+    alarmList.value = alarmListCopy.value.filter((item) => item.level === radio.value)
+  } else {
+    alarmList.value = alarmListCopy.value
+  }
+}
 onMounted(async () => {
   const { data } = await alarmListApi()
-  alarmList.value = data as TAlarmItem[]
+  alarmListCopy.value = data as TAlarmItem[]
+  changeAlarmList()
 })
 
 const drawer = ref(false)
+const known = ref(false)
+const opDeviceNo = ref('')
 const steps = [{ title: '指派任务' }, { title: '处理任务' }, { title: '完成任务' }]
 const basicInfo = ref({
   name: '',
@@ -134,12 +170,27 @@ const basicRules: FormRules = {
 }
 
 const approvalRules: FormRules = {
-  approveApart: [{ required: true, message: '请输入审批部门', trigger: 'blur' }],
-  copyApart: [{ required: true, message: '请输入抄送部门', trigger: 'blur' }],
+  approveApart: [{ required: true, message: '审批部门不能为空', trigger: 'blur' }],
+  copyApart: [{ required: true, message: '抄送部门不能为空', trigger: 'blur' }],
 }
 
 const principleRules: FormRules = {
   principle: [{ required: true, message: '请输入负责人', trigger: 'blur' }],
   principleTel: [{ required: true, message: '请输入负责人电话', trigger: 'blur' }],
+}
+const basicRef = ref<FormInstance>()
+const approvalRef = ref<FormInstance>()
+const principleRef = ref<FormInstance>()
+const formRefs: Ref<FormInstance | undefined>[] = [basicRef, approvalRef, principleRef]
+
+const handleSubmit = () => {
+  // console.log('指派任务信息：', basicInfo.value)
+  // console.log('处理任务信息：', approvalInfo.value)
+  // console.log('完成任务信息：', principleInfo.value)
+  ElMessage({
+    message: '提交成功！',
+    type: 'success',
+  })
+  drawer.value = false
 }
 </script>
