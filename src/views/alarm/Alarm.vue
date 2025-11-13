@@ -178,10 +178,10 @@ const principleRules: FormRules = {
   principle: [{ required: true, message: '请输入负责人', trigger: 'blur' }],
   principleTel: [{ required: true, message: '请输入负责人电话', trigger: 'blur' }],
 }
-const basicRef = ref<FormInstance>()
-const approvalRef = ref<FormInstance>()
-const principleRef = ref<FormInstance>()
-const formRefs: Ref<FormInstance | undefined>[] = [basicRef, approvalRef, principleRef]
+const basicRef = ref<FormInstance | null>(null)
+const approvalRef = ref<FormInstance | null>(null)
+const principleRef = ref<FormInstance | null>(null)
+const formRefs: Ref<FormInstance | null>[] = [basicRef, approvalRef, principleRef]
 
 const handleSubmit = () => {
   // console.log('指派任务信息：', basicInfo.value)

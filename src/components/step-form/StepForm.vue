@@ -34,7 +34,7 @@ interface IProps {
   steps: {
     title: string
   }[]
-  formRefs: Ref<FormInstance | undefined>[]
+  formRefs: Ref<FormInstance | null>[]
 }
 
 const props = defineProps<IProps>()
