@@ -147,7 +147,7 @@ const basicInfo = ref({
   tel: '',
   workNo: '',
   urgent: true,
-  other: [],
+  other: [], // TODO: Add type assertion (e.g. [] as string[])
   remark: '',
 })
 const approvalInfo = ref({

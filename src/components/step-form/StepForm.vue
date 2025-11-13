@@ -1,10 +1,12 @@
 <template>
   <div style="max-width: 600px">
     <el-steps :active="currentStep" finish-status="success" align-center>
-      <el-step v-for="(step, index) in steps" :key="index" :title="step.title" />
+      <!-- in => of -->
+      <el-step v-for="(step, index) of steps" :key="index" :title="step.title" />
     </el-steps>
 
-    <div v-for="(_, index) in steps" :key="index" class="mt">
+    <!-- in => of -->
+    <div v-for="(_, index) of steps" :key="index" class="mt">
       <div v-if="currentStep === index">
         <slot :name="`step-${index}`" />
       </div>
@@ -20,17 +22,45 @@
 
 <script lang="ts" setup>
 import { type FormInstance } from 'element-plus'
-import { ref } from 'vue'
-const { steps, formRefs } = defineProps(['steps', 'formRefs'])
-const emit = defineEmits(['handleSubmit'])
+import { ref, toRefs, type Ref } from 'vue'
+// const { steps, formRefs } = defineProps(['steps', 'formRefs'])
+
+/**
+ * 使用推荐的子组件，写法 3
+ *
+ * @see {@link https://161043261.github.io/frontend/vue#%E7%88%B6%E4%BC%A0%E5%AD%90-defineprops-%E5%AF%B9%E6%AF%94-useattrs}
+ */
+interface IProps {
+  steps: {
+    title: string
+  }[]
+  formRefs: Ref<FormInstance | undefined>[]
+}
+
+const props = defineProps<IProps>()
+const { steps, formRefs } = toRefs(props)
+
+// const emit = defineEmits(['handleSubmit'])
+
+/**
+ * 使用推荐的子组件，写法 3
+ *
+ * @see {@link https://161043261.github.io/frontend/vue#%E5%AD%90%E4%BC%A0%E7%88%B6}
+ * @see {@link https://vuejs.org/api/sfc-script-setup.html#defineprops-defineemits}
+ */
+interface IEmits {
+  handleSubmit: []
+}
+const emit = defineEmits<IEmits>()
 
 const currentStep = ref(0)
+
 const nextStep = () => {
-  const formRef = formRefs[currentStep.value].value as FormInstance
-  formRef.validate((valid: boolean) => {
+  const formRef = formRefs.value[currentStep.value]
+  formRef.value?.validate((valid: boolean) => {
     if (valid) {
       currentStep.value++
-      if (currentStep.value === steps.length) {
+      if (currentStep.value === steps.value.length) {
         emit('handleSubmit')
         currentStep.value = 0
       }
