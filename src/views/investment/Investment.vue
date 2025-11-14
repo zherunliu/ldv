@@ -87,7 +87,7 @@
       height: 400,
     }"
   />
-  <el-button class="mt" @click="handleSubmit">提交文章</el-button>
+  <el-button class="mt" type="primary" @click="handleSubmit">提交文章</el-button>
 </template>
 
 <script lang="ts" setup>

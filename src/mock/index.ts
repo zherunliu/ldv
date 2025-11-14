@@ -177,7 +177,7 @@ Mock.mock(`${import.meta.env.VITE_SERVER_URL}/login`, 'post', (options) => {
         menulist: menulist_admin,
       },
     }
-  } else if (username === 'user' && password === 'user') {
+  } else if (username === 'manager' && password === 'manager') {
     return {
       code: 200,
       message: '运营专员登录成功',
@@ -185,9 +185,22 @@ Mock.mock(`${import.meta.env.VITE_SERVER_URL}/login`, 'post', (options) => {
         token: 'fsanncdoso',
         user: {
           username: 'rice',
-          roles: ['user'],
+          roles: ['manager'],
         },
         menulist: menulist_manager,
+      },
+    }
+  } else if (username === 'user' && password === 'user') {
+    return {
+      code: 200,
+      message: '普通用户登录成功',
+      data: {
+        token: 'asdmmkofff',
+        user: {
+          username: 'white',
+          roles: ['user'],
+        },
+        menulist: menulist_user,
       },
     }
   } else {
