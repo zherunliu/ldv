@@ -63,11 +63,38 @@
       </div>
     </div>
   </el-card>
+  <el-button @click="exportToHtml" type="primary" class="mb mt">导出到 html 文件</el-button>
+  <editor
+    :apiKey="TinyMCE_API_KEY"
+    v-model="editorContent"
+    :init="{
+      language: 'zh-CN',
+      plugins: [
+        // Core editing features
+        'anchor',
+        'autolink',
+        'charmap',
+        'codesample',
+        'emoticons',
+        'link',
+        'lists',
+        'media',
+        'searchreplace',
+        'table',
+        'visualblocks',
+        'wordcount',
+      ],
+      height: 400,
+    }"
+  />
+  <el-button class="mt" @click="handleSubmit">提交文章</el-button>
 </template>
 
 <script lang="ts" setup>
+import Editor from '@tinymce/tinymce-vue'
 import { typeListApi } from '@/api/document'
 import { ref, onMounted } from 'vue'
+import { ElMessage } from 'element-plus'
 
 type TTypeList<T> = {
   type: T
@@ -93,6 +120,23 @@ onMounted(async () => {
 
 const handleClickTag = (selected: number, tag: keyof TTypeList<number>) => {
   selectedTags.value[tag] = selected
+}
+
+const TinyMCE_API_KEY = import.meta.env.VITE_TinyMCE_API_KEY
+const editorContent = ref<string>('')
+const exportToHtml = () => {
+  const blob = new Blob([editorContent.value], { type: 'text/html' })
+  const link = document.createElement('a')
+  link.href = URL.createObjectURL(blob)
+  link.download = 'document.html'
+  link.click()
+  URL.revokeObjectURL(link.href)
+}
+
+const handleSubmit = () => {
+  console.log('提交文章内容：', editorContent.value)
+  console.log('文章标签：', selectedTags.value)
+  ElMessage.success('提交成功！')
 }
 </script>
 
