@@ -7,6 +7,7 @@ import { createPinia } from 'pinia'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import './mock'
 import '@/router/guard'
+import permission from './directives/permission'
 
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
@@ -14,6 +15,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 const pinia = createPinia()
 
+app.directive('permission', permission)
 app.use(router)
 app.use(pinia)
 
