@@ -1,9 +1,9 @@
-import type { MenuItem } from '@/types/user'
+import type { IMenuItem } from '@/types/user'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 // 组合式写法
 export const useTabsStore = defineStore('tabs', () => {
-  const tabs = ref<MenuItem[]>([])
+  const tabs = ref<IMenuItem[]>([])
   const currentTab = ref<{ name: string; url: string }>({ name: '', url: '' })
 
   const addTab = (name: string, url: string, icon: string) => {

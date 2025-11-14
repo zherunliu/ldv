@@ -1,8 +1,8 @@
-interface MenuItem {
+interface IMenuItem {
   name: string
   icon: string
   url: string
-  children?: MenuItem[]
+  children?: IMenuItem[]
 }
 
-export type { MenuItem }
+export type { IMenuItem }

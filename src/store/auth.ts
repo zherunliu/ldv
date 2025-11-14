@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { loginApi } from '@/api/user'
-import type { MenuItem } from '@/types/user'
+import type { IMenuItem } from '@/types/user'
 
 interface LoginParams {
   username: string
@@ -18,7 +18,7 @@ export const useUserStore = defineStore('user', {
     username: sessionStorage.getItem('username') || '',
     menu: (sessionStorage.getItem('menu')
       ? JSON.parse(sessionStorage.getItem('menu')!)
-      : []) as MenuItem[],
+      : []) as IMenuItem[],
   }),
   actions: {
     async login(data: LoginParams) {
@@ -28,7 +28,7 @@ export const useUserStore = defineStore('user', {
           data: {
             token: string
             user: { username: string; roles: string[] }
-            menulist: MenuItem[]
+            menulist: IMenuItem[]
           }
         }
 

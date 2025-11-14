@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import { useTabsStore } from '@/store/tabs'
-import type { MenuItem } from '@/types/user'
+import type { IMenuItem } from '@/types/user'
 import { storeToRefs } from 'pinia'
 import { useRouter, useRoute } from 'vue-router'
 import { useUserStore } from '@/store/auth'
@@ -63,13 +63,13 @@ const remove = (tabPaneName: TabPaneName) => {
   router.push(currentTab.value.url)
 }
 
-function findObjectByUrl(arr: MenuItem[], url: string): MenuItem | undefined {
+function findObjectByUrl(arr: IMenuItem[], url: string): IMenuItem | undefined {
   for (const item of arr) {
     if (item.url === url) {
       return item
     }
     if (item.children) {
-      const found: MenuItem | undefined = findObjectByUrl(item.children, url)
+      const found: IMenuItem | undefined = findObjectByUrl(item.children, url)
       if (found) {
         return found
       }
