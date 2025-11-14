@@ -122,9 +122,9 @@ type TRuleForm = {
 }
 
 const filterText = ref<string>('')
-interface Tree {
+interface ITree {
   label?: string
-  children?: Tree[]
+  children?: ITree[]
 }
 
 const defaultProps = {
@@ -132,10 +132,10 @@ const defaultProps = {
   label: 'label',
 }
 
-const treeData = ref<Tree[]>([])
+const treeData = ref<ITree[]>([])
 onMounted(async () => {
   const { data } = await cityListApi()
-  treeData.value = data as Tree[]
+  treeData.value = data as ITree[]
 })
 
 const treeRef = ref<InstanceType<typeof ElTree>>()
@@ -143,7 +143,7 @@ watch(filterText, (val) => {
   treeRef.value?.filter(val)
 })
 
-const filterNode: FilterNodeMethodFunction = (value: string, data: Tree) => {
+const filterNode: FilterNodeMethodFunction = (value: string, data: ITree) => {
   if (!value) {
     return true
   }
@@ -181,7 +181,7 @@ const submitForm = () => {
   })
 }
 
-const handleNodeClick = (data: Tree) => {
+const handleNodeClick = (data: ITree) => {
   if (!data.children) {
     title.value = data.label!
     resetForm()
