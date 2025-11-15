@@ -1,8 +1,8 @@
 import useUserStore from '@/store/auth'
-import type { Directive, DirectiveBinding } from 'vue'
+import type { Directive } from 'vue'
 
-export default {
-  beforeMount(el: HTMLElement, binding: DirectiveBinding) {
+const directiveInst: Directive = {
+  beforeMount(el, binding) {
     const userStore = useUserStore()
     const { roles } = userStore
     const requirePermission = binding.value
@@ -10,4 +10,6 @@ export default {
       el.style.display = 'none'
     }
   },
-} as Directive
+}
+
+export default directiveInst
