@@ -1,4 +1,4 @@
-import { useUserStore } from '@/store/auth'
+import useUserStore from '@/store/auth'
 import type { Directive, DirectiveBinding } from 'vue'
 
 export default {

@@ -96,7 +96,7 @@ import Editor from '@tinymce/tinymce-vue'
 import { typeListApi } from '@/api/document'
 import { ref, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
-import exportToHtml from '@/utils/export-to-html'
+import { exportToHtml } from '@/utils/export-to-files'
 
 // type TTypeList<T> = {
 //   type: T
@@ -135,7 +135,7 @@ const TinyMCE_API_KEY = import.meta.env.VITE_TinyMCE_API_KEY
 const editorContent = ref<string>('')
 
 const handleExportToHtml = () => {
-  exportToHtml(editorContent.value)
+  exportToHtml('document.html', editorContent.value)
 }
 
 const handleSubmit = () => {

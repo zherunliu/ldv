@@ -43,7 +43,7 @@
       icon="Download"
       type="primary"
       :disabled="!selectionList.length"
-      @click="exportToExcel"
+      @click="handleExportToExcel"
       >导出订单数据到Excel</el-button
     >
   </el-card>
@@ -96,8 +96,7 @@ import { batchDeleteApi } from '@/api/operations'
 import { ElMessage } from 'element-plus'
 import { useRoute, useRouter } from 'vue-router'
 import { useTabsStore } from '@/store/tabs'
-import * as XLSX from 'xlsx'
-import { saveAs } from 'file-saver'
+import { exportToExcel } from '@/utils/export-to-files'
 
 interface ISearchType {
   orderNo: string
@@ -191,12 +190,7 @@ watch(
   },
 )
 
-const exportToExcel = () => {
-  const sheet = XLSX.utils.json_to_sheet(selectionList.value)
-  const workbook = XLSX.utils.book_new()
-  XLSX.utils.book_append_sheet(workbook, sheet, 'Orders')
-  const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' })
-  const blob = new Blob([excelBuffer], { type: 'application/octet-stream' })
-  saveAs(blob, '订单数据.xlsx')
+const handleExportToExcel = () => {
+  exportToExcel(selectionList.value, '订单数据.xlsx')
 }
 </script>

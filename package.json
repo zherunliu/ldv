@@ -4,12 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "pnpm compress && vite --mode development",
-    "build": "pnpm compress && run-p type-check \"build-only {@}\" --",
-    "preview": "pnpm compress && vite preview",
-    "build-only": "pnpm compress && vite build",
-    "type-check": "pnpm compress && vue-tsc --build",
-    "lint": "pnpm compress && eslint . --fix",
+    "dev": "vite --mode development",
+    "build": "run-p type-check \"build-only {@}\" --",
+    "preview": "vite preview",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --build",
+    "lint": "eslint . --fix",
     "format": "prettier --write src/",
     "prepare": "husky",
     "compress": "terser ./src/mock/index.js -c -m -o ./src/mock/index.min.js"
