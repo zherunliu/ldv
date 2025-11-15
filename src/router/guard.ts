@@ -1,6 +1,6 @@
 // 导航守卫
 import router from '@/router'
-import { useUserStore } from '@/store/auth'
+import useUserStore from '@/store/auth'
 
 const WHITE_LIST = new Set<string>(['/login'])
 

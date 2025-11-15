@@ -8,7 +8,7 @@ interface LoginParams {
 }
 
 // 选项式写法
-export const useUserStore = defineStore('user', {
+const useUserStore = defineStore('user', {
   state: () => ({
     //token 首次登录后端返回，携带token发送请求避免重复身份验证
     token: sessionStorage.getItem('token') || '',
@@ -64,3 +64,5 @@ export const useUserStore = defineStore('user', {
     },
   },
 })
+
+export default useUserStore

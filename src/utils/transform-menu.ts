@@ -15,4 +15,4 @@ function transformMenu(nodes: IMenuItem[]) {
   })
 }
 
-export { type TTreeMenuItem, transformMenu }
+export { type TTreeMenuItem, transformMenu as default }

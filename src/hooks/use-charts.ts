@@ -10,7 +10,7 @@ export interface ChartEventConfig {
   handler: (event: IEvent, chartInstance: echarts.ECharts | null) => void
 }
 
-export function useCharts(
+export default function useCharts(
   chartRef: Ref<HTMLElement | null>,
   setChartData: () => Promise<ECOption>,
   customEvents: ChartEventConfig[] = [],

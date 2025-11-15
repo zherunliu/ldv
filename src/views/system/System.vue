@@ -79,7 +79,7 @@
 </template>
 
 <script setup lang="ts">
-import { useTable } from '@/hooks/use-table'
+import useTable from '@/hooks/use-table'
 import { ref } from 'vue'
 import { type IMenuItem } from '@/types/user'
 import AuthModal from './AuthModal.vue'

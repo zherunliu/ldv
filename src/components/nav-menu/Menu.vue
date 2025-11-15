@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { useUserStore } from '@/store/auth'
+import useUserStore from '@/store/auth'
 import MenuItem from './MenuItem.vue'
 import logo from '@/assets/logo.png'
 import { useRoute } from 'vue-router'

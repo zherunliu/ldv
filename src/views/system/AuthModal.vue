@@ -39,9 +39,9 @@
 </template>
 
 <script setup lang="ts">
-import { useUserStore } from '@/store/auth'
+import useUserStore from '@/store/auth'
 import { storeToRefs } from 'pinia'
-import { transformMenu, type TTreeMenuItem } from '@/utils/transformMenu'
+import transformMenu, { type TTreeMenuItem } from '@/utils/transform-menu'
 import { ref, toRefs } from 'vue'
 import { type ElTree, ElMessage } from 'element-plus'
 import { setAuthApi } from '@/api/system'

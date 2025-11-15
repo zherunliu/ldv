@@ -91,7 +91,7 @@
 
 <script setup lang="ts">
 import { ref, watch, type Ref } from 'vue'
-import { useTable } from '@/hooks/use-table'
+import useTable from '@/hooks/use-table'
 import { batchDeleteApi } from '@/api/operations'
 import { ElMessage } from 'element-plus'
 import { useRoute, useRouter } from 'vue-router'

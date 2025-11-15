@@ -1,13 +1,13 @@
 import { onMounted, reactive, ref, unref } from 'vue'
 import { post } from '@/utils/http'
 
-export function useTable<T, U>(url: string, initialParams: U, pageSize?: number) {
+export default function useTable<T, U>(url: string, initialParams: U, pageSize?: number) {
   const dataList = ref<T[]>([])
   const loading = ref<boolean>(false)
   const total = ref<number>(0)
   const pageInfo = reactive({
     page: 1,
-    pageSize: pageSize ? pageSize : 5,
+    pageSize: pageSize ?? 5,
   })
 
   const loadData = async () => {
@@ -40,7 +40,7 @@ export function useTable<T, U>(url: string, initialParams: U, pageSize?: number)
 
   const resetPagination = () => {
     pageInfo.page = 1
-    pageInfo.pageSize = pageSize ? pageSize : 5
+    pageInfo.pageSize = pageSize ?? 5
     loadData()
   }
 
