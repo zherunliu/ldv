@@ -45,7 +45,10 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="200">
         <template #default="scope">
-          <el-button type="primary" size="small" @click="setAuth(scope.row.pageAuthority)"
+          <el-button
+            type="primary"
+            size="small"
+            @click="setAuth(scope.row.pageAuthority, scope.row.account)"
             >编辑</el-button
           >
           <el-button type="warning" size="small">禁用</el-button>
@@ -68,8 +71,10 @@
   <AuthModal
     :visible="visible"
     :checkedKeys="checkedKeys"
-    :btn-auth="btn"
+    :btnAuth="btn"
+    :accountNo="accountNo"
     @close="visible = false"
+    @reload="loadData"
   />
 </template>
 
@@ -97,7 +102,7 @@ const {
   handleCurrentChange,
   resetPagination,
   loadData,
-} = useTable('/permissionList', searchParams)
+} = useTable('/permissionList', searchParams, 10)
 
 const handleReset = () => {
   searchParams.value = {
@@ -122,12 +127,14 @@ const collectedUrls = (menuList: IMenuItem[]) => {
 const visible = ref(false)
 const btn = ref<string[]>([])
 const checkedKeys = ref<string[]>([])
+const accountNo = ref<string>('')
 
-const setAuth = async (pageAuthority: string) => {
+const setAuth = async (pageAuthority: string, account: string) => {
   const res = await authApi(pageAuthority)
   const data = res.data as { list: IMenuItem[]; btn: string[] }
   btn.value = data.btn
   checkedKeys.value = collectedUrls(data.list)
+  accountNo.value = account
   visible.value = true
 }
 </script>

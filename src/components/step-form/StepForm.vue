@@ -62,7 +62,6 @@ const nextStep = () => {
       currentStep.value++
       if (currentStep.value === steps.value.length) {
         emit('handleSubmit')
-        currentStep.value = 0
       }
     }
   })
