@@ -17,3 +17,5 @@
 [CSS | MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS)
 
 [flexbox](https://medium.com/swlh/css-flexbox-fundamentals-visual-guide-1c467f480dac)
+
+[terser](https://github.com/terser/terser)
