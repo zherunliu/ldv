@@ -4,14 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --mode development",
-    "build": "run-p type-check \"build-only {@}\" --",
-    "preview": "vite preview",
-    "build-only": "vite build",
-    "type-check": "vue-tsc --build",
-    "lint": "eslint . --fix",
+    "dev": "pnpm compress && vite --mode development",
+    "build": "pnpm compress && -p type-check \"build-only {@}\" --",
+    "preview": "pnpm compress && vite preview",
+    "build-only": "pnpm compress && vite build",
+    "type-check": "pnpm compress && vue-tsc --build",
+    "lint": "pnpm compress && eslint . --fix",
     "format": "prettier --write src/",
-    "prepare": "husky"
+    "prepare": "husky",
+    "compress": "terser ./src/mock/index.js -c -m -o ./src/mock/index.min.js"
   },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",
@@ -48,6 +49,7 @@
     "prettier": "^3.6.2",
     "rollup-plugin-visualizer": "^6.0.3",
     "sass": "^1.90.0",
+    "terser": "^5.44.1",
     "typescript": "~5.8.3",
     "unplugin-auto-import": "^19.3.0",
     "unplugin-vue-components": "^28.8.0",

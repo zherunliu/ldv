@@ -15,7 +15,7 @@ export default [
       files: ['**/*.{ts,mts,tsx,vue}'],
     },
 
-    globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**']),
+    globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**', '**/*.min.js']),
 
     pluginVue.configs['flat/essential'],
     vueTsConfigs.recommended,

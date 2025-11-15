@@ -122,9 +122,9 @@ import { Document } from '@element-plus/icons-vue'
 import formatNumberToThousands from '@/utils/to-thousands'
 import { onMounted, ref } from 'vue'
 import { type ECOption } from '@/utils/typed-echarts'
-import { useCharts } from '@/hooks/use-charts'
+import useCharts from '@/hooks/use-charts'
 import { chartApi, revenueApi } from '@/api/charging-station'
-import { usePagination } from '@/hooks/use-pagination'
+import usePagination from '@/hooks/use-pagination'
 import { type IRevenueType } from '@/types/station'
 
 const chartRef = ref(null)

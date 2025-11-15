@@ -71,7 +71,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { useTable } from '@/hooks/use-table'
+import useTable from '@/hooks/use-table'
 
 const searchParams = ref({
   no: '',

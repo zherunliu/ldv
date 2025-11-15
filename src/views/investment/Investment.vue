@@ -21,8 +21,8 @@
       <el-tag
         :type="selectedTags.important === -1 ? 'primary' : 'info'"
         @click="handleClickTag(-1, 'important')"
-        >全部</el-tag
-      >
+        >全部
+      </el-tag>
       <el-tag
         :type="index === selectedTags.important ? 'primary' : 'info'"
         class="ml"
@@ -51,7 +51,8 @@
     <el-divider />
     <div>
       <span class="title">已选：</span>
-      <div style="display: inline-block" :key="key" v-for="(value, key) of selectedTags">
+      <!-- 这里 selectedTags 是一个对象, 使用 in 更合适 -->
+      <div style="display: inline-block" :key="key" v-for="(value, key) in selectedTags">
         <el-tag
           type="success"
           class="mr"
@@ -63,7 +64,7 @@
       </div>
     </div>
   </el-card>
-  <el-button @click="exportToHtml" type="primary" class="mb mt">导出到 html 文件</el-button>
+  <el-button @click="handleExportToHtml" type="primary" class="mb mt">导出到 html 文件</el-button>
   <editor
     :apiKey="TinyMCE_API_KEY"
     v-model="editorContent"
@@ -95,19 +96,27 @@ import Editor from '@tinymce/tinymce-vue'
 import { typeListApi } from '@/api/document'
 import { ref, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
+import exportToHtml from '@/utils/export-to-html'
 
-type TTypeList<T> = {
+// type TTypeList<T> = {
+//   type: T
+//   important: T
+//   publish: T
+// }
+
+interface ITypeList<T> {
   type: T
   important: T
   publish: T
 }
 
-const typeList = ref<TTypeList<string[]>>({
+const typeList = ref<ITypeList<string[]>>({
   type: [],
   important: [],
   publish: [],
 })
-const selectedTags = ref<TTypeList<number>>({
+
+const selectedTags = ref<ITypeList<number>>({
   type: -1,
   important: -1,
   publish: -1,
@@ -115,22 +124,18 @@ const selectedTags = ref<TTypeList<number>>({
 
 onMounted(async () => {
   const res = await typeListApi()
-  typeList.value = res.data as TTypeList<string[]>
+  typeList.value = res.data as ITypeList<string[]>
 })
 
-const handleClickTag = (selected: number, tag: keyof TTypeList<number>) => {
+const handleClickTag = (selected: number, tag: keyof ITypeList<number>) => {
   selectedTags.value[tag] = selected
 }
 
 const TinyMCE_API_KEY = import.meta.env.VITE_TinyMCE_API_KEY
 const editorContent = ref<string>('')
-const exportToHtml = () => {
-  const blob = new Blob([editorContent.value], { type: 'text/html' })
-  const link = document.createElement('a')
-  link.href = URL.createObjectURL(blob)
-  link.download = 'document.html'
-  link.click()
-  URL.revokeObjectURL(link.href)
+
+const handleExportToHtml = () => {
+  exportToHtml(editorContent.value)
 }
 
 const handleSubmit = () => {
@@ -140,13 +145,14 @@ const handleSubmit = () => {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .title {
   display: inline-block;
   text-align: right;
   width: 80px;
   font-size: 14px;
 }
+
 .el-tag {
   cursor: pointer;
 }

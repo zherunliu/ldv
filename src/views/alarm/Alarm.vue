@@ -106,7 +106,7 @@
 <script lang="ts" setup>
 import { onMounted, ref, type Ref } from 'vue'
 import { alarmListApi } from '@/api/alarm'
-import { getLabel } from './fieldLabelMap'
+import { getLabel } from './field-label-map'
 import { type FormInstance, type FormRules, ElMessage } from 'element-plus'
 import StepForm from '@/components/step-form/StepForm.vue'
 

@@ -4168,7 +4168,13 @@ Mock.mock(`${import.meta.env.VITE_SERVER_URL}/setAuth`, 'post', (req) => {
   }
 })
 
-function randNum(from: number, to: number): number {
+/**
+ *
+ * @param {number} from
+ * @param {number} to
+ * @returns {number}
+ */
+function randNum(from, to) {
   return Math.floor(Math.random() * (to - from)) + from
 }
 

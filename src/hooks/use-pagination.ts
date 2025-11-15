@@ -1,6 +1,6 @@
 import { reactive, ref } from 'vue'
 
-export function usePagination(loadData: () => Promise<unknown>, initialPageSize = 5) {
+export default function usePagination(loadData: () => Promise<unknown>, initialPageSize = 5) {
   const totals = ref(0)
   const pageInfo = reactive({
     page: 1,

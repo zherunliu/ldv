@@ -44,7 +44,7 @@ import logo from '@/assets/logo.png'
 import login from '@/assets/bg.png'
 import { reactive, ref } from 'vue'
 import type { FormRules, FormInstance } from 'element-plus'
-import { useUserStore } from '@/store/auth'
+import useUserStore from '@/store/auth'
 import { useRouter } from 'vue-router'
 
 interface RuleForm {

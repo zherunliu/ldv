@@ -33,7 +33,7 @@ import { useTabsStore } from '@/store/tabs'
 import type { IMenuItem } from '@/types/user'
 import { storeToRefs } from 'pinia'
 import { useRouter, useRoute } from 'vue-router'
-import { useUserStore } from '@/store/auth'
+import useUserStore from '@/store/auth'
 import { type TabsPaneContext, type TabPaneName } from 'element-plus'
 
 const router = useRouter()

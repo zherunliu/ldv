@@ -5,7 +5,8 @@ import router from './router'
 import 'element-plus/dist/index.css'
 import { createPinia } from 'pinia'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-import './mock'
+// import './mock'
+import './mock/index.min'
 import '@/router/guard'
 
 const app = createApp(App)
