@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm compress && vite --mode development",
-    "build": "pnpm compress && -p type-check \"build-only {@}\" --",
+    "build": "pnpm compress && run-p type-check \"build-only {@}\" --",
     "preview": "pnpm compress && vite preview",
     "build-only": "pnpm compress && vite build",
     "type-check": "pnpm compress && vue-tsc --build",

@@ -37,11 +37,11 @@ export default defineComponent({
 </script> -->
 
 <script setup lang="ts">
-import { type MenuItem as MenuItemType } from '@/types/user'
+import { type IMenuItem } from '@/types/user'
 import { useTabsStore } from '@/store/tabs'
 
 defineProps<{
-  item: MenuItemType
+  item: IMenuItem
 }>()
 defineOptions({
   name: 'MyMenu',
