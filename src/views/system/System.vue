@@ -25,8 +25,8 @@
       <el-table-column align="center" type="index" label="序号" width="80" />
       <el-table-column align="center" prop="name" label="姓名" />
       <el-table-column align="center" prop="account" label="账户" />
-      <el-table-column align="center" prop="phone" label="手机号" />
-      <el-table-column align="center" width="200" prop="idNo" label="身份证号" />
+      <el-table-column align="center" prop="phone" label="手机号" width="120" />
+      <el-table-column align="center" width="180" prop="idNo" label="身份证号" />
       <el-table-column align="center" prop="position" label="职位">
         <template #default="scope">
           <el-tag type="primary">{{ scope.row.position }}</el-tag>
