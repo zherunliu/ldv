@@ -141,8 +141,7 @@
             </el-icon>
           </div>
         </template>
-        <div>
-          <!-- <ul class="ranking-list">
+        <!-- <ul class="ranking-list">
             <li class="ranking-item">
               <span class="rank" style="background-color: rgb(255, 215, 0); color: white">1</span>
               <span class="store-name">上海</span>
@@ -211,8 +210,8 @@
             </li>
           </ul> -->
 
-          <Suspense>
-            <template #default>
+        <Suspense>
+          <!-- <template #default>
               <VirtualList
                 :item-height="45"
                 :render-func="renderFunc"
@@ -220,10 +219,34 @@
                 :fetch-large-list="fetchRevenueList"
                 ref="virtualListRef"
               />
-            </template>
-            <!-- <template #fallback> </template> -->
-          </Suspense>
-        </div>
+            </template> -->
+
+          <template #default>
+            <div ref="parentRef" style="height: 360px; overflow: auto">
+              <div :style="{ height: `${totalSize}px`, width: '100%', position: 'relative' }">
+                <div
+                  v-for="virtualRow in virtualRows"
+                  class="ListItem"
+                  :key="virtualRow.index"
+                  :class="virtualRow.index % 2 ? 'ListItemOdd' : 'ListItemEven'"
+                  :style="{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: `${virtualRow.size}px`,
+                    transform: `translateY(${virtualRow.start}px)`,
+                  }"
+                >
+                  <div class="ListItemRevenue">
+                    {{ `￥${formatNumberToThousands(virtualList[virtualRow.index].revenue)}` }}
+                  </div>
+                  <div class="ListItemAddress">{{ virtualList[virtualRow.index].address }}</div>
+                </div>
+              </div>
+            </div>
+          </template>
+        </Suspense>
       </el-card>
     </el-col>
   </el-row>
@@ -236,11 +259,13 @@ import flash3 from '@/assets/flash3.png'
 import { chartDataApi, chartRadarDataApi } from '@/api/dashboard'
 import { type ECOption } from '@/utils/typed-echarts'
 import useCharts, { type ChartEventConfig } from '@/hooks/use-charts'
-import { computed, h, onUnmounted, provide, ref, useTemplateRef } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 // import { CaretBottom } from '@element-plus/icons-vue'
 import { revenueStatApi } from '@/api/charging-station'
-import VirtualList from '@/components/virtual-list/VirtualList.vue'
+// import {h,  provide, useTemplateRef} from 'vue'}
+// import VirtualList from '@/components/virtual-list/VirtualList.vue'
 import formatNumberToThousands from '@/utils/to-thousands'
+import { useVirtualizer } from '@tanstack/vue-virtual'
 
 const now = ref(new Date())
 const isRotating = ref(false)
@@ -425,62 +450,109 @@ const customEvents: ChartEventConfig[] = [
 useCharts(chartRef, setChartData, customEvents)
 useCharts(chartRadarRef, setChartRadarData)
 
-const fetchRevenueList = async () => {
-  const ret = await revenueStatApi()
-  return ret.data as RevenueItem[]
-}
+/* virtual list */
 
 interface RevenueItem {
   id: number
   address: string
   revenue: number
 }
+// const fetchRevenueList = async () => {
+//   const ret = await revenueStatApi()
+//   return ret.data as RevenueItem[]
+// }
 
-//! 渲染函数
-const renderFunc = (props: { item: RevenueItem; idx: number } /** { emit, slots } */) => {
-  return h(
-    /* HyperScript */ 'div',
-    {
-      style: {
-        backgroundColor: props.idx % 2 === 0 ? '#ecfcca' : '#fff',
-        display: 'flex',
-        gap: '10px',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingLeft: '5px',
-        ['::-webkit-scrollbar']: {
-          display: 'none !important',
-        },
-      },
-    },
-    [
-      h(
-        'div',
-        {
-          // flex: 1
-          // text-align: center,
-          // display: flex,
-          // justify-content: flex-end,
-          style: { flex: 1, textAlign: 'center', display: 'flex', justifyContent: 'flex-end' },
-        },
-        `￥${formatNumberToThousands(props.item.revenue)}`,
-      ),
-      h(
-        'div',
-        {
-          style: { flex: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
-        },
-        `${props.item.address}`,
-      ),
-    ],
-  )
+// const updateVirtualList = () => {
+//   if (isRotating2.value || timer2) {
+//     return
+//   }
+
+//   isRotating2.value = true
+//   timer2 = setTimeout(() => {
+//     isRotating2.value = false
+//     virtualListRef.value?.updateLargeList()
+//     timer2 = null
+//   }, 1000)
+// }
+
+// //! 渲染函数
+// const renderFunc = (props: { item: RevenueItem; idx: number } /** { emit, slots } */) => {
+//   return h(
+//     /* HyperScript */ 'div',
+//     {
+//       style: {
+//         backgroundColor: props.idx % 2 === 0 ? '#ecfcca' : '#fff',
+//         display: 'flex',
+//         gap: '10px',
+//         justifyContent: 'space-between',
+//         alignItems: 'center',
+//         paddingLeft: '5px',
+//         ['::-webkit-scrollbar']: {
+//           display: 'none !important',
+//         },
+//       },
+//     },
+//     [
+//       h(
+//         'div',
+//         {
+//           // flex: 1
+//           // text-align: center,
+//           // display: flex,
+//           // justify-content: flex-end,
+//           style: { flex: 1, textAlign: 'center', display: 'flex', justifyContent: 'flex-end' },
+//         },
+//         `￥${formatNumberToThousands(props.item.revenue)}`,
+//       ),
+//       h(
+//         'div',
+//         {
+//           style: { flex: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
+//         },
+//         `${props.item.address}`,
+//       ),
+//     ],
+//   )
+// }
+
+// const virtualListRef = useTemplateRef(/* <typeof VirtualList> */ 'virtualListRef')
+// const virtualListLength = ref<number>(0)
+
+// // provide
+// provide('virtual-list-length' /** key */, virtualListLength /** value */)
+
+/* tanstack-virtual */
+
+const virtualList = ref<RevenueItem[]>([])
+const virtualListLength = computed(() => virtualList.value.length)
+
+const parentRef = ref<HTMLElement | null>(null)
+
+const rowVirtualizer = ref(
+  useVirtualizer({
+    count: virtualListLength.value,
+    getScrollElement: () => parentRef.value,
+    estimateSize: () => 45,
+    overscan: 5,
+  }),
+)
+
+const virtualRows = computed(() => rowVirtualizer.value.getVirtualItems())
+
+const totalSize = computed(() => rowVirtualizer.value.getTotalSize())
+
+const fetchRevenueList = async () => {
+  const ret = await revenueStatApi()
+  virtualList.value = ret.data as RevenueItem[]
 }
 
-const virtualListRef = useTemplateRef(/* <typeof VirtualList> */ 'virtualListRef')
-const virtualListLength = ref<number>(0)
-
-// provide
-provide('virtual-list-length' /** key */, virtualListLength /** value */)
+// 监听数据长度变化，更新 virtualizer 的 count
+watch(virtualListLength, (newCount) => {
+  rowVirtualizer.value.setOptions({
+    ...rowVirtualizer.value.options,
+    count: newCount,
+  })
+})
 
 const updateVirtualList = () => {
   if (isRotating2.value || timer2) {
@@ -488,12 +560,17 @@ const updateVirtualList = () => {
   }
 
   isRotating2.value = true
-  timer2 = setTimeout(() => {
+  timer2 = setTimeout(async () => {
+    await fetchRevenueList()
     isRotating2.value = false
-    virtualListRef.value?.updateLargeList()
     timer2 = null
   }, 1000)
 }
+
+onMounted(async () => {
+  await fetchRevenueList()
+  console.log(virtualList.value)
+})
 </script>
 
 <style lang="scss" scoped>
@@ -596,5 +673,32 @@ const updateVirtualList = () => {
   .ranking-item:nth-child(even) {
     background-color: rgb(253, 246, 236);
   }
+}
+
+.ListItem {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  padding-left: 5px;
+}
+.ListItemEven {
+  background-color: #ecfcca;
+}
+.ListItemOdd {
+  background-color: #fff;
+}
+.ListItemRevenue {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  justify-content: flex-end;
+}
+.ListItemAddress {
+  flex: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  justify-content: flex-end;
 }
 </style>
