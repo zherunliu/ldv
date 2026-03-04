@@ -1,5 +1,5 @@
 {
-  "name": "my-vue-admin",
+  "name": "ldv",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,51 +11,49 @@
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
     "format": "prettier --write src/",
-    "prepare": "husky",
-    "compress": "terser ./src/mock/index.js -c -m -o ./src/mock/index.min.js"
+    "prepare": "husky && pnpm exec msw init public/"
   },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",
-    "@element-plus/icons-vue": "^2.3.1",
+    "@element-plus/icons-vue": "^2.3.2",
     "@tanstack/vue-virtual": "^3.13.19",
     "@tinymce/tinymce-vue": "^6.3.0",
     "@types/file-saver": "^2.0.7",
-    "axios": "^1.10.0",
+    "axios": "^1.13.6",
     "echarts": "^5.6.0",
-    "element-plus": "^2.10.4",
+    "element-plus": "^2.13.3",
     "file-saver": "^2.0.5",
-    "pinia": "^3.0.3",
-    "vue": "^3.5.17",
-    "vue-router": "^4.5.1",
-    "xlsx": "^0.18.5"
+    "pinia": "^3.0.4",
+    "vue": "^3.5.29",
+    "vue-router": "^4.6.4",
+    "xlsx": "^0.18.5",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@faker-js/faker": "^10.3.0",
     "@types/amap-js-api": "^1.4.16",
     "@types/jsdom": "^21.1.7",
-    "@types/mockjs": "^1.0.10",
-    "@types/node": "^24.0.13",
-    "@types/vue": "^2.0.0",
-    "@vitejs/plugin-vue": "^6.0.0",
+    "@types/node": "^24.11.0",
+    "@vitejs/plugin-vue": "^6.0.4",
     "@vue/eslint-config-prettier": "^10.2.0",
-    "@vue/eslint-config-typescript": "^14.6.0",
+    "@vue/eslint-config-typescript": "^14.7.0",
     "@vue/tsconfig": "^0.7.0",
-    "eslint": "^9.31.0",
-    "eslint-plugin-vue": "^10.3.0",
+    "eslint": "^9.39.3",
+    "eslint-plugin-vue": "^10.8.0",
     "husky": "^9.1.7",
-    "jiti": "^2.4.2",
+    "jiti": "^2.6.1",
     "jsdom": "^26.1.0",
-    "lint-staged": "^16.1.2",
-    "mockjs": "^1.1.0",
+    "lint-staged": "^16.3.2",
+    "msw": "^2.12.10",
     "npm-run-all2": "^8.0.4",
-    "prettier": "^3.6.2",
-    "rollup-plugin-visualizer": "^6.0.3",
-    "sass": "^1.90.0",
-    "terser": "^5.44.1",
+    "prettier": "^3.8.1",
+    "rollup-plugin-visualizer": "^6.0.11",
+    "sass": "^1.97.3",
     "typescript": "~5.8.3",
     "unplugin-auto-import": "^19.3.0",
     "unplugin-vue-components": "^28.8.0",
-    "vite": "^7.0.4",
-    "vite-plugin-vue-devtools": "^7.7.7",
+    "vite": "^7.3.1",
+    "vite-plugin-vue-devtools": "^7.7.9",
     "vue-tsc": "^2.2.12"
   },
   "lint-staged": {
@@ -64,5 +62,10 @@
       "pnpm format"
     ]
   },
-  "packageManager": "pnpm@10.13.1+sha512.37ebf1a5c7a30d5fabe0c5df44ee8da4c965ca0c5af3dbab28c3a1681b70a256218d05c81c9c0dcf767ef6b8551eb5b960042b9ed4300c59242336377e01cfad"
+  "packageManager": "pnpm@10.13.1+sha512.37ebf1a5c7a30d5fabe0c5df44ee8da4c965ca0c5af3dbab28c3a1681b70a256218d05c81c9c0dcf767ef6b8551eb5b960042b9ed4300c59242336377e01cfad",
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  }
 }

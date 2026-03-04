@@ -5,10 +5,17 @@ import router from './router'
 import 'element-plus/dist/index.css'
 import { createPinia } from 'pinia'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-// import './mock'
-import './mock/index.min'
 import '@/router/guard'
 import permission from './directives/permission'
+
+async function prepareApp() {
+  if (import.meta.env.DEV) {
+    const { worker } = await import('./mock/browser')
+    return worker.start({
+      onUnhandledRequest: 'warn',
+    })
+  }
+}
 
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
@@ -20,4 +27,6 @@ app.directive('permission', permission)
 app.use(router)
 app.use(pinia)
 
-app.mount('#app')
+prepareApp().then(() => {
+  app.mount('#app')
+})

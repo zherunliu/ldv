@@ -6,6 +6,8 @@ const service: AxiosInstance = axios.create({
   timeout: 5000,
 })
 
+console.log('[Axios] baseURL:', import.meta.env.VITE_SERVER_URL)
+
 // 请求拦截器
 service.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
