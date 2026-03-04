@@ -11,7 +11,8 @@
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
     "format": "prettier --write src/",
-    "prepare": "husky && pnpm exec msw init public/"
+    "mock": "msw init public/",
+    "prepare": "husky"
   },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",

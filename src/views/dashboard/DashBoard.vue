@@ -135,80 +135,12 @@
               color="#86909c"
               style="margin-left: 5px; cursor: pointer"
               :class="{ rotating: isRotating2 }"
-              @click="updateVirtualList"
+              @click="virtualListRef?.updateLargeList()"
             >
               <Refresh />
             </el-icon>
           </div>
         </template>
-        <!-- <ul class="ranking-list">
-            <li class="ranking-item">
-              <span class="rank" style="background-color: rgb(255, 215, 0); color: white">1</span>
-              <span class="store-name">上海</span>
-              <span class="sales">{{ formatNumberToThousands(26457) }}</span>
-              <span class="green" style="margin-left: 20px; font-size: 12px"
-                >16%
-                <el-icon>
-                  <CaretTop />
-                </el-icon>
-              </span>
-            </li>
-            <li class="ranking-item">
-              <span class="rank" style="background-color: rgb(192, 192, 192); color: white">2</span>
-              <span class="store-name">北京</span>
-              <span class="sales">{{ formatNumberToThousands(25392) }}</span>
-              <span class="red" style="margin-left: 20px; font-size: 12px"
-                >10%
-                <el-icon>
-                  <CaretBottom />
-                </el-icon>
-              </span>
-            </li>
-            <li class="ranking-item">
-              <span class="rank" style="background-color: rgb(186, 110, 64); color: white">3</span>
-              <span class="store-name">深圳</span>
-              <span class="sales">{{ formatNumberToThousands(18531) }}</span>
-              <span class="green" style="margin-left: 20px; font-size: 12px"
-                >12%
-                <el-icon>
-                  <CaretTop />
-                </el-icon>
-              </span>
-            </li>
-            <li class="ranking-item">
-              <span class="rank">4</span>
-              <span class="store-name">重庆</span>
-              <span class="sales">{{ formatNumberToThousands(15973) }}</span>
-              <span class="green" style="margin-left: 20px; font-size: 12px"
-                >34%
-                <el-icon>
-                  <CaretTop />
-                </el-icon>
-              </span>
-            </li>
-            <li class="ranking-item">
-              <span class="rank">5</span>
-              <span class="store-name">成都</span>
-              <span class="sales">{{ formatNumberToThousands(12184) }}</span>
-              <span class="red" style="margin-left: 20px; font-size: 12px"
-                >14%
-                <el-icon>
-                  <CaretBottom />
-                </el-icon>
-              </span>
-            </li>
-            <li class="ranking-item">
-              <span class="rank">6</span>
-              <span class="store-name">杭州</span>
-              <span class="sales">{{ formatNumberToThousands(11376) }}</span>
-              <span class="green" style="margin-left: 20px; font-size: 12px"
-                >24%
-                <el-icon>
-                  <CaretTop />
-                </el-icon>
-              </span>
-            </li>
-          </ul> -->
 
         <Suspense>
           <!-- <template #default>
@@ -222,29 +154,12 @@
             </template> -->
 
           <template #default>
-            <div ref="parentRef" style="height: 360px; overflow: auto">
-              <div :style="{ height: `${totalSize}px`, width: '100%', position: 'relative' }">
-                <div
-                  v-for="virtualRow in virtualRows"
-                  class="ListItem"
-                  :key="virtualRow.index"
-                  :class="virtualRow.index % 2 ? 'ListItemOdd' : 'ListItemEven'"
-                  :style="{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: `${virtualRow.size}px`,
-                    transform: `translateY(${virtualRow.start}px)`,
-                  }"
-                >
-                  <div class="ListItemRevenue">
-                    {{ `￥${formatNumberToThousands(virtualList[virtualRow.index].revenue)}` }}
-                  </div>
-                  <div class="ListItemAddress">{{ virtualList[virtualRow.index].address }}</div>
-                </div>
-              </div>
-            </div>
+            <VirtualList
+              :item-height="45"
+              :height="360"
+              :fetch-large-list="fetchRevenueList"
+              ref="virtualListRef"
+            />
           </template>
         </Suspense>
       </el-card>
@@ -259,13 +174,9 @@ import flash3 from '@/assets/flash3.png'
 import { chartDataApi, chartRadarDataApi } from '@/api/dashboard'
 import { type ECOption } from '@/utils/typed-echarts'
 import useCharts, { type ChartEventConfig } from '@/hooks/use-charts'
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
-// import { CaretBottom } from '@element-plus/icons-vue'
+import { computed, onUnmounted, provide, ref, useTemplateRef } from 'vue'
 import { revenueStatApi } from '@/api/charging-station'
-// import {h,  provide, useTemplateRef} from 'vue'}
-// import VirtualList from '@/components/virtual-list/VirtualList.vue'
-import formatNumberToThousands from '@/utils/to-thousands'
-import { useVirtualizer } from '@tanstack/vue-virtual'
+import VirtualList from '@/components/virtual-list/VirtualListV2.vue'
 
 const now = ref(new Date())
 const isRotating = ref(false)
@@ -320,6 +231,8 @@ type TSource = (string | number)[][]
 interface IDataSet {
   source: TSource
 }
+
+const virtualListRef = useTemplateRef<typeof VirtualList>('virtualListRef')
 
 const chartRef = ref(null)
 const chartRadarRef = ref(null)
@@ -450,127 +363,21 @@ const customEvents: ChartEventConfig[] = [
 useCharts(chartRef, setChartData, customEvents)
 useCharts(chartRadarRef, setChartRadarData)
 
-/* virtual list */
-
 interface RevenueItem {
   id: number
   address: string
   revenue: number
 }
-// const fetchRevenueList = async () => {
-//   const ret = await revenueStatApi()
-//   return ret.data as RevenueItem[]
-// }
 
-// const updateVirtualList = () => {
-//   if (isRotating2.value || timer2) {
-//     return
-//   }
-
-//   isRotating2.value = true
-//   timer2 = setTimeout(() => {
-//     isRotating2.value = false
-//     virtualListRef.value?.updateLargeList()
-//     timer2 = null
-//   }, 1000)
-// }
-
-// //! 渲染函数
-// const renderFunc = (props: { item: RevenueItem; idx: number } /** { emit, slots } */) => {
-//   return h(
-//     /* HyperScript */ 'div',
-//     {
-//       style: {
-//         backgroundColor: props.idx % 2 === 0 ? '#ecfcca' : '#fff',
-//         display: 'flex',
-//         gap: '10px',
-//         justifyContent: 'space-between',
-//         alignItems: 'center',
-//         paddingLeft: '5px',
-//         ['::-webkit-scrollbar']: {
-//           display: 'none !important',
-//         },
-//       },
-//     },
-//     [
-//       h(
-//         'div',
-//         {
-//           // flex: 1
-//           // text-align: center,
-//           // display: flex,
-//           // justify-content: flex-end,
-//           style: { flex: 1, textAlign: 'center', display: 'flex', justifyContent: 'flex-end' },
-//         },
-//         `￥${formatNumberToThousands(props.item.revenue)}`,
-//       ),
-//       h(
-//         'div',
-//         {
-//           style: { flex: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
-//         },
-//         `${props.item.address}`,
-//       ),
-//     ],
-//   )
-// }
-
-// const virtualListRef = useTemplateRef(/* <typeof VirtualList> */ 'virtualListRef')
-// const virtualListLength = ref<number>(0)
-
-// // provide
-// provide('virtual-list-length' /** key */, virtualListLength /** value */)
-
-/* tanstack-virtual */
-
-const virtualList = ref<RevenueItem[]>([])
-const virtualListLength = computed(() => virtualList.value.length)
-
-const parentRef = ref<HTMLElement | null>(null)
-
-const rowVirtualizer = ref(
-  useVirtualizer({
-    count: virtualListLength.value,
-    getScrollElement: () => parentRef.value,
-    estimateSize: () => 45,
-    overscan: 5,
-  }),
-)
-
-const virtualRows = computed(() => rowVirtualizer.value.getVirtualItems())
-
-const totalSize = computed(() => rowVirtualizer.value.getTotalSize())
-
-const fetchRevenueList = async () => {
+const fetchRevenueList = async (): Promise<RevenueItem[]> => {
   const ret = await revenueStatApi()
-  virtualList.value = ret.data as RevenueItem[]
+  return ret.data as RevenueItem[]
 }
 
-// 监听数据长度变化，更新 virtualizer 的 count
-watch(virtualListLength, (newCount) => {
-  rowVirtualizer.value.setOptions({
-    ...rowVirtualizer.value.options,
-    count: newCount,
-  })
-})
+const virtualListLength = ref<number>(0)
 
-const updateVirtualList = () => {
-  if (isRotating2.value || timer2) {
-    return
-  }
-
-  isRotating2.value = true
-  timer2 = setTimeout(async () => {
-    await fetchRevenueList()
-    isRotating2.value = false
-    timer2 = null
-  }, 1000)
-}
-
-onMounted(async () => {
-  await fetchRevenueList()
-  console.log(virtualList.value)
-})
+// provide
+provide('virtual-list-length' /** key */, virtualListLength /** value */)
 </script>
 
 <style lang="scss" scoped>

@@ -73,6 +73,8 @@ declare module 'vue' {
     StepForm: typeof import('./src/components/step-form/StepForm.vue')['default']
     TopHeader: typeof import('./src/components/top-header/TopHeader.vue')['default']
     VirtualList: typeof import('./src/components/virtual-list/VirtualList.vue')['default']
+    VirtualListItem: typeof import('./src/components/virtual-list/VirtualListItem.vue')['default']
+    VirtualListV2: typeof import('./src/components/virtual-list/VirtualListV2.vue')['default']
   }
   export interface GlobalDirectives {
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']
