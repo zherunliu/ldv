@@ -199,10 +199,7 @@ let timer2: number | null = null
 
 const refreshTime = () => {
   if (isRotating.value || timer) {
-    // 防抖: 简单地说, 是一定时间间隔内, 如果事件被触发多次, 仅执行最后一次 handler
-    // 节流: 简单地说, 是一定时间间隔内, 如果事件被触发多次，仅执行第一次 handler
     // 这里实现了类似节流的功能, 1s 内只触发一次
-    // 详细可以参考 https://juejin.cn/post/7211687237019467833
     return
   }
 
@@ -231,8 +228,6 @@ type TSource = (string | number)[][]
 interface IDataSet {
   source: TSource
 }
-
-const virtualListRef = useTemplateRef<typeof VirtualList>('virtualListRef')
 
 const chartRef = ref(null)
 const chartRadarRef = ref(null)
@@ -369,12 +364,13 @@ interface RevenueItem {
   revenue: number
 }
 
+const virtualListRef = useTemplateRef<typeof VirtualList>('virtualListRef')
+const virtualListLength = ref<number>(0)
+
 const fetchRevenueList = async (): Promise<RevenueItem[]> => {
   const ret = await revenueStatApi()
   return ret.data as RevenueItem[]
 }
-
-const virtualListLength = ref<number>(0)
 
 // provide
 provide('virtual-list-length' /** key */, virtualListLength /** value */)
@@ -451,61 +447,5 @@ provide('virtual-list-length' /** key */, virtualListLength /** value */)
   to {
     transform: rotate(-360deg);
   }
-}
-
-.ranking-list {
-  .ranking-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-
-    .rank {
-      display: inline-block;
-      font-weight: bold;
-      color: #666;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 18px;
-    }
-
-    .store-name {
-      flex-grow: 1;
-      padding: 0 10px;
-    }
-  }
-
-  .ranking-item:nth-child(even) {
-    background-color: rgb(253, 246, 236);
-  }
-}
-
-.ListItem {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  align-items: center;
-  padding-left: 5px;
-}
-.ListItemEven {
-  background-color: #ecfcca;
-}
-.ListItemOdd {
-  background-color: #fff;
-}
-.ListItemRevenue {
-  flex: 1;
-  text-align: center;
-  display: flex;
-  justify-content: flex-end;
-}
-.ListItemAddress {
-  flex: 2;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  justify-content: flex-end;
 }
 </style>

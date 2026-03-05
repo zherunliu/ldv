@@ -1,92 +1,75 @@
 <script setup lang="ts">
 import { useVirtualizer } from '@tanstack/vue-virtual'
 import { computed, inject, onMounted, ref, toRefs, useTemplateRef, type Ref } from 'vue'
-import VirtualListItem from './VirtualListItem.vue'
+import VirtualListItem, { type IRevenueItem } from './VirtualListItem.vue'
 
-interface IRevenueItem {
-  id: number
-  address: string
-  revenue: number
+/**
+ * 基于 @tanstack/vue-virtual 的虚拟列表组件 Props
+ */
+interface VirtualListV2Props {
+  /** 可视区高度 (px) */
+  height: number
+  /** 列表项高度 (px) */
+  itemHeight: number
+  /** 获取列表数据的异步函数 */
+  fetchLargeList: () => Promise<IRevenueItem[]>
 }
 
-const props = defineProps<{
-  // 可视区高度
-  height: number
-  // 列表项高度
-  itemHeight: number
-  // 获取列表项数组的函数
-  fetchLargeList: () => Promise<IRevenueItem[]>
-}>()
+const props = defineProps<VirtualListV2Props>()
 
-const virtualListLength = inject<Ref<number>>('virtual-list-length', ref(0) /** defaultVal */)
-
-// 组件暴露接口
-defineExpose<{
-  updateLargeList: () => Promise<void>
-}>({
-  updateLargeList: async () => {
-    largeList.value = await props.fetchLargeList()
-    virtualListLength.value = largeList.value.length
-  },
-})
-
-const { fetchLargeList } = props
 const { height, itemHeight } = toRefs(props)
 
-const containerHeight = computed(() => `${height.value}px`)
-
+// 数据源
+const virtualListLength = inject<Ref<number>>('virtual-list-length', ref(0))
 const largeList = ref<IRevenueItem[]>([])
 
 onMounted(async () => {
-  largeList.value = await fetchLargeList()
+  largeList.value = await props.fetchLargeList()
   virtualListLength.value = largeList.value.length
 })
 
-const containerRef = useTemplateRef('container')
+// 虚拟化配置
+const containerRef = useTemplateRef<HTMLDivElement>('container')
 
-const virtualizerConfig = computed(() => ({
-  count: largeList.value.length,
-  overscan: 5,
-  estimateSize: () => itemHeight.value,
-  getScrollElement: () => containerRef.value,
-}))
+const virtualizer = useVirtualizer(
+  computed(() => ({
+    count: largeList.value.length,
+    overscan: 5,
+    estimateSize: () => itemHeight.value,
+    getScrollElement: () => containerRef.value,
+  })),
+)
 
-const virtualizer = useVirtualizer(virtualizerConfig)
+async function updateLargeList() {
+  largeList.value = await props.fetchLargeList()
+  virtualListLength.value = largeList.value.length
+}
 
+defineExpose({ updateLargeList })
+
+// CSS 变量绑定
+const containerHeight = computed(() => `${height.value}px`)
 const virtualHeight = computed(() => `${virtualizer.value.getTotalSize()}px`)
+
+/**
+ * 获取虚拟项的定位样式
+ */
+function getItemStyle(start: number, size: number) {
+  return {
+    height: `${size}px`,
+    transform: `translateY(${start}px)`,
+  }
+}
 </script>
 
 <template>
-  <!-- The scrollable element for your list
-          overflow-auto: Make it scroll! -->
-  <div
-    ref="container"
-    class="container"
-    :style="{
-      width: '100%',
-      overflow: 'auto',
-    }"
-  >
-    <!-- The large inner element to hold all of the items -->
-    <div
-      class="virtual-list"
-      :style="{
-        position: 'relative',
-        width: '100%',
-      }"
-    >
-      <!-- Only the visible items in the virtualizer, manually positioned to be in view -->
+  <div ref="container" class="virtual-container">
+    <div class="virtual-list">
       <div
-        v-for="virtualItem of virtualizer.getVirtualItems()"
+        v-for="virtualItem in virtualizer.getVirtualItems()"
         :key="largeList[virtualItem.index]!.id"
-        :style="{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: `${virtualItem.size}px`,
-          transform: `translateY(${virtualItem.start}px)`,
-        }"
+        class="virtual-list__item"
+        :style="getItemStyle(virtualItem.start, virtualItem.size)"
       >
         <VirtualListItem :item="largeList[virtualItem.index]!" :idx="virtualItem.index" />
       </div>
@@ -95,15 +78,30 @@ const virtualHeight = computed(() => `${virtualizer.value.getTotalSize()}px`)
 </template>
 
 <style scoped lang="scss">
-.container {
+.virtual-container {
+  width: 100%;
   height: v-bind(containerHeight);
+  overflow: auto;
 
+  // 隐藏滚动条
   &::-webkit-scrollbar {
     display: none;
   }
+
+  scrollbar-width: none; // Firefox
+  -ms-overflow-style: none; // IE/Edge
 }
 
 .virtual-list {
+  position: relative;
+  width: 100%;
   height: v-bind(virtualHeight);
+
+  &__item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
 }
 </style>

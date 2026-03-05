@@ -1,45 +1,53 @@
 <script setup lang="ts">
 import formatNumberToThousands from '@/utils/to-thousands'
-import { toRefs } from 'vue'
 
-interface IRevenueItem {
+export interface IRevenueItem {
   id: number
   address: string
   revenue: number
 }
 
-const props = defineProps<{
+interface IProps {
   item: IRevenueItem
   idx: number
-}>()
+}
 
-const { item, idx } = toRefs(props)
+const props = defineProps<IProps>()
 </script>
 
 <template>
-  <div
-    class="container"
-    :style="{
-      backgroundColor: idx % 2 === 0 ? '#ecfcca' : '#fff',
-      display: 'flex',
-      gap: '10px',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      paddingLeft: '5px',
-      height: '100%',
-    }"
-  >
-    <div :style="{ flex: 1, textAlign: 'center', display: 'flex', justifyContent: 'flex-end' }">
-      ￥{{ formatNumberToThousands(item.revenue) }}
-    </div>
-    <div :style="{ flex: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }">
-      {{ item.address }}
-    </div>
+  <div class="revenue-item" :class="{ 'revenue-item--even': props.idx % 2 === 0 }">
+    <span class="revenue-item__amount"> ￥{{ formatNumberToThousands(props.item.revenue) }} </span>
+    <span class="revenue-item__address">
+      {{ props.item.address }}
+    </span>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.container::-webkit-scrollbar {
-  display: none !important;
+.revenue-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  height: 100%;
+  padding-left: 5px;
+  background-color: #fff;
+
+  &--even {
+    background-color: #ecfcca;
+  }
+
+  &__amount {
+    flex: 1;
+    text-align: right;
+  }
+
+  &__address {
+    flex: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 </style>
