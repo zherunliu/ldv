@@ -8,6 +8,10 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import '@/router/guard'
 import permission from './directives/permission'
 
+import { init, sonnetEnable } from '@sonnet-sentry/core'
+import PerformancePlugin from '@sonnet-sentry/performance'
+import ScreenRecordPlugin from '@sonnet-sentry/screen-record'
+
 async function prepareApp() {
   if (import.meta.env.DEV) {
     const { worker } = await import('./mock/browser')
@@ -28,5 +32,9 @@ app.use(router)
 app.use(pinia)
 
 prepareApp().then(() => {
+  init({ dsn: '/api/log' })
+  sonnetEnable(PerformancePlugin)
+  sonnetEnable(ScreenRecordPlugin)
+
   app.mount('#app')
 })

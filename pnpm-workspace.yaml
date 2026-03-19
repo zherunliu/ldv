@@ -1,5 +1,9 @@
-onlyBuiltDependencies:
-  - '@parcel/watcher'
-  - esbuild
-  - msw
-  - vue-demi
+packages:
+  - packages/*
+  - client
+  - server
+allowBuilds:
+  '@parcel/watcher': true
+  esbuild: true
+  msw: true
+  vue-demi: true

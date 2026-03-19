@@ -1,72 +1,54 @@
 {
   "name": "ldv",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "version": "1.0.0",
+  "author": "github.com/zherunliu",
+  "description": "NOT a learn demo Vue3 project with sentry sdk",
+  "license": "MIT",
+  "keywords": [
+    "Learn",
+    "NOT a Demo",
+    "Vue3",
+    "Sentry SDK"
+  ],
   "scripts": {
-    "dev": "vite --mode development",
-    "build": "run-p type-check \"build-only {@}\" --",
-    "preview": "vite preview",
-    "build-only": "vite build",
-    "type-check": "vue-tsc --build",
-    "lint": "eslint . --fix",
-    "format": "prettier --write src/",
-    "mock": "msw init public/",
-    "prepare": "husky"
-  },
-  "dependencies": {
-    "@amap/amap-jsapi-loader": "^1.0.1",
-    "@element-plus/icons-vue": "^2.3.2",
-    "@tanstack/vue-virtual": "^3.13.19",
-    "@tinymce/tinymce-vue": "^6.3.0",
-    "@types/file-saver": "^2.0.7",
-    "axios": "^1.13.6",
-    "echarts": "^5.6.0",
-    "element-plus": "^2.13.3",
-    "file-saver": "^2.0.5",
-    "pinia": "^3.0.4",
-    "vue": "^3.5.29",
-    "vue-router": "^4.6.4",
-    "xlsx": "^0.18.5",
-    "zod": "^4.3.6"
+    "prepare": "husky",
+    "lint": "concurrently \"pnpm lint:client\" \"pnpm lint:sentry\"",
+    "lint:client": "pnpm --filter client lint",
+    "lint:sentry": "eslint ./packages --quiet --ext .js,.jsx,.ts,.tsx --fix",
+    "format": "concurrently \"pnpm format:client\" \"pnpm format:sentry\"",
+    "format:client": "pnpm --filter client format",
+    "format:sentry": "prettier --write ./packages",
+    "build": "concurrently \"pnpm build:client\" \"pnpm build:sentry\"",
+    "build:client": "pnpm --filter client build",
+    "build:sentry": "rollup -c ./rollup.config.js",
+    "dev": "concurrently \"pnpm dev:client\" \"pnpm dev:sentry\"",
+    "dev:client": "pnpm --filter client dev",
+    "dev:sentry": "rollup -c ./rollup.config.js -w",
+    "prepare:client": "pnpm --filter client prepare"
   },
   "devDependencies": {
-    "@faker-js/faker": "^10.3.0",
-    "@types/amap-js-api": "^1.4.16",
-    "@types/jsdom": "^21.1.7",
-    "@types/node": "^24.11.0",
-    "@vitejs/plugin-vue": "^6.0.4",
-    "@vue/eslint-config-prettier": "^10.2.0",
-    "@vue/eslint-config-typescript": "^14.7.0",
-    "@vue/tsconfig": "^0.7.0",
+    "@eslint/js": "^9.39.2",
+    "globals": "^17.0.0",
+    "typescript-eslint": "^8.52.0",
+    "@rollup/plugin-commonjs": "^29.0.2",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-terser": "^1.0.0",
+    "concurrently": "^9.2.1",
     "eslint": "^9.39.3",
-    "eslint-plugin-vue": "^10.8.0",
     "husky": "^9.1.7",
-    "jiti": "^2.6.1",
-    "jsdom": "^26.1.0",
     "lint-staged": "^16.3.2",
-    "msw": "^2.12.10",
-    "npm-run-all2": "^8.0.4",
     "prettier": "^3.8.1",
-    "rollup-plugin-visualizer": "^6.0.11",
-    "sass": "^1.97.3",
-    "typescript": "~5.8.3",
-    "unplugin-auto-import": "^19.3.0",
-    "unplugin-vue-components": "^28.8.0",
-    "vite": "^7.3.1",
-    "vite-plugin-vue-devtools": "^7.7.9",
-    "vue-tsc": "^2.2.12"
+    "rollup": "^4.59.0",
+    "rollup-plugin-dts": "^6.4.0",
+    "rollup-plugin-esbuild": "^6.2.1"
   },
+  "type": "module",
   "lint-staged": {
     "*.{vue,js,cjs,mjs,jsx,ts,cts,mts,tsx,json,css,less,scss,md,mdx}": [
       "pnpm lint",
       "pnpm format"
-    ]
-  },
-  "packageManager": "pnpm@10.13.1+sha512.37ebf1a5c7a30d5fabe0c5df44ee8da4c965ca0c5af3dbab28c3a1681b70a256218d05c81c9c0dcf767ef6b8551eb5b960042b9ed4300c59242336377e01cfad",
-  "msw": {
-    "workerDirectory": [
-      "public"
     ]
   }
 }

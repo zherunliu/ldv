@@ -8,6 +8,7 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { copyFileSync } from 'node:fs'
 import { resolve } from 'node:path'
+import sentryPlugin from './vite-plugin-sentry'
 
 const copy404 = (): Plugin => ({
   name: 'copy-404',
@@ -30,6 +31,7 @@ export default ({ mode }: { mode: string }) =>
     plugins: [
       vue(),
       vueDevTools(),
+      sentryPlugin(),
       // 按需导入 element-plus
       AutoImport({
         resolvers: [ElementPlusResolver()],
@@ -41,11 +43,20 @@ export default ({ mode }: { mode: string }) =>
       visualizer({ open: true }),
       // 自定义插件
       copy404(),
+
     ],
     resolve: {
       alias: {
         // '@': resolve(__dirname, './src'),
         '@': fileURLToPath(new URL('./src', import.meta.url)),
       },
+    },
+    optimizeDeps: {
+      // 禁止预构建依赖
+      exclude: [
+        '@sonnet-sentry/core',
+        '@sonnet-sentry/performance',
+        '@sonnet-sentry/screen-record',
+      ],
     },
   })

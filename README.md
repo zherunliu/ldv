@@ -19,3 +19,9 @@
 [flexbox](https://medium.com/swlh/css-flexbox-fundamentals-visual-guide-1c467f480dac)
 
 [terser](https://github.com/terser/terser)
+
+```bash
+pnpm add @sonnet-sentry/core --filter client && \
+pnpm add @sonnet-sentry/performance --filter client && \
+pnpm add @sonnet-sentry/screen-record --filter client
+```
