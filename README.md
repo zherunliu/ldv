@@ -1,4 +1,4 @@
-# A Learning Demo of Vue3
+# NOT a learn demo Vue3 project with sentry sdk
 
 ## Referenced websites
 
@@ -6,7 +6,7 @@
 
 [vue router](https://router.vuejs.org/zh/guide/)
 
-[Element Plus](https://element-plus.org/zh-CN/)
+[element-plus](https://element-plus.org/zh-CN/)
 
 [echarts](https://echarts.apache.org/handbook/zh/get-started/)
 
@@ -15,10 +15,6 @@
 [husky 🐶 woof!](https://typicode.github.io/husky/)
 
 [CSS | MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS)
-
-[flexbox](https://medium.com/swlh/css-flexbox-fundamentals-visual-guide-1c467f480dac)
-
-[terser](https://github.com/terser/terser)
 
 ```bash
 pnpm add @sonnet-sentry/core --filter client && \
