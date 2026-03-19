@@ -25,7 +25,7 @@
     "dev": "concurrently \"pnpm dev:client\" \"pnpm dev:sentry\"",
     "dev:client": "pnpm --filter client dev",
     "dev:sentry": "rollup -c ./rollup.config.js -w",
-    "prepare:client": "pnpm --filter client prepare"
+    "mock": "pnpm --filter client mock"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
