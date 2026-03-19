@@ -1,6 +1,6 @@
 # NOT a learn demo Vue3 project with sentry sdk
 
-## Referenced websites
+## Reference
 
 [vue](https://cn.vuejs.org/guide/quick-start.html)
 
