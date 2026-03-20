@@ -1,6 +1,6 @@
-# NOT a learn demo Vue3 project with sentry sdk
+# NOT a Vue3 learning demo project, including sentry sdk
 
-## Reference
+## References
 
 [vue](https://cn.vuejs.org/guide/quick-start.html)
 
