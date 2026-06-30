@@ -15,9 +15,3 @@
 [husky 🐶 woof!](https://typicode.github.io/husky/)
 
 [CSS | MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS)
-
-```bash
-pnpm add @sonnet-sentry/core --filter client && \
-pnpm add @sonnet-sentry/performance --filter client && \
-pnpm add @sonnet-sentry/screen-record --filter client
-```
